@@ -1,0 +1,2801 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NaWi-Lernlabor 5. Klasse: Haut, Ohr &amp; Reize</title>
+  <style>
+    /* ==========================================================================
+       DESIGN-SYSTEM & VARIABLEN (Komplett lokal, ohne externe Fonts/CDNs)
+       ========================================================================== */
+    :root {
+      --sky-50: #f0f9ff;
+      --sky-100: #e0f2fe;
+      --sky-200: #bae6fd;
+      --sky-300: #7dd3fc;
+      --sky-500: #0ea5e9;
+      --sky-600: #0284c7;
+      --sky-800: #075985;
+      --sky-900: #0c4a6e;
+      --emerald-50: #ecfdf5;
+      --emerald-100: #d1fae5;
+      --emerald-300: #6ee7b7;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --emerald-600: #059669;
+      --emerald-800: #065f46;
+      --emerald-900: #064e3b;
+      --amber-50: #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-200: #fde68a;
+      --amber-300: #fcd34d;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
+      --amber-700: #b45309;
+      --amber-800: #92400e;
+      --amber-900: #78350f;
+      --rose-50: #fff1f2;
+      --rose-100: #ffe4e6;
+      --rose-300: #fda4af;
+      --rose-400: #fb7185;
+      --rose-600: #e11d48;
+      --rose-900: #881337;
+      --purple-50: #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-200: #e9d5ff;
+      --purple-300: #d8b4fe;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+      --purple-700: #7e22ce;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+
+      --bg-main: #f0f9ff;
+      --bg-card: rgba(255, 255, 255, 0.96);
+      --bg-subtle: #e0f2fe;
+      --text-main: #1e293b;
+      --text-muted: #475569;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #e0f2fe;
+      --secondary: #059669;
+      --secondary-light: #d1fae5;
+      --accent-amber: #f59e0b;
+      --accent-amber-light: #fef3c7;
+      --accent-rose: #e11d48;
+      --accent-rose-light: #ffe4e6;
+      --success: #10b981;
+      --success-light: #d1fae5;
+      --border-color: #cbd5e1;
+      --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 20px 35px -10px rgba(0, 0, 0, 0.12);
+      --radius-lg: 1.75rem;
+      --radius-md: 1.25rem;
+      --radius-sm: 0.85rem;
+      --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, var(--sky-100) 0%, var(--emerald-100) 50%, var(--amber-100) 100%);
+      color: var(--text-main);
+      line-height: 1.55;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.75rem;
+      overflow-x: hidden;
+    }
+
+    @media (min-width: 640px) {
+      body { padding: 1.5rem; }
+    }
+
+    h1, h2, h3, h4, .font-title {
+      font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, -apple-system, sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    /* ==========================================================================
+       HEADER & FORTSCHRITTSLEISTE (HUD-DESIGN ANALOG GEWI)
+       ========================================================================== */
+    header {
+      width: 100%;
+      max-width: 66rem;
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--slate-800);
+      border-radius: 1.25rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      border: 2px solid var(--sky-200);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0.5rem;
+      z-index: 50;
+    }
+
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .hud-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-hub-back {
+      background: var(--slate-100);
+      border: 1px solid var(--slate-300);
+      color: var(--slate-700);
+      font-weight: 700;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-hub-back:hover { background: var(--slate-200); }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--emerald-400), var(--emerald-600));
+      color: #ffffff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.45rem;
+      font-weight: 800;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+      flex-shrink: 0;
+    }
+
+    .hud-subtitle {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--emerald-600);
+      display: block;
+    }
+
+    .brand h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--slate-800);
+    }
+
+    .hud-progress-wrap {
+      flex: 1;
+      min-width: 150px;
+      max-width: 240px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--slate-500);
+      margin-bottom: 0.25rem;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 0.75rem;
+      background: var(--slate-200);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--emerald-400), var(--emerald-600));
+      width: 0%;
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .status-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      background: var(--amber-100);
+      border: 2px solid var(--amber-300);
+      color: var(--amber-800);
+      padding: 0.35rem 0.85rem;
+      border-radius: 0.85rem;
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    #star-count { font-size: 1.2rem; }
+
+    /* Musik-Steuerungsleiste im HUD */
+    .music-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--purple-50);
+      border: 1.5px solid var(--purple-200);
+      padding: 0.28rem 0.55rem;
+      border-radius: 0.85rem;
+    }
+
+    .btn-music {
+      background: var(--purple-100);
+      border: 1px solid var(--purple-300);
+      color: var(--purple-700);
+      padding: 0.3rem 0.55rem;
+      border-radius: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+    }
+    .btn-music.active {
+      background: var(--purple-600);
+      border-color: var(--purple-700);
+      color: #ffffff;
+    }
+
+    .btn-mood {
+      background: #ffffff;
+      border: 1px solid var(--purple-200);
+      color: var(--slate-700);
+      padding: 0.28rem 0.45rem;
+      border-radius: 0.55rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-mood:hover { background: var(--purple-100); }
+
+    .volume-slider {
+      width: 3.6rem;
+      accent-color: var(--purple-600);
+      cursor: pointer;
+    }
+
+    .icon-btn {
+      background: var(--sky-100);
+      border: 1px solid var(--sky-300);
+      color: var(--sky-800);
+      padding: 0.45rem 0.65rem;
+      border-radius: 0.75rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .icon-btn:hover {
+      background: var(--sky-200);
+      transform: translateY(-1px);
+    }
+
+    .icon-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* ==========================================================================
+       LEHRER-BEGRÜSSUNGSBANNER & NAVIGATION
+       ========================================================================== */
+    main {
+      max-width: 66rem;
+      width: 100%;
+      margin: 0 auto 2rem;
+      flex: 1;
+    }
+
+    .teacher-box {
+      background: rgba(255, 255, 255, 0.96);
+      border: 3px solid var(--emerald-300);
+      border-radius: 1.5rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .teacher-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--secondary-light);
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      flex-shrink: 0;
+      border: 2px solid #99f6e4;
+    }
+
+    .teacher-text h2 {
+      font-size: 1.05rem;
+      color: var(--secondary);
+      margin-bottom: 0.2rem;
+    }
+
+    .teacher-text p {
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    /* Modul-Tabs */
+    .module-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 820px) {
+      .module-nav {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .module-nav {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .nav-tab {
+      background: var(--bg-card);
+      border: 3px solid var(--border-color);
+      border-radius: 1.25rem;
+      padding: 0.95rem 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 5px 0 rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .nav-tab:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .nav-tab.active {
+      background: linear-gradient(135deg, var(--sky-50), var(--sky-100));
+      border-color: var(--sky-500);
+      box-shadow: 0 5px 0 rgba(14, 165, 233, 0.25);
+    }
+
+    .nav-tab.completed {
+      box-shadow: 0 0 0 3px var(--emerald-400);
+    }
+
+    .nav-tab-icon {
+      font-size: 1.65rem;
+      flex-shrink: 0;
+    }
+
+    .nav-tab-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-tab-title {
+      font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, -apple-system, sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-main);
+    }
+
+    .nav-tab-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .nav-check {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: var(--emerald-500);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      display: none;
+    }
+
+    .nav-tab.completed .nav-check {
+      display: inline-block;
+    }
+
+    /* ==========================================================================
+       KARTEN & ALLGEMEINE UI-KOMPONENTEN
+       ========================================================================== */
+    .module-panel {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .module-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 1.75rem;
+      padding: 1.25rem;
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.12);
+      margin-bottom: 1.5rem;
+      border: 4px solid #ffffff;
+    }
+
+    @media (min-width: 640px) {
+      .card { padding: 2rem; }
+    }
+
+    .card-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--sky-100);
+    }
+
+    .card-header h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--slate-800);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: var(--sky-100);
+      color: var(--sky-800);
+      border: 1px solid var(--sky-300);
+      font-weight: 800;
+      font-size: 0.82rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+    }
+
+    .badge-teal {
+      background: var(--emerald-100);
+      color: var(--emerald-800);
+      border-color: var(--emerald-300);
+    }
+
+    .badge-amber {
+      background: var(--amber-100);
+      color: var(--amber-800);
+      border-color: var(--amber-300);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .btn {
+      background: linear-gradient(90deg, var(--sky-500), var(--sky-600));
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.35rem;
+      border-radius: 1rem;
+      font-weight: 800;
+      font-size: 0.96rem;
+      cursor: pointer;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      min-height: 46px;
+      box-shadow: 0 5px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      background: linear-gradient(90deg, var(--emerald-500), var(--emerald-600));
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 2px solid var(--border-color);
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .btn-danger {
+      background: var(--accent-rose);
+    }
+
+    /* ==========================================================================
+       INTERAKTIVE SVG-DIAGRAMME & INFO-BOXEN
+       ========================================================================== */
+    .svg-container {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .svg-container svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .hotspot {
+      cursor: pointer;
+      transition: opacity 0.2s ease, filter 0.2s ease;
+    }
+
+    .hotspot:hover {
+      filter: brightness(1.08) drop-shadow(0 0 5px rgba(37, 99, 235, 0.6));
+    }
+
+    .hotspot.selected {
+      filter: drop-shadow(0 0 7px rgba(245, 158, 11, 0.95));
+      stroke: #f59e0b !important;
+      stroke-width: 3.5px !important;
+    }
+
+    .info-inspector {
+      background: var(--bg-subtle);
+      border: 2px solid #bfdbfe;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .info-inspector h4 {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .info-meta {
+      display: inline-block;
+      background: #ffffff;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
+      margin-bottom: 0.85rem;
+      border: 1px solid #cbd5e1;
+    }
+
+    .info-desc {
+      font-size: 0.98rem;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+    }
+
+    .info-tip {
+      background: #ffffff;
+      border-left: 4px solid var(--accent-amber);
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.85rem;
+    }
+
+    .chip-btn {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--text-main);
+    }
+
+    .chip-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .chip-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .chip-btn.explored::after {
+      content: " ✓";
+      color: var(--success);
+      font-weight: 900;
+    }
+
+    .chip-btn.active.explored::after {
+      color: #fde047;
+    }
+
+    /* ==========================================================================
+       MINI-ÜBUNGEN & INTERAKTIVE ELEMENTE
+       ========================================================================== */
+    .exercise-box {
+      background: #f8fafc;
+      border: 2px dashed #94a3b8;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .quiz-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: #ffffff;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.65rem;
+      font-size: 0.96rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--text-main);
+    }
+
+    .quiz-option:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .quiz-option.correct {
+      background: var(--success-light);
+      border-color: var(--success);
+      color: #14532d;
+    }
+
+    .quiz-option.wrong {
+      background: var(--accent-rose-light);
+      border-color: var(--accent-rose);
+      color: #881337;
+    }
+
+    .feedback-banner {
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-sm);
+      margin-top: 0.85rem;
+      font-weight: 600;
+      font-size: 0.94rem;
+      display: none;
+    }
+
+    .feedback-banner.show {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .feedback-banner.success {
+      background: var(--success-light);
+      color: #14532d;
+      border: 1.5px solid #86efac;
+    }
+
+    .feedback-banner.error {
+      background: var(--accent-rose-light);
+      color: #881337;
+      border: 1.5px solid #fda4af;
+    }
+
+    /* Schallwellen-Reise Animation */
+    .wave-pulse {
+      animation: pulseWave 1.2s infinite ease-in-out;
+      transform-origin: center;
+    }
+
+    @keyframes pulseWave {
+      0%, 100% { transform: scale(1); opacity: 0.95; }
+      50% { transform: scale(1.12); opacity: 0.65; }
+    }
+
+    .step-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .step-pill {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 0.6rem;
+      text-align: center;
+      font-size: 0.84rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .step-pill.current {
+      background: var(--accent-amber-light);
+      border-color: var(--accent-amber);
+      transform: scale(1.03);
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.25);
+    }
+
+    .step-pill.done {
+      background: var(--success-light);
+      border-color: var(--success);
+      color: #14532d;
+    }
+
+    /* Reihenfolge-Spiel (Modul 2) */
+    .order-pool, .order-slots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin: 0.75rem 0;
+    }
+
+    .order-item {
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 0.6rem 0.9rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .order-item:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .order-item:disabled {
+      opacity: 0.4;
+      cursor: default;
+      border-color: #94a3b8;
+      color: #64748b;
+    }
+
+    .order-slot {
+      background: #ffffff;
+      border: 2px dashed #94a3b8;
+      border-radius: 10px;
+      padding: 0.55rem 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      min-width: 145px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .order-slot.filled {
+      border-style: solid;
+      border-color: var(--secondary);
+      background: var(--secondary-light);
+      color: #115e59;
+    }
+
+    /* Reiz-Reaktions-Kette (Modul 3) */
+    .chain-flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+      background: #ffffff;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .chain-node {
+      background: var(--bg-subtle);
+      border: 2px solid #93c5fd;
+      border-radius: 10px;
+      padding: 0.55rem 0.8rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-align: center;
+      min-width: 115px;
+    }
+
+    .chain-select {
+      padding: 0.5rem 0.65rem;
+      border-radius: 10px;
+      border: 2px solid var(--accent-amber);
+      background: var(--accent-amber-light);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: #78350f;
+      cursor: pointer;
+      min-height: 40px;
+    }
+
+    .chain-arrow {
+      font-weight: 900;
+      color: var(--primary);
+      font-size: 1.15rem;
+    }
+
+    /* Reiz-Sortierer */
+    .sorter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .organ-bucket {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .organ-bucket:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    .organ-bucket .organ-emoji {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .organ-bucket .organ-name {
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .active-stimulus-card {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      text-align: center;
+      margin: 0.75rem 0;
+    }
+
+    /* ==========================================================================
+       URKUNDE (MODUL 4 ABSCHLUSS) & MODAL
+       ========================================================================== */
+    .certificate {
+      background: linear-gradient(180deg, #fffbeb 0%, #ffffff 100%);
+      border: 6px double #d97706;
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(217, 119, 6, 0.18);
+      margin-top: 1.25rem;
+      position: relative;
+    }
+
+    .certificate-seal {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 0.75rem;
+      background: #f59e0b;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.3rem;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+      border: 4px solid #fef3c7;
+    }
+
+    .certificate h3 {
+      font-size: 1.65rem;
+      color: #92400e;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.02em;
+    }
+
+    .cert-name-input {
+      border: none;
+      border-bottom: 2px dashed #d97706;
+      background: transparent;
+      font-family: inherit;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #1e293b;
+      text-align: center;
+      padding: 0.25rem 0.5rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .cert-name-input:focus {
+      outline: none;
+      border-bottom-style: solid;
+    }
+
+    /* Bestätigungs-Modal (Ersatz für confirm/alert) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 100;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      max-width: 440px;
+      width: 100%;
+      padding: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    .modal-box h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-box p {
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem 1.25rem;
+      color: var(--slate-600);
+      font-size: 0.85rem;
+      font-weight: 600;
+      width: 100%;
+      max-width: 66rem;
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      #certificate-card, #certificate-card * { visibility: visible; }
+      #certificate-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       KOPFZEILE MIT STERNE-ZÄHLER, SOUND & FORTSCHRITT
+       ======================================================================== -->
+  <header>
+    <div class="header-inner">
+      <div class="hud-left">
+        <a href="index.html" class="btn-hub-back" title="Zurück zur Modul-Auswahl">
+          <span>🏠</span> <span>Startseite</span>
+        </a>
+        <div class="brand">
+          <div class="brand-badge" aria-hidden="true">🔬</div>
+          <div>
+            <span class="hud-subtitle">NaWi-Lernlabor • Klasse 5</span>
+            <h1>Sinnesorgane &amp; Umweltreize</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="hud-progress-wrap">
+        <div class="progress-label">
+          <span>Fortschritt</span>
+          <span id="progress-percent">0 %</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="status-controls">
+        <div class="stat-pill" title="Deine gesammelten Lernsterne">
+          <span>⭐</span>
+          <span id="star-count">0</span>
+          <span style="font-size: 0.78rem;">Sterne</span>
+        </div>
+        <button type="button" class="icon-btn" id="sound-toggle-btn" aria-label="Ton ein- oder ausschalten" title="Sound-Effekte an/aus">
+          <span id="sound-icon">🔊</span>
+          <span id="sound-label">Ton an</span>
+        </button>
+        <button type="button" class="icon-btn" id="reset-open-btn" title="Lernfortschritt zurücksetzen">
+          <span>🔄</span>
+          <span>Neustart</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HAUPTBEREICH
+       ======================================================================== -->
+  <main>
+    <!-- Lehrer-Begrüßung & Hinweise -->
+    <section class="teacher-box" aria-label="Hinweis von deiner NaWi-Lehrkraft">
+      <div class="teacher-avatar" aria-hidden="true">👩‍🏫</div>
+      <div class="teacher-text">
+        <h2 id="teacher-greeting">Hallo Nachwuchsforscherin / Nachwuchsforscher!</h2>
+        <p id="teacher-message">
+          Schön, dass du da bist! Heute machen wir uns fit für deine <strong>NaWi-Klassenarbeit</strong>. Entdecke zuerst die <strong>Haut</strong> und das <strong>Ohr</strong>, trainiere die <strong>Reiz-Reaktions-Kette</strong> und hol dir am Ende deine eigene <strong>NaWi-Profi-Urkunde</strong>!
+        </p>
+      </div>
+    </section>
+
+    <!-- Modul-Navigation -->
+    <nav class="module-nav" aria-label="Lernmodule">
+      <button type="button" class="nav-tab active" data-module="mod1" id="tab-mod1">
+        <span class="nav-tab-icon" aria-hidden="true">🖐️</span>
+        <div class="nav-tab-info">
+          <span class="nav-tab-title">1. Die Haut</span>
+          <span class="nav-tab-sub">Schichten &amp; Sinneskörperchen</span>
+        </div>
+        <span class="nav-check">Fertig ✓</span>
+      </button>
+
+      <button type="button" class="nav-tab" data-module="mod2" id="tab-mod2">
+        <span class="nav-tab-icon" aria-hidden="true">👂</span>
+        <div class="nav-tab-info">
+          <span class="nav-tab-title">2. Das Ohr</span>
+          <span class="nav-tab-sub">Aufbau &amp; Schallwellen-Reise</span>
+        </div>
+        <span class="nav-check">Fertig ✓</span>
+      </button>
+
+      <button type="button" class="nav-tab" data-module="mod3" id="tab-mod3">
+        <span class="nav-tab-icon" aria-hidden="true">🚦</span>
+        <div class="nav-tab-info">
+          <span class="nav-tab-title">3. Umweltreize</span>
+          <span class="nav-tab-sub">Reiz-Reaktions-Kette</span>
+        </div>
+        <span class="nav-check">Fertig ✓</span>
+      </button>
+
+      <button type="button" class="nav-tab" data-module="mod4" id="tab-mod4">
+        <span class="nav-tab-icon" aria-hidden="true">🏆</span>
+        <div class="nav-tab-info">
+          <span class="nav-tab-title">4. Klassenarbeits-Quiz</span>
+          <span class="nav-tab-sub">10 Fragen &amp; Urkunde</span>
+        </div>
+        <span class="nav-check">Fertig ✓</span>
+      </button>
+    </nav>
+
+    <!-- ======================================================================
+         MODUL 1: DIE HAUT
+         ====================================================================== -->
+    <section id="mod1" class="module-panel active" aria-labelledby="mod1-heading">
+      <div class="card">
+        <div class="card-header">
+          <h3 id="mod1-heading">🖐️ Modul 1: Die Haut – Unser größtes Sinnesorgan</h3>
+          <span class="badge" id="skin-explored-badge">0 / 9 Bestandteile entdeckt</span>
+        </div>
+        <p style="margin-bottom: 1rem;">
+          Klicke direkt auf die verschiedenen Schichten und Bestandteile im <strong>Haut-Querschnitt</strong> (oder auf die Buttons darunter), um herauszufinden, welche Aufgaben sie erfüllen!
+        </p>
+
+        <div class="grid-2">
+          <!-- Interaktive SVG-Grafik der Haut -->
+          <div>
+            <div class="svg-container">
+              <svg viewBox="0 0 560 400" role="img" aria-label="Interaktiver Querschnitt durch die menschliche Haut">
+                <!-- Hintergrund / Himmel -->
+                <rect x="0" y="0" width="560" height="75" fill="#e0f2fe" />
+                
+                <!-- 1. OBERHAUT (Epidermis) -->
+                <g class="hotspot" data-skin="oberhaut" tabindex="0">
+                  <rect x="20" y="75" width="430" height="45" fill="#f5c29b" stroke="#d97706" stroke-width="2" />
+                  <!-- Hornschicht oben -->
+                  <rect x="20" y="75" width="430" height="12" fill="#e6a57e" />
+                </g>
+
+                <!-- 2. LEDERHAUT (Dermis) -->
+                <g class="hotspot" data-skin="lederhaut" tabindex="0">
+                  <rect x="20" y="120" width="430" height="165" fill="#fbcfe8" stroke="#db2777" stroke-width="2" />
+                </g>
+
+                <!-- 3. UNTERHAUT (Subcutis) mit Fettgewebe -->
+                <g class="hotspot" data-skin="unterhaut" tabindex="0">
+                  <rect x="20" y="285" width="430" height="95" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
+                  <!-- Fettzellen-Kreise -->
+                  <circle cx="55" cy="315" r="16" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="95" cy="322" r="18" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="140" cy="312" r="15" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="185" cy="325" r="17" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="245" cy="318" r="18" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="295" cy="314" r="16" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="345" cy="324" r="18" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="395" cy="315" r="16" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="70" cy="355" r="17" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="120" cy="356" r="16" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="170" cy="358" r="15" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="220" cy="355" r="17" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="275" cy="356" r="16" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="325" cy="357" r="16" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                  <circle cx="380" cy="355" r="17" fill="#fde047" stroke="#eab308" stroke-width="1.5" />
+                </g>
+
+                <!-- 4. HAAR & HAARWURZEL / HAARBALG -->
+                <g class="hotspot" data-skin="haar" tabindex="0">
+                  <!-- Haarschaft schräg nach oben -->
+                  <path d="M135 250 L165 20 L174 21 L147 250 Z" fill="#78350f" />
+                  <!-- Haarbalg / Haarzwiebel -->
+                  <ellipse cx="141" cy="252" rx="14" ry="20" fill="#92400e" stroke="#451a03" stroke-width="2" />
+                </g>
+
+                <!-- 5. TALGDRÜSE (am Haarbalg) -->
+                <g class="hotspot" data-skin="talgdruese" tabindex="0">
+                  <path d="M153 165 C175 155, 190 175, 175 190 C165 198, 152 188, 150 178 Z" fill="#fb923c" stroke="#c2410c" stroke-width="2" />
+                  <circle cx="168" cy="173" r="4" fill="#ffedd5" />
+                  <circle cx="173" cy="181" r="3.5" fill="#ffedd5" />
+                </g>
+
+                <!-- 6. SCHWEISSDRÜSE -->
+                <g class="hotspot" data-skin="schweissdruese" tabindex="0">
+                  <!-- Ausführungsgang bis zur Pore -->
+                  <path d="M375 75 Q370 110 380 145 T375 215" fill="none" stroke="#0284c7" stroke-width="4" />
+                  <!-- Drüsenknäuel -->
+                  <circle cx="375" cy="232" r="20" fill="#38bdf8" stroke="#0369a1" stroke-width="2.5" />
+                  <path d="M364 228 Q375 218 385 230 T367 240 T383 236" fill="none" stroke="#e0f2fe" stroke-width="2.5" />
+                </g>
+
+                <!-- 7. BLUTGEFÄSSE -->
+                <g class="hotspot" data-skin="blutgefaesse" tabindex="0">
+                  <!-- Rot (Arterie) & Blau (Vene) -->
+                  <path d="M20 272 C110 265, 220 275, 450 268" fill="none" stroke="#dc2626" stroke-width="6" />
+                  <path d="M20 280 C110 273, 220 283, 450 276" fill="none" stroke="#2563eb" stroke-width="5" />
+                  <!-- Feine Kapillaren nach oben -->
+                  <path d="M220 270 L220 145 M220 190 L205 160 M220 175 L235 150" fill="none" stroke="#dc2626" stroke-width="3" />
+                </g>
+
+                <!-- 8. TAST- & DRUCKKÖRPERCHEN -->
+                <g class="hotspot" data-skin="tastkoerperchen" tabindex="0">
+                  <ellipse cx="82" cy="148" rx="12" ry="18" fill="#8b5cf6" stroke="#4c1d95" stroke-width="2" />
+                  <path d="M75 142 L89 146 M75 150 L89 154 M82 166 L82 260" stroke="#4c1d95" stroke-width="2" />
+                  <!-- Druckkörperchen tiefer -->
+                  <ellipse cx="305" cy="245" rx="16" ry="12" fill="#a78bfa" stroke="#4c1d95" stroke-width="2" />
+                  <ellipse cx="305" cy="245" rx="9" ry="6" fill="none" stroke="#ede9fe" stroke-width="1.5" />
+                </g>
+
+                <!-- 9. WÄRME-, KÄLTE- & SCHMERZREZEPTOREN -->
+                <g class="hotspot" data-skin="temperatur_schmerz" tabindex="0">
+                  <!-- Kältekörperchen (blau) -->
+                  <circle cx="255" cy="145" r="11" fill="#06b6d4" stroke="#155e75" stroke-width="2" />
+                  <text x="255" y="149" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold">❄</text>
+                  <!-- Wärmekörperchen (rot-orange) -->
+                  <circle cx="315" cy="168" r="11" fill="#ef4444" stroke="#7f1d1d" stroke-width="2" />
+                  <text x="315" y="172" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold">☀</text>
+                  <!-- Freie Nervenendigungen (Schmerz) -->
+                  <path d="M415 112 L422 128 L430 114 M422 128 L422 255" fill="none" stroke="#be123c" stroke-width="2.5" />
+                  <circle cx="422" cy="128" r="6" fill="#f43f5e" />
+                </g>
+
+                <!-- Schicht-Beschriftungen rechts -->
+                <line x1="455" y1="75" x2="465" y2="75" stroke="#475569" stroke-width="2" />
+                <line x1="465" y1="75" x2="465" y2="118" stroke="#475569" stroke-width="2" />
+                <text x="472" y="101" font-size="12" font-weight="bold" fill="#1e293b">Oberhaut</text>
+
+                <line x1="455" y1="122" x2="465" y2="122" stroke="#475569" stroke-width="2" />
+                <line x1="465" y1="122" x2="465" y2="283" stroke="#475569" stroke-width="2" />
+                <text x="472" y="205" font-size="12" font-weight="bold" fill="#1e293b">Lederhaut</text>
+
+                <line x1="455" y1="287" x2="465" y2="287" stroke="#475569" stroke-width="2" />
+                <line x1="465" y1="287" x2="465" y2="380" stroke="#475569" stroke-width="2" />
+                <text x="472" y="338" font-size="12" font-weight="bold" fill="#1e293b">Unterhaut</text>
+              </svg>
+            </div>
+
+            <!-- Schnellauswahl-Buttons für Touch-Komfort -->
+            <div class="chip-list" id="skin-chips"></div>
+          </div>
+
+          <!-- Informations-Inspektor -->
+          <div class="info-inspector" id="skin-info-box">
+            <div>
+              <span class="info-meta" id="skin-info-layer">Schicht: Alle 3 Hautschichten</span>
+              <h4 id="skin-info-title">Unsere Haut – Ein echtes Multitalent!</h4>
+              <p class="info-desc" id="skin-info-desc">
+                Mit etwa 1,5 bis 2 Quadratmetern Fläche ist die Haut das <strong>größte Organ</strong> des Menschen. Sie schützt uns vor Kälte, Hitze, Austrocknung und Krankheitserregern – und lässt uns fühlen!
+              </p>
+            </div>
+            <div class="info-tip" id="skin-info-tip">
+              💡 <strong>Forscher-Auftrag:</strong> Tippe im Bild links oder auf die Buttons darunter alle 9 Bestandteile der Haut an!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mini-Übung Modul 1: Zuordnungs-Quiz -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🧪 Mini-Übung 1: Haut-Detektiv</h3>
+          <span class="badge badge-teal" id="mod1-quiz-progress">Frage 1 von 4</span>
+        </div>
+        <div class="exercise-box">
+          <p id="mod1-q-text" style="font-weight: 800; font-size: 1.05rem; margin-bottom: 0.85rem;"></p>
+          <div id="mod1-q-options"></div>
+          <div class="feedback-banner" id="mod1-q-feedback"></div>
+          <div style="margin-top: 1rem; display: flex; justify-content: flex-end;">
+            <button type="button" class="btn" id="mod1-next-btn" style="display: none;">Nächste Frage ➔</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MODUL 2: DAS OHR
+         ====================================================================== -->
+    <section id="mod2" class="module-panel" aria-labelledby="mod2-heading">
+      <div class="card">
+        <div class="card-header">
+          <h3 id="mod2-heading">👂 Modul 2: Das Ohr – Aufbau &amp; Wie Hören funktioniert</h3>
+          <span class="badge" id="ear-explored-badge">0 / 8 Bestandteile entdeckt</span>
+        </div>
+
+        <div class="grid-2">
+          <!-- Interaktives SVG des Ohrs -->
+          <div>
+            <div class="svg-container">
+              <svg viewBox="0 0 560 360" role="img" aria-label="Interaktives Diagramm des menschlichen Ohrs">
+                <!-- Hintergrundbereiche: Außenohr, Mittelohr, Innenohr -->
+                <rect x="10" y="10" width="215" height="310" rx="12" fill="#eff6ff" stroke="#bfdbfe" stroke-dasharray="4" />
+                <text x="117" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#1d4ed8">AUSSENOHR</text>
+
+                <rect x="230" y="10" width="135" height="310" rx="12" fill="#f0fdfa" stroke="#99f6e4" stroke-dasharray="4" />
+                <text x="297" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f766e">MITTELOHR</text>
+
+                <rect x="370" y="10" width="180" height="310" rx="12" fill="#fefce8" stroke="#fde047" stroke-dasharray="4" />
+                <text x="460" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#a16207">INNENOHR</text>
+
+                <!-- Schallwellen-Symbol links (für Animation) -->
+                <g id="ear-sound-waves" opacity="0.25">
+                  <path d="M26 155 Q36 175 26 195" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" />
+                  <path d="M38 145 Q52 175 38 205" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" />
+                  <path d="M50 135 Q68 175 50 215" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" />
+                </g>
+
+                <!-- 1. OHRMUSCHEL -->
+                <g class="hotspot" data-ear="ohrmuschel" tabindex="0">
+                  <path d="M115 80 C65 75, 55 140, 68 185 C78 220, 72 260, 102 265 C122 268, 128 242, 118 222 C105 200, 115 165, 128 155 C138 145, 138 85, 115 80 Z" fill="#fdba74" stroke="#c2410c" stroke-width="2.5" />
+                  <path d="M106 105 C82 108, 80 155, 94 185 C102 202, 95 230, 106 238" fill="none" stroke="#9a3412" stroke-width="2.5" stroke-linecap="round" />
+                </g>
+
+                <!-- 2. GEHÖRGANG -->
+                <g class="hotspot" data-ear="gehoergang" tabindex="0">
+                  <path d="M122 155 L242 150 L242 190 L122 188 Z" fill="#fed7aa" stroke="#ea580c" stroke-width="2" />
+                </g>
+
+                <!-- 3. TROMMELFELL -->
+                <g class="hotspot" data-ear="trommelfell" tabindex="0">
+                  <ellipse cx="245" cy="170" rx="8" ry="26" transform="rotate(-12 245 170)" fill="#f43f5e" stroke="#9f1239" stroke-width="2.5" />
+                </g>
+
+                <!-- Ohrtrompete (Eustachische Röhre - dekorativ) -->
+                <path d="M275 215 L250 305 L270 305 L295 215 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" />
+
+                <!-- 4. HAMMER -->
+                <g class="hotspot" data-ear="hammer" tabindex="0">
+                  <path d="M248 165 L275 135 L286 144 L256 173 Z" fill="#60a5fa" stroke="#1e40af" stroke-width="2" />
+                  <circle cx="281" cy="138" r="8" fill="#3b82f6" stroke="#1e40af" stroke-width="2" />
+                </g>
+
+                <!-- 5. AMBOSS -->
+                <g class="hotspot" data-ear="amboss" tabindex="0">
+                  <path d="M288 134 L318 134 L312 172 L298 172 L296 148 L286 144 Z" fill="#34d399" stroke="#065f46" stroke-width="2" />
+                </g>
+
+                <!-- 6. STEIGBÜGEL -->
+                <g class="hotspot" data-ear="steigbuegel" tabindex="0">
+                  <path d="M313 163 L342 153 L342 177 L313 169 Z" fill="none" stroke="#7c3aed" stroke-width="4" />
+                  <rect x="341" y="150" width="7" height="30" rx="3" fill="#8b5cf6" stroke="#4c1d95" stroke-width="1.5" />
+                </g>
+
+                <!-- 7. BOGENGÄNGE (Gleichgewichtssinn) -->
+                <g class="hotspot" data-ear="bogengaenge" tabindex="0">
+                  <path d="M378 145 C362 105, 405 85, 412 128" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" />
+                  <path d="M398 132 C412 88, 452 102, 434 142" fill="none" stroke="#fbbf24" stroke-width="8" stroke-linecap="round" />
+                  <path d="M368 152 C345 135, 355 102, 382 118" fill="none" stroke="#d97706" stroke-width="7" stroke-linecap="round" />
+                </g>
+
+                <!-- 8. HÖRSCHNECKE (Cochlea) -->
+                <g class="hotspot" data-ear="hoerschnecke" tabindex="0">
+                  <circle cx="425" cy="195" r="42" fill="#fde047" stroke="#ca8a04" stroke-width="3" />
+                  <path d="M425 195 m0 -28 a28 28 0 1 1 -24 14 a18 18 0 1 1 16 14 a9 9 0 1 1 8 -6" fill="none" stroke="#a16207" stroke-width="4" stroke-linecap="round" />
+                </g>
+
+                <!-- 9. HÖRNERV -->
+                <g class="hotspot" data-ear="hoernerv" tabindex="0">
+                  <path d="M464 180 L542 162 L542 195 L464 205 Z" fill="#fb7185" stroke="#be123c" stroke-width="2" />
+                  <text x="504" y="186" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">zum Gehirn</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="chip-list" id="ear-chips"></div>
+          </div>
+
+          <!-- Informations-Inspektor Ohr -->
+          <div class="info-inspector">
+            <div>
+              <span class="info-meta" id="ear-info-zone">Bereich: Außen-, Mittel- &amp; Innenohr</span>
+              <h4 id="ear-info-title">Wie kommen Töne in unseren Kopf?</h4>
+              <p class="info-desc" id="ear-info-desc">
+                Unser Ohr besteht aus drei großen Bereichen: dem <strong>Außenohr</strong>, dem <strong>Mittelohr</strong> (mit den drei kleinsten Knochen unseres Körpers!) und dem <strong>Innenohr</strong>.
+              </p>
+            </div>
+            <div class="info-tip" id="ear-info-tip">
+              💡 <strong>Forscher-Auftrag:</strong> Klicke alle Teile des Ohrs an – vergiss auch nicht die Bogengänge oben im Innenohr!
+            </div>
+          </div>
+        </div>
+
+        <!-- Schallwellen-Reise Animation -->
+        <div class="exercise-box" style="margin-top: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem;">
+            <div>
+              <h4 style="font-size: 1.1rem; color: var(--primary);">🔔 Interaktive Schallwellen-Reise</h4>
+              <p style="font-size: 0.92rem; color: var(--text-muted);">Begleite das Klingeln einer Fahrradklingel Schritt für Schritt bis ins Gehirn!</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="btn btn-secondary" id="wave-step-btn">▶ Nächster Schritt</button>
+              <button type="button" class="btn btn-outline" id="wave-reset-btn">↺ Neu starten</button>
+            </div>
+          </div>
+
+          <div class="step-cards" id="wave-steps-container"></div>
+          <div id="wave-explanation" style="margin-top: 0.85rem; background: #ffffff; padding: 0.85rem 1rem; border-radius: 10px; border-left: 4px solid var(--accent-amber); font-weight: 600;">
+            Klicke auf <strong>„Nächster Schritt“</strong>, um eine Schallwelle loszuschicken!
+          </div>
+        </div>
+      </div>
+
+      <!-- Mini-Übung Modul 2: Reihenfolge des Hörens -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🧩 Mini-Übung 2: Bringe das Hören in die richtige Reihenfolge!</h3>
+          <span class="badge badge-teal">Weg des Schalls</span>
+        </div>
+        <div class="exercise-box">
+          <p style="margin-bottom: 0.65rem; font-weight: 700;">
+            Tippe die Bausteine unten in der richtigen Reihenfolge an (von 1 bis 6), wie der Schall vom Außenohr bis zum Gehirn wandert:
+          </p>
+          <div class="order-slots" id="ear-order-slots"></div>
+          <p style="font-size: 0.86rem; color: var(--text-muted); margin-top: 0.5rem;">Verfügbare Bausteine (anklicken zum Einordnen):</p>
+          <div class="order-pool" id="ear-order-pool"></div>
+
+          <div style="margin-top: 0.85rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+            <button type="button" class="btn" id="ear-order-check-btn" disabled>Reihenfolge prüfen ✓</button>
+            <button type="button" class="btn btn-outline" id="ear-order-clear-btn">Eingabe löschen</button>
+          </div>
+          <div class="feedback-banner" id="ear-order-feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MODUL 3: UMWELTREIZE & REIZ-REAKTIONS-KETTE
+         ====================================================================== -->
+    <section id="mod3" class="module-panel" aria-labelledby="mod3-heading">
+      <div class="card">
+        <div class="card-header">
+          <h3 id="mod3-heading">🚦 Modul 3: Umweltreize &amp; Die Reiz-Reaktions-Kette</h3>
+          <span class="badge badge-amber" id="chain-badge">Szenario 1 von 3</span>
+        </div>
+        <p style="margin-bottom: 1rem;">
+          Auf deinem Schulweg prasseln ständig <strong>Umweltreize</strong> auf dich ein (z. B. ein hupendes Auto, eine rote Ampel oder eine kalte Schneeflocke). Damit du richtig reagieren kannst, läuft in deinem Körper blitzschnell die <strong>Reiz-Reaktions-Kette</strong> ab!
+        </p>
+
+        <!-- Szenario-Auswahl -->
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;" id="scenario-tabs"></div>
+
+        <div class="exercise-box">
+          <div id="scenario-story" style="font-size: 1.02rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;"></div>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Wähle in den gelben Lücken jeweils den passenden Begriff aus:</p>
+
+          <div class="chain-flow" id="chain-flow-container"></div>
+
+          <div style="display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 0.75rem;">
+            <button type="button" class="btn" id="check-chain-btn">Reiz-Reaktions-Kette überprüfen ✓</button>
+          </div>
+          <div class="feedback-banner" id="chain-feedback"></div>
+        </div>
+      </div>
+
+      <!-- Mini-Übung Modul 3: Reiz-Sortierer -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🎯 Mini-Übung 3: Der Reiz-Sortierer</h3>
+          <span class="badge badge-teal" id="sorter-score-badge">0 / 6 sortiert</span>
+        </div>
+        <div class="exercise-box">
+          <p style="font-weight: 700;">Welches Sinnesorgan nimmt den angezeigten Umweltreiz auf? Tippe auf das richtige Sinnesorgan!</p>
+
+          <div class="active-stimulus-card" id="stimulus-card">
+            <div style="font-size: 0.82rem; text-transform: uppercase; font-weight: 800; color: #92400e; letter-spacing: 0.04em;">Aktueller Umweltreiz</div>
+            <div id="stimulus-text" style="font-size: 1.3rem; font-weight: 800; margin-top: 0.25rem; color: #1e293b;">🚗 Hupendes Auto auf der Straße (Schallwellen)</div>
+          </div>
+
+          <div class="sorter-grid" id="organ-buckets">
+            <button type="button" class="organ-bucket" data-organ="ohr">
+              <span class="organ-emoji">👂</span>
+              <span class="organ-name">Ohr</span>
+            </button>
+            <button type="button" class="organ-bucket" data-organ="auge">
+              <span class="organ-emoji">👁️</span>
+              <span class="organ-name">Auge</span>
+            </button>
+            <button type="button" class="organ-bucket" data-organ="haut">
+              <span class="organ-emoji">🖐️</span>
+              <span class="organ-name">Haut</span>
+            </button>
+            <button type="button" class="organ-bucket" data-organ="nase">
+              <span class="organ-emoji">👃</span>
+              <span class="organ-name">Nase</span>
+            </button>
+            <button type="button" class="organ-bucket" data-organ="zunge">
+              <span class="organ-emoji">👅</span>
+              <span class="organ-name">Zunge</span>
+            </button>
+          </div>
+
+          <div class="feedback-banner" id="sorter-feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MODUL 4: GROSSES NAWI-KLASSENARBEITS-QUIZ
+         ====================================================================== -->
+    <section id="mod4" class="module-panel" aria-labelledby="mod4-heading">
+      <div class="card">
+        <div class="card-header">
+          <h3 id="mod4-heading">🏆 Modul 4: Großes NaWi-Klassenarbeits-Quiz</h3>
+          <span class="badge" id="final-quiz-counter">Frage 1 von 10</span>
+        </div>
+
+        <div id="final-quiz-area">
+          <p id="final-q-topic" style="font-size: 0.85rem; font-weight: 800; color: var(--secondary); text-transform: uppercase; margin-bottom: 0.3rem;"></p>
+          <h4 id="final-q-text" style="font-size: 1.15rem; margin-bottom: 1rem;"></h4>
+          <div id="final-q-options"></div>
+          <div class="feedback-banner" id="final-q-feedback"></div>
+
+          <div style="margin-top: 1.1rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 700; color: var(--text-muted);" id="final-score-live">Richtige Antworten: 0</span>
+            <button type="button" class="btn" id="final-next-btn" style="display: none;">Weiter ➔</button>
+          </div>
+        </div>
+
+        <!-- Auswertung & Urkunde -->
+        <div id="final-result-area" style="display: none;">
+          <div class="certificate" id="certificate-card">
+            <div class="certificate-seal">🏅</div>
+            <p style="text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; color: #b45309; font-size: 0.85rem;">NaWi-Lernlabor • Klasse 5</p>
+            <h3>NaWi-Profi-Urkunde</h3>
+            <p style="font-size: 1rem; color: var(--text-muted); margin-top: 0.4rem;">Hiermit wird bestätigt, dass</p>
+            <input type="text" class="cert-name-input" id="student-name-input" placeholder="Deinen Namen hier eintippen..." aria-label="Dein Name für die Urkunde">
+            <p style="font-size: 1rem; max-width: 540px; margin: 0.5rem auto;">
+              erfolgreich das Training zu den Themen <strong>Aufbau der Haut</strong>, <strong>Aufbau und Funktion des Ohrs</strong> sowie <strong>Umweltreize &amp; Reiz-Reaktions-Kette</strong> absolviert hat!
+            </p>
+            <div style="display: inline-block; background: #fef3c7; border: 2px solid #f59e0b; padding: 0.6rem 1.25rem; border-radius: 12px; font-weight: 800; color: #92400e; margin: 0.75rem 0;">
+              Ergebnis im Abschlusstest: <span id="cert-score-text">0 von 10 Punkten</span>
+            </div>
+            <p id="cert-teacher-remark" style="font-weight: 700; color: var(--secondary); margin-top: 0.4rem;"></p>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 1rem;">Ausgestellt im NaWi-Lernlabor • Viel Erfolg bei deiner Klassenarbeit!</p>
+          </div>
+
+          <div class="no-print" style="margin-top: 1.25rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="index.html" class="btn btn-outline" style="text-decoration: none;">🏠 Zur Modul-Auswahl</a>
+            <button type="button" class="btn" onclick="window.print()">🖨️ Urkunde drucken</button>
+            <button type="button" class="btn btn-secondary" id="retake-final-btn">🔄 Abschlusstest wiederholen</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bestätigungs-Modal für Fortschritts-Reset -->
+  <div class="modal-backdrop" id="reset-modal" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
+    <div class="modal-box">
+      <div style="font-size: 2.5rem; margin-bottom: 0.4rem;">🔄</div>
+      <h4 id="reset-modal-title">Lernfortschritt zurücksetzen?</h4>
+      <p>Möchtest du wirklich alle gesammelten Sterne und erledigten Übungen löschen und komplett von vorne beginnen?</p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="reset-cancel-btn">Abbrechen</button>
+        <button type="button" class="btn btn-danger" id="reset-confirm-btn">Ja, alles löschen</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    NaWi-Lernlabor 5. Klasse • 100 % offline &amp; lokal im Browser gespeichert • Kein Tracking, keine externen Daten.
+  </footer>
+
+  <!-- ========================================================================
+       JAVASCRIPT LOGIK
+       ======================================================================== -->
+  <script>
+    (function () {
+      "use strict";
+
+      /* ======================================================================
+         1. WEB AUDIO API (Sanfte Sound-Effekte ohne externe Dateien)
+         ====================================================================== */
+      let audioCtx = null;
+
+      function playTone(type) {
+        if (!state.soundEnabled) return;
+        try {
+          if (!audioCtx) {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (AudioContextClass) audioCtx = new AudioContextClass();
+          }
+          if (!audioCtx) return;
+          if (audioCtx.state === "suspended") audioCtx.resume();
+
+          const now = audioCtx.currentTime;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          if (type === "click") {
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(520, now);
+            gain.gain.setValueAtTime(0.06, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+            osc.start(now);
+            osc.stop(now + 0.08);
+          } else if (type === "success") {
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(523.25, now); // C5
+            osc.frequency.setValueAtTime(659.25, now + 0.09); // E5
+            osc.frequency.setValueAtTime(783.99, now + 0.18); // G5
+            gain.gain.setValueAtTime(0.11, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+            osc.start(now);
+            osc.stop(now + 0.36);
+          } else if (type === "error") {
+            osc.type = "sawtooth";
+            osc.frequency.setValueAtTime(220, now);
+            osc.frequency.linearRampToValueAtTime(175, now + 0.22);
+            gain.gain.setValueAtTime(0.07, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+            osc.start(now);
+            osc.stop(now + 0.24);
+          } else if (type === "fanfare") {
+            const notes = [523.25, 659.25, 783.99, 1046.5];
+            notes.forEach((freq, idx) => {
+              const o = audioCtx.createOscillator();
+              const g = audioCtx.createGain();
+              o.type = "triangle";
+              o.connect(g);
+              g.connect(audioCtx.destination);
+              o.frequency.setValueAtTime(freq, now + idx * 0.11);
+              g.gain.setValueAtTime(0.11, now + idx * 0.11);
+              g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.11 + 0.32);
+              o.start(now + idx * 0.11);
+              o.stop(now + idx * 0.11 + 0.32);
+            });
+          }
+        } catch (e) {
+          // Falls Audio vom Browser blockiert wird, leise ignorieren
+        }
+      }
+
+      /* ======================================================================
+         2. ZUSTAND & LOCALSTORAGE (DSGVO-konform lokal)
+         ====================================================================== */
+      const STORAGE_KEY = "nawi_lernlabor_5_state_v1";
+
+      const defaultState = {
+        stars: 0,
+        soundEnabled: true,
+        studentName: "",
+        skinExplored: [],
+        mod1QuizDone: false,
+        earExplored: [],
+        earOrderDone: false,
+        mod3ChainsDone: [false, false, false],
+        mod3SorterDone: false,
+        mod4Done: false,
+        mod4BestScore: 0
+      };
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return JSON.parse(JSON.stringify(defaultState));
+          const parsed = JSON.parse(raw);
+          return Object.assign({}, JSON.parse(JSON.stringify(defaultState)), parsed);
+        } catch (e) {
+          return JSON.parse(JSON.stringify(defaultState));
+        }
+      }
+
+      let state = loadState();
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          // Falls Speicher voll/gesperrt
+        }
+        updateGlobalUI();
+      }
+
+      function addStars(amount) {
+        state.stars += amount;
+        saveState();
+      }
+
+      function updateGlobalUI() {
+        document.getElementById("star-count").textContent = state.stars;
+
+        // Sound-Button aktualisieren
+        document.getElementById("sound-icon").textContent = state.soundEnabled ? "🔊" : "🔇";
+        document.getElementById("sound-label").textContent = state.soundEnabled ? "Ton an" : "Ton aus";
+
+        // Fortschritt berechnen (8 Meilensteine)
+        let milestones = 0;
+        if (state.skinExplored.length >= 9) milestones++;
+        if (state.mod1QuizDone) milestones++;
+        if (state.earExplored.length >= 9) milestones++;
+        if (state.earOrderDone) milestones++;
+        if (state.mod3ChainsDone.every(Boolean)) milestones++;
+        if (state.mod3SorterDone) milestones++;
+        if (state.mod4Done) milestones++;
+        if (state.mod4BestScore >= 7) milestones++;
+
+        const percent = Math.round((milestones / 8) * 100);
+        document.getElementById("progress-percent").textContent = percent + " % abgeschlossen";
+        document.getElementById("progress-fill").style.width = percent + "%";
+        document.getElementById("progress-bar").setAttribute("aria-valuenow", percent);
+
+        // Modul-Häkchen setzen
+        document.getElementById("tab-mod1").classList.toggle("completed", state.skinExplored.length >= 9 && state.mod1QuizDone);
+        document.getElementById("tab-mod2").classList.toggle("completed", state.earExplored.length >= 9 && state.earOrderDone);
+        document.getElementById("tab-mod3").classList.toggle("completed", state.mod3ChainsDone.every(Boolean) && state.mod3SorterDone);
+        document.getElementById("tab-mod4").classList.toggle("completed", state.mod4Done);
+      }
+
+      /* ======================================================================
+         3. NAVIGATION & LEHRER-KOMMENTARE
+         ====================================================================== */
+      const teacherHints = {
+        mod1: "Tipp für Modul 1: Merke dir die drei Hautschichten von außen nach innen: Oberhaut, Lederhaut und Unterhaut. In der Lederhaut sitzen fast alle Sinneskörperchen!",
+        mod2: "Tipp für Modul 2: Hammer, Amboss und Steigbügel sind die drei kleinsten Knochen deines Körpers. Sie verstärken die Schwingungen des Trommelfells!",
+        mod3: "Tipp für Modul 3: Ein Reiz ist eine Information aus der Umwelt (z. B. Schall oder Licht). Dein Gehirn ist die Steuerzentrale und gibt den Befehl an die Muskeln!",
+        mod4: "Zeit für die Generalprobe! Lies dir jede der 10 Klassenarbeits-Fragen genau durch. Du schaffst das!"
+      };
+
+      document.querySelectorAll(".nav-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          playTone("click");
+          const targetId = tab.dataset.module;
+          document.querySelectorAll(".nav-tab").forEach((t) => t.classList.remove("active"));
+          document.querySelectorAll(".module-panel").forEach((p) => p.classList.remove("active"));
+
+          tab.classList.add("active");
+          document.getElementById(targetId).classList.add("active");
+          document.getElementById("teacher-message").textContent = teacherHints[targetId];
+        });
+      });
+
+      /* ======================================================================
+         4. MODUL 1: INTERAKTIVE HAUT & MINI-ÜBUNG
+         ====================================================================== */
+      const skinData = {
+        oberhaut: {
+          title: "Oberhaut (Epidermis)",
+          layer: "1. Schicht (ganz außen)",
+          desc: "Die Oberhaut bildet unsere äußerste Schutzschicht. Ganz oben liegt die Hornschicht aus abgestorbenen Zellen – sie schützt uns wie ein Schutzschild vor Bakterien, Schmutz und Austrocknung. Darunter bilden sich ständig neue Hautzellen.",
+          tip: "💡 Merke: Wenn du dir leicht die Haut abschürfst und es nicht blutet, war nur die Oberhaut verletzt!"
+        },
+        lederhaut: {
+          title: "Lederhaut (Dermis)",
+          layer: "2. Schicht (in der Mitte)",
+          desc: "Die Lederhaut ist sehr reißfest und elastisch. In ihr liegen die wichtigsten Helfer der Haut: Blutgefäße, Schweiß- und Talgdrüsen, Haarwurzeln und die verschiedenen Sinneskörperchen.",
+          tip: "💡 Merke: In der Lederhaut passiert am meisten – hier fühlen wir Berührung, Wärme, Kälte und Schmerz!"
+        },
+        unterhaut: {
+          title: "Unterhaut (Subcutis) mit Fettgewebe",
+          layer: "3. Schicht (ganz unten)",
+          desc: "Die Unterhaut besteht hauptsächlich aus lockerem Bindegewebe und vielen Fettzellen. Diese Fettschicht wirkt wie eine warme Winterjacke gegen Kälte, polstert Stöße ab und dient als Energiespeicher.",
+          tip: "💡 Merke: Die Unterhaut isoliert deinen Körper gegen Kälte und schützt Knochen und Organe bei Stürzen."
+        },
+        haar: {
+          title: "Haar und Haarbalg (Haarwurzel)",
+          layer: "Wächst aus der Lederhaut",
+          desc: "Haare wachsen aus dem Haarbalg in der Lederhaut. Kleine Haarbalgmuskeln können die Haare bei Kälte oder Schreck aufrichten – dann bekommst du eine „Gänsehaut“!",
+          tip: "💡 Merke: Unsere Kopfhaare schützen zusätzlich vor starker Sonneneinstrahlung und Wärmeverlust."
+        },
+        talgdruese: {
+          title: "Talgdrüse",
+          layer: "Lederhaut (am Haarbalg)",
+          desc: "Die Talgdrüse produziert Hautfett (Talg) und gibt es entlang des Haares an die Hautoberfläche ab. Dadurch bleibt die Haut geschmeidig und wasserabweisend.",
+          tip: "💡 Merke: Ohne Talg wäre unsere Haut ganz trocken und rissig."
+        },
+        schweissdruese: {
+          title: "Schweißdrüse",
+          layer: "Lederhaut bis Pore in der Oberhaut",
+          desc: "Wenn uns heiß ist oder wir Sport treiben, gibt die Schweißdrüse Schweiß über feine Poren ab. Verdunstet der Schweiß auf der Haut, entsteht Verdunstungskälte – unser Körper kühlt ab!",
+          tip: "💡 Merke: Schwitzen ist die eingebaute Klimaanlage unseres Körpers!"
+        },
+        blutgefaesse: {
+          title: "Blutgefäße",
+          layer: "Lederhaut & Unterhaut",
+          desc: "Feine Blutgefäße versorgen die Hautzellen mit Sauerstoff und Nährstoffen. Bei Hitze weiten sie sich (wir bekommen einen roten Kopf), um Wärme abzugeben. Bei Kälte verengen sie sich, um Wärme zu sparen.",
+          tip: "💡 Merke: In der Oberhaut gibt es keine Blutgefäße – erst ab der Lederhaut!"
+        },
+        tastkoerperchen: {
+          title: "Tast- und Druckkörperchen",
+          layer: "Lederhaut",
+          desc: "Tastkörperchen liegen weit oben in der Lederhaut (besonders viele in den Fingerspitzen und Lippen) und melden feinste Berührungen. Druckkörperchen liegen tiefer und spüren festeren Druck.",
+          tip: "💡 Merke: Dank der vielen Tastkörperchen in den Fingern können blinde Menschen die Blindenschrift lesen."
+        },
+        temperatur_schmerz: {
+          title: "Wärme-, Kälte- & Schmerzrezeptoren",
+          layer: "Lederhaut (bis Grenze Oberhaut)",
+          desc: "Spezielle Sinneskörperchen melden, ob etwas warm oder kalt ist. Freie Nervenendigungen warnen uns mit Schmerz vor Verletzungen (z. B. bei einem Nadelstich oder großer Hitze).",
+          tip: "💡 Merke: Schmerz ist ein wichtiges Warnsignal, damit wir unsere Hand schnell zurückziehen!"
+        }
+      };
+
+      const skinKeys = Object.keys(skinData);
+      const skinChipsContainer = document.getElementById("skin-chips");
+
+      function selectSkinPart(key) {
+        const item = skinData[key];
+        if (!item) return;
+
+        playTone("click");
+
+        // SVG & Chips markieren
+        document.querySelectorAll("[data-skin]").forEach((el) => {
+          el.classList.toggle("selected", el.dataset.skin === key);
+        });
+        document.querySelectorAll("#skin-chips .chip-btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.key === key);
+        });
+
+        // Info-Box aktualisieren
+        document.getElementById("skin-info-layer").textContent = "Bereich: " + item.layer;
+        document.getElementById("skin-info-title").textContent = item.title;
+        document.getElementById("skin-info-desc").textContent = item.desc;
+        document.getElementById("skin-info-tip").textContent = item.tip;
+
+        // Fortschritt speichern
+        if (!state.skinExplored.includes(key)) {
+          state.skinExplored.push(key);
+          addStars(1);
+          if (state.skinExplored.length === skinKeys.length) {
+            playTone("success");
+            addStars(2);
+          }
+          saveState();
+        }
+        renderSkinChips();
+      }
+
+      function renderSkinChips() {
+        skinChipsContainer.innerHTML = "";
+        skinKeys.forEach((key) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "chip-btn";
+          btn.dataset.key = key;
+          if (state.skinExplored.includes(key)) btn.classList.add("explored");
+          btn.textContent = skinData[key].title.split(" (")[0];
+          btn.addEventListener("click", () => selectSkinPart(key));
+          skinChipsContainer.appendChild(btn);
+        });
+        document.getElementById("skin-explored-badge").textContent =
+          state.skinExplored.length + " / " + skinKeys.length + " Bestandteile entdeckt";
+      }
+
+      document.querySelectorAll("[data-skin]").forEach((el) => {
+        el.addEventListener("click", () => selectSkinPart(el.dataset.skin));
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selectSkinPart(el.dataset.skin);
+          }
+        });
+      });
+
+      renderSkinChips();
+
+      // Mini-Übung 1 (Haut-Detektiv)
+      const mod1Questions = [
+        {
+          q: "Welche Hautschicht enthält das Fettgewebe, das uns wie eine warme Jacke vor Kälte schützt?",
+          options: ["Die Oberhaut (Epidermis)", "Die Unterhaut (Subcutis)", "Die Hornschicht"],
+          answer: 1,
+          explanation: "Richtig! In der Unterhaut liegt das Fettgewebe. Es schützt vor Wärmeverlust und polstert Stöße ab."
+        },
+        {
+          q: "Du berührst im Winter einen kalten Metallpfosten. Welche Sinneszellen in der Lederhaut schlagen sofort Alarm?",
+          options: ["Die Talgdrüsen", "Die Kältekörperchen", "Die Schweißdrüsen"],
+          answer: 1,
+          explanation: "Genau! Die Kältekörperchen in der Lederhaut nehmen niedrige Temperaturen wahr und melden sie ans Gehirn."
+        },
+        {
+          q: "Welche Aufgabe hat der Talg aus den Talgdrüsen?",
+          options: [
+            "Er macht die Haut geschmeidig und wasserabweisend.",
+            "Er kühlt die Haut beim Sport ab.",
+            "Er leitet Schallwellen weiter."
+          ],
+          answer: 0,
+          explanation: "Super! Talg fettet Haut und Haare leicht ein, damit sie nicht austrocknen und rissig werden."
+        },
+        {
+          q: "Warum schwitzen wir beim Sportunterricht besonders stark?",
+          options: [
+            "Damit die Oberhaut schneller wächst.",
+            "Weil verdunstender Schweiß dem Körper Wärme entzieht und ihn abkühlt.",
+            "Damit die Fettzellen größer werden."
+          ],
+          answer: 1,
+          explanation: "Klasse! Schweiß verdunstet auf der Hautoberfläche und sorgt für angenehme Verdunstungskälte."
+        }
+      ];
+
+      let mod1Index = 0;
+
+      function renderMod1Quiz() {
+        const item = mod1Questions[mod1Index];
+        document.getElementById("mod1-quiz-progress").textContent = `Frage ${mod1Index + 1} von ${mod1Questions.length}`;
+        document.getElementById("mod1-q-text").textContent = item.q;
+        const optContainer = document.getElementById("mod1-q-options");
+        const fb = document.getElementById("mod1-q-feedback");
+        const nextBtn = document.getElementById("mod1-next-btn");
+
+        optContainer.innerHTML = "";
+        fb.className = "feedback-banner";
+        fb.textContent = "";
+        nextBtn.style.display = "none";
+
+        item.options.forEach((optText, idx) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "quiz-option";
+          btn.textContent = optText;
+          btn.addEventListener("click", () => {
+            const allBtns = optContainer.querySelectorAll(".quiz-option");
+            allBtns.forEach((b) => (b.disabled = true));
+
+            if (idx === item.answer) {
+              btn.classList.add("correct");
+              fb.className = "feedback-banner show success";
+              fb.textContent = "✅ " + item.explanation;
+              playTone("success");
+              if (!state.mod1QuizDone) addStars(1);
+            } else {
+              btn.classList.add("wrong");
+              allBtns[item.answer].classList.add("correct");
+              fb.className = "feedback-banner show error";
+              fb.textContent = "❌ Nicht ganz! " + item.explanation;
+              playTone("error");
+            }
+
+            if (mod1Index < mod1Questions.length - 1) {
+              nextBtn.textContent = "Nächste Frage ➔";
+              nextBtn.style.display = "inline-flex";
+            } else {
+              if (!state.mod1QuizDone) {
+                state.mod1QuizDone = true;
+                addStars(2);
+                saveState();
+              }
+              nextBtn.textContent = "Übung wiederholen ↺";
+              nextBtn.style.display = "inline-flex";
+            }
+          });
+          optContainer.appendChild(btn);
+        });
+      }
+
+      document.getElementById("mod1-next-btn").addEventListener("click", () => {
+        playTone("click");
+        if (mod1Index < mod1Questions.length - 1) {
+          mod1Index++;
+        } else {
+          mod1Index = 0;
+        }
+        renderMod1Quiz();
+      });
+
+      renderMod1Quiz();
+
+      /* ======================================================================
+         5. MODUL 2: DAS OHR, SCHALLWELLEN-REISE & REIHENFOLGE
+         ====================================================================== */
+      const earData = {
+        ohrmuschel: {
+          title: "Ohrmuschel",
+          zone: "Außenohr",
+          desc: "Die trichterförmige Ohrmuschel fängt Schallwellen aus der Luft auf und lenkt sie gezielt in den Gehörgang.",
+          tip: "💡 Probiere es aus: Halte deine Hände wie Trichter hinter die Ohren – sofort hörst du Geräusche noch lauter!"
+        },
+        gehoergang: {
+          title: "Gehörgang",
+          zone: "Außenohr",
+          desc: "Der Gehörgang ist ein kleiner Tunnel, der die Schallwellen bis zum Trommelfell leitet. Ohrenschmalz und feine Härchen halten Staub und Schmutz fern.",
+          tip: "💡 Wichtig: Niemals Wattestäbchen tief in den Gehörgang stecken – das Trommelfell könnte verletzt werden!"
+        },
+        trommelfell: {
+          title: "Trommelfell",
+          zone: "Grenze Außenohr / Mittelohr",
+          desc: "Das Trommelfell ist ein hauchdünnes, straff gespanntes Häutchen. Treffen Schallwellen darauf, beginnt es wie das Fell einer Trommel zu schwingen.",
+          tip: "💡 Bei hohen Tönen schwingt das Trommelfell sehr schnell, bei tiefen Tönen langsamer."
+        },
+        hammer: {
+          title: "Hammer",
+          zone: "Mittelohr (1. Gehörknöchelchen)",
+          desc: "Der Hammer ist direkt mit dem Trommelfell verwachsen. Wenn das Trommelfell schwingt, bewegt sich der Hammer mit und gibt die Schwingung an den Amboss weiter.",
+          tip: "💡 Merksatz: Hammer, Amboss, Steigbügel – wie in einer kleinen Schmiede!"
+        },
+        amboss: {
+          title: "Amboss",
+          zone: "Mittelohr (2. Gehörknöchelchen)",
+          desc: "Der Amboss liegt zwischen Hammer und Steigbügel. Zusammen wirken die drei Gehörknöchelchen wie ein Hebel und verstärken die Schallschwingungen.",
+          tip: "💡 Ohne diese Verstärkung wären viele Töne für unser Innenohr viel zu leise."
+        },
+        steigbuegel: {
+          title: "Steigbügel",
+          zone: "Mittelohr (3. Gehörknöchelchen)",
+          desc: "Der Steigbügel ist der kleinste Knochen im gesamten menschlichen Körper (nur etwa 3 Millimeter groß!). Er überträgt die Schwingungen auf die Hörschnecke im Innenohr.",
+          tip: "💡 Er heißt so, weil er genau aussieht wie der Steigbügel an einem Pferdesattel."
+        },
+        bogengaenge: {
+          title: "Bogengänge (Gleichgewichtsorgan)",
+          zone: "Innenohr",
+          desc: "Direkt über der Hörschnecke liegen drei mit Flüssigkeit gefüllte Bogengänge. Sie haben nichts mit dem Hören zu tun, sondern melden unserem Gehirn, wie wir unseren Kopf drehen und halten uns im Gleichgewicht!",
+          tip: "💡 Wenn du dich ganz oft im Kreis drehst, schwappt die Flüssigkeit darin nach – deshalb wird dir schwindelig!"
+        },
+        hoerschnecke: {
+          title: "Hörschnecke (Cochlea)",
+          zone: "Innenohr",
+          desc: "Die Hörschnecke sieht aus wie ein Schneckenhaus und ist mit Flüssigkeit und tausenden feinen Sinneshärchen gefüllt. Bewegt sich die Flüssigkeit, biegen sich die Sinneshärchen um und wandeln den Schall in elektrische Signale um.",
+          tip: "💡 Zu laute Musik über Kopfhörer kann diese empfindlichen Sinneshärchen für immer abknicken!"
+        },
+        hoernerv: {
+          title: "Hörnerv",
+          zone: "Innenohr ➔ Gehirn",
+          desc: "Der Hörnerv ist wie ein Datenkabel: Er leitet die elektrischen Signale aus der Hörschnecke blitzschnell an das Hörzentrum im Gehirn weiter. Erst dort erkennen wir, was wir hören!",
+          tip: "💡 Erst im Gehirn wird aus dem Signal das Wort „Fahrradklingel“ oder dein Lieblingslied."
+        }
+      };
+
+      const earKeys = Object.keys(earData);
+      const earChipsContainer = document.getElementById("ear-chips");
+
+      function selectEarPart(key) {
+        const item = earData[key];
+        if (!item) return;
+
+        playTone("click");
+
+        document.querySelectorAll("[data-ear]").forEach((el) => {
+          el.classList.toggle("selected", el.dataset.ear === key);
+        });
+        document.querySelectorAll("#ear-chips .chip-btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.key === key);
+        });
+
+        document.getElementById("ear-info-zone").textContent = "Bereich: " + item.zone;
+        document.getElementById("ear-info-title").textContent = item.title;
+        document.getElementById("ear-info-desc").textContent = item.desc;
+        document.getElementById("ear-info-tip").textContent = item.tip;
+
+        if (!state.earExplored.includes(key)) {
+          state.earExplored.push(key);
+          addStars(1);
+          if (state.earExplored.length === earKeys.length) {
+            playTone("success");
+            addStars(2);
+          }
+          saveState();
+        }
+        renderEarChips();
+      }
+
+      function renderEarChips() {
+        earChipsContainer.innerHTML = "";
+        earKeys.forEach((key) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "chip-btn";
+          btn.dataset.key = key;
+          if (state.earExplored.includes(key)) btn.classList.add("explored");
+          btn.textContent = earData[key].title.split(" (")[0];
+          btn.addEventListener("click", () => selectEarPart(key));
+          earChipsContainer.appendChild(btn);
+        });
+        document.getElementById("ear-explored-badge").textContent =
+          state.earExplored.length + " / " + earKeys.length + " Bestandteile entdeckt";
+      }
+
+      document.querySelectorAll("[data-ear]").forEach((el) => {
+        el.addEventListener("click", () => selectEarPart(el.dataset.ear));
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selectEarPart(el.dataset.ear);
+          }
+        });
+      });
+
+      renderEarChips();
+
+      // Schallwellen-Reise Schritt-für-Schritt
+      const waveJourney = [
+        {
+          label: "1. Ohrmuschel",
+          target: "ohrmuschel",
+          text: "🔔 Ding-Dong! Eine Fahrradklingel erzeugt Schallwellen in der Luft. Deine Ohrmuschel fängt sie wie ein Trichter auf."
+        },
+        {
+          label: "2. Gehörgang",
+          target: "gehoergang",
+          text: "➡️ Die Schallwellen wandern durch den Gehörgang tiefer ins Ohr hinein."
+        },
+        {
+          label: "3. Trommelfell",
+          target: "trommelfell",
+          text: "🥁 Die Schallwellen treffen auf das Trommelfell und versetzen es in schnelle Schwingungen."
+        },
+        {
+          label: "4. Gehörknöchelchen",
+          target: "amboss",
+          text: "🔨 Hammer, Amboss und Steigbügel nehmen die Schwingungen auf und verstärken sie wie ein Hebel."
+        },
+        {
+          label: "5. Hörschnecke",
+          target: "hoerschnecke",
+          text: "🐌 Der Steigbügel überträgt die Schwingung auf die Flüssigkeit in der Hörschnecke. Die feinen Sinneshärchen biegen sich und erzeugen elektrische Signale."
+        },
+        {
+          label: "6. Hörnerv ➔ Gehirn",
+          target: "hoernerv",
+          text: "🧠 Der Hörnerv leitet die elektrischen Signale ans Gehirn weiter. Jetzt weißt du: „Achtung, ein Fahrrad klingelt!“"
+        }
+      ];
+
+      let waveStep = -1;
+      const waveContainer = document.getElementById("wave-steps-container");
+
+      function renderWaveJourney() {
+        waveContainer.innerHTML = "";
+        waveJourney.forEach((step, idx) => {
+          const pill = document.createElement("div");
+          pill.className = "step-pill";
+          if (idx === waveStep) pill.classList.add("current");
+          if (idx < waveStep) pill.classList.add("done");
+          pill.textContent = step.label;
+          waveContainer.appendChild(pill);
+        });
+
+        const wavesGroup = document.getElementById("ear-sound-waves");
+        if (waveStep >= 0) {
+          wavesGroup.setAttribute("opacity", "1");
+          wavesGroup.classList.add("wave-pulse");
+          const current = waveJourney[waveStep];
+          document.getElementById("wave-explanation").textContent = current.text;
+          // Im SVG hervorheben
+          document.querySelectorAll("[data-ear]").forEach((el) => {
+            el.classList.toggle("selected", el.dataset.ear === current.target);
+          });
+        } else {
+          wavesGroup.setAttribute("opacity", "0.25");
+          wavesGroup.classList.remove("wave-pulse");
+          document.getElementById("wave-explanation").innerHTML =
+            'Klicke auf <strong>„Nächster Schritt“</strong>, um eine Schallwelle loszuschicken!';
+        }
+      }
+
+      document.getElementById("wave-step-btn").addEventListener("click", () => {
+        if (waveStep < waveJourney.length - 1) {
+          waveStep++;
+          playTone(waveStep === waveJourney.length - 1 ? "success" : "click");
+          renderWaveJourney();
+        } else {
+          waveStep = 0;
+          playTone("click");
+          renderWaveJourney();
+        }
+      });
+
+      document.getElementById("wave-reset-btn").addEventListener("click", () => {
+        waveStep = -1;
+        playTone("click");
+        renderWaveJourney();
+      });
+
+      renderWaveJourney();
+
+      // Mini-Übung 2: Reihenfolge-Spiel
+      const correctEarSequence = [
+        "1. Ohrmuschel fängt Schall auf",
+        "2. Gehörgang leitet Schall weiter",
+        "3. Trommelfell beginnt zu schwingen",
+        "4. Hammer, Amboss & Steigbügel verstärken",
+        "5. Hörschnecke wandelt in Signale um",
+        "6. Hörnerv meldet es dem Gehirn"
+      ];
+
+      // Gemischte Anzeige-Reihenfolge
+      const shuffledEarItems = [
+        correctEarSequence[3],
+        correctEarSequence[0],
+        correctEarSequence[5],
+        correctEarSequence[2],
+        correctEarSequence[4],
+        correctEarSequence[1]
+      ];
+
+      let userEarSequence = [];
+
+      function renderEarOrderExercise() {
+        const slotsEl = document.getElementById("ear-order-slots");
+        const poolEl = document.getElementById("ear-order-pool");
+        const checkBtn = document.getElementById("ear-order-check-btn");
+
+        slotsEl.innerHTML = "";
+        for (let i = 0; i < correctEarSequence.length; i++) {
+          const slot = document.createElement("div");
+          slot.className = "order-slot" + (userEarSequence[i] ? " filled" : "");
+          slot.textContent = userEarSequence[i]
+            ? userEarSequence[i]
+            : `Station ${i + 1}: ...`;
+          slotsEl.appendChild(slot);
+        }
+
+        poolEl.innerHTML = "";
+        shuffledEarItems.forEach((label) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "order-item";
+          // Nummerierung ausblenden, damit es eine echte Denkaufgabe bleibt!
+          const cleanLabel = label.replace(/^\d+\.\s*/, "");
+          btn.textContent = cleanLabel;
+          btn.disabled = userEarSequence.includes(label);
+          btn.addEventListener("click", () => {
+            if (userEarSequence.length < correctEarSequence.length) {
+              playTone("click");
+              userEarSequence.push(label);
+              renderEarOrderExercise();
+            }
+          });
+          poolEl.appendChild(btn);
+        });
+
+        checkBtn.disabled = userEarSequence.length !== correctEarSequence.length;
+      }
+
+      document.getElementById("ear-order-clear-btn").addEventListener("click", () => {
+        playTone("click");
+        userEarSequence = [];
+        const fb = document.getElementById("ear-order-feedback");
+        fb.className = "feedback-banner";
+        renderEarOrderExercise();
+      });
+
+      document.getElementById("ear-order-check-btn").addEventListener("click", () => {
+        const isCorrect = userEarSequence.every((val, idx) => val === correctEarSequence[idx]);
+        const fb = document.getElementById("ear-order-feedback");
+
+        if (isCorrect) {
+          fb.className = "feedback-banner show success";
+          fb.textContent = "🎉 Perfekt! Du kennst den kompletten Weg der Schallwellen durch das Ohr auswendig!";
+          playTone("success");
+          if (!state.earOrderDone) {
+            state.earOrderDone = true;
+            addStars(3);
+            saveState();
+          }
+        } else {
+          fb.className = "feedback-banner show error";
+          fb.textContent = "❌ Da ist noch ein Dreher drin! Tipp: Es beginnt außen an der Ohrmuschel und endet am Hörnerv. Klicke auf „Eingabe löschen“ und probiere es noch einmal!";
+          playTone("error");
+        }
+      });
+
+      renderEarOrderExercise();
+
+      /* ======================================================================
+         6. MODUL 3: UMWELTREIZE & REIZ-REAKTIONS-KETTE
+         ====================================================================== */
+      const chainScenarios = [
+        {
+          title: "Szenario 1: Schulweg & Autoverkehr",
+          story: "🚗 Du willst über die Straße gehen. Plötzlich hupt ein Auto laut um die Ecke! Du bleibst sofort am Bordstein stehen.",
+          steps: [
+            { type: "select", options: ["Umweltreiz: Hupen (Schallwellen)", "Reaktion: Losrennen", "Sinnesorgan: Zunge"], answer: 0 },
+            { type: "select", options: ["Sinnesorgan: Ohr", "Sinnesorgan: Haut", "Sinnesorgan: Nase"], answer: 0 },
+            { type: "fixed", text: "Sinneszellen ➔ Nerv" },
+            { type: "select", options: ["Gehirn (Verarbeitung)", "Magen (Verdauung)", "Lunge (Atmung)"], answer: 0 },
+            { type: "fixed", text: "Nerv ➔ Beinmuskeln" },
+            { type: "select", options: ["Reaktion: Stehen bleiben", "Umweltreiz: Regen", "Sinnesorgan: Auge"], answer: 0 }
+          ],
+          successMsg: "Super! Das laute Hupen (Reiz) wird vom Ohr aufgenommen, über Nerven ans Gehirn gemeldet und deine Muskeln lassen dich rechtzeitig stehen bleiben!"
+        },
+        {
+          title: "Szenario 2: Heiße Herdplatte",
+          story: "🍳 Beim Kochen berührst du aus Versehen den Rand einer heißen Pfanne. Blitzschnell ziehst du deine Hand weg!",
+          steps: [
+            { type: "select", options: ["Umweltreiz: Große Hitze", "Umweltreiz: Leise Musik", "Reaktion: Lachen"], answer: 0 },
+            { type: "select", options: ["Sinnesorgan: Haut", "Sinnesorgan: Ohr", "Sinnesorgan: Auge"], answer: 0 },
+            { type: "fixed", text: "Wärme-/Schmerzrezeptoren ➔ Nerv" },
+            { type: "select", options: ["Rückenmark / Gehirn", "Herz", "Kniegelenk"], answer: 0 },
+            { type: "fixed", text: "Nerv ➔ Armmuskel" },
+            { type: "select", options: ["Reaktion: Hand wegziehen", "Umweltreiz: Kälte", "Sinnesorgan: Zunge"], answer: 0 }
+          ],
+          successMsg: "Klasse! Bei großer Hitze schützt uns dieser blitzschnelle Reflex vor schweren Verbrennungen."
+        },
+        {
+          title: "Szenario 3: Rote Fußgängerampel",
+          story: "🚦 Du läufst Richtung Schule und siehst, wie die Fußgängerampel auf Rot springt. Du bremst ab.",
+          steps: [
+            { type: "select", options: ["Umweltreiz: Rotes Licht", "Umweltreiz: Duft von Brötchen", "Reaktion: Husten"], answer: 0 },
+            { type: "select", options: ["Sinnesorgan: Auge", "Sinnesorgan: Ohr", "Sinnesorgan: Haut"], answer: 0 },
+            { type: "fixed", text: "Sehzellen ➔ Sehnerv" },
+            { type: "select", options: ["Gehirn (Erkennt: Rot = Stopp)", "Ohrmuschel", "Schweißdrüse"], answer: 0 },
+            { type: "fixed", text: "Nerv ➔ Muskeln" },
+            { type: "select", options: ["Reaktion: Anhalten & warten", "Umweltreiz: Schall", "Sinnesorgan: Nase"], answer: 0 }
+          ],
+          successMsg: "Perfekt! Licht ist der Umweltreiz für unsere Augen – und dein Gehirn weiß genau, was Rot im Straßenverkehr bedeutet."
+        }
+      ];
+
+      let activeScenarioIdx = 0;
+
+      function renderChainScenario() {
+        const tabsEl = document.getElementById("scenario-tabs");
+        tabsEl.innerHTML = "";
+        chainScenarios.forEach((sc, idx) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "chip-btn" + (idx === activeScenarioIdx ? " active" : "");
+          if (state.mod3ChainsDone[idx]) btn.classList.add("explored");
+          btn.textContent = sc.title;
+          btn.addEventListener("click", () => {
+            playTone("click");
+            activeScenarioIdx = idx;
+            renderChainScenario();
+          });
+          tabsEl.appendChild(btn);
+        });
+
+        const current = chainScenarios[activeScenarioIdx];
+        document.getElementById("chain-badge").textContent = `Szenario ${activeScenarioIdx + 1} von ${chainScenarios.length}`;
+        document.getElementById("scenario-story").textContent = current.story;
+
+        const flowEl = document.getElementById("chain-flow-container");
+        flowEl.innerHTML = "";
+
+        current.steps.forEach((step, idx) => {
+          if (idx > 0) {
+            const arrow = document.createElement("span");
+            arrow.className = "chain-arrow";
+            arrow.textContent = "➔";
+            flowEl.appendChild(arrow);
+          }
+
+          if (step.type === "fixed") {
+            const node = document.createElement("div");
+            node.className = "chain-node";
+            node.textContent = step.text;
+            flowEl.appendChild(node);
+          } else {
+            const sel = document.createElement("select");
+            sel.className = "chain-select";
+            sel.dataset.answer = step.answer;
+            sel.setAttribute("aria-label", "Passenden Baustein auswählen");
+
+            const placeholder = document.createElement("option");
+            placeholder.value = "-1";
+            placeholder.textContent = "Bitte auswählen...";
+            sel.appendChild(placeholder);
+
+            step.options.forEach((opt, oIdx) => {
+              const option = document.createElement("option");
+              option.value = String(oIdx);
+              option.textContent = opt;
+              sel.appendChild(option);
+            });
+            flowEl.appendChild(sel);
+          }
+        });
+
+        const fb = document.getElementById("chain-feedback");
+        fb.className = "feedback-banner";
+      }
+
+      document.getElementById("check-chain-btn").addEventListener("click", () => {
+        const selects = document.querySelectorAll("#chain-flow-container .chain-select");
+        let allSelected = true;
+        let allCorrect = true;
+
+        selects.forEach((sel) => {
+          if (sel.value === "-1") allSelected = false;
+          if (sel.value !== sel.dataset.answer) allCorrect = false;
+        });
+
+        const fb = document.getElementById("chain-feedback");
+        if (!allSelected) {
+          fb.className = "feedback-banner show error";
+          fb.textContent = "⚠️ Bitte fülle erst alle gelben Auswahlfelder aus!";
+          playTone("error");
+          return;
+        }
+
+        if (allCorrect) {
+          fb.className = "feedback-banner show success";
+          fb.textContent = "✅ " + chainScenarios[activeScenarioIdx].successMsg;
+          playTone("success");
+          if (!state.mod3ChainsDone[activeScenarioIdx]) {
+            state.mod3ChainsDone[activeScenarioIdx] = true;
+            addStars(2);
+            saveState();
+            renderChainScenario();
+            // Feedback nach Re-Render wieder sichtbar lassen
+            const fbAfter = document.getElementById("chain-feedback");
+            fbAfter.className = "feedback-banner show success";
+            fbAfter.textContent = "✅ " + chainScenarios[activeScenarioIdx].successMsg;
+          }
+        } else {
+          fb.className = "feedback-banner show error";
+          fb.textContent = "❌ Mindestens ein Baustein passt noch nicht. Achte genau auf die Reihenfolge: Umweltreiz ➔ Sinnesorgan ➔ Gehirn ➔ Reaktion!";
+          playTone("error");
+        }
+      });
+
+      renderChainScenario();
+
+      // Mini-Übung 3: Reiz-Sortierer
+      const stimuliList = [
+        { text: "🚗 Hupendes Auto auf der Straße (Schallwellen)", organ: "ohr", name: "Ohr" },
+        { text: "🚦 Grünes Licht an der Ampel (Lichtreiz)", organ: "auge", name: "Auge" },
+        { text: "🧊 Ein eiskalter Schneeball in der Hand (Kältereiz)", organ: "haut", name: "Haut" },
+        { text: "🍕 Duft von frisch gebackener Pizza (Duftstoffe)", organ: "nase", name: "Nase" },
+        { text: "🍋 Ein Spritzer saurer Zitronensaft (Geschmacksstoffe)", organ: "zunge", name: "Zunge" },
+        { text: "🐱 Weiches Katzenfell streicheln (Berührungsreiz)", organ: "haut", name: "Haut" }
+      ];
+
+      let sorterIndex = 0;
+      let sorterCorrectCount = 0;
+
+      function renderSorter() {
+        document.getElementById("sorter-score-badge").textContent = `${sorterCorrectCount} / ${stimuliList.length} sortiert`;
+        if (sorterIndex < stimuliList.length) {
+          document.getElementById("stimulus-text").textContent = stimuliList[sorterIndex].text;
+        } else {
+          document.getElementById("stimulus-text").textContent = "🎉 Alle 6 Umweltreize erfolgreich zugeordnet!";
+        }
+      }
+
+      document.querySelectorAll("#organ-buckets .organ-bucket").forEach((bucket) => {
+        bucket.addEventListener("click", () => {
+          if (sorterIndex >= stimuliList.length) return;
+          const current = stimuliList[sorterIndex];
+          const chosen = bucket.dataset.organ;
+          const fb = document.getElementById("sorter-feedback");
+
+          if (chosen === current.organ) {
+            playTone("success");
+            sorterCorrectCount++;
+            sorterIndex++;
+            fb.className = "feedback-banner show success";
+            fb.textContent = `✅ Richtig! Das Sinnesorgan „${current.name}“ ist dafür zuständig.`;
+            if (sorterIndex === stimuliList.length && !state.mod3SorterDone) {
+              state.mod3SorterDone = true;
+              addStars(3);
+              saveState();
+            }
+            renderSorter();
+          } else {
+            playTone("error");
+            fb.className = "feedback-banner show error";
+            fb.textContent = `❌ Nicht ganz! Überlege, welches Sinnesorgan diesen Reiz empfängt.`;
+          }
+        });
+      });
+
+      renderSorter();
+
+      /* ======================================================================
+         7. MODUL 4: GROSSES NAWI-KLASSENARBEITS-QUIZ (10 FRAGEN) & URKUNDE
+         ====================================================================== */
+      const finalQuestions = [
+        {
+          topic: "Thema: Haut",
+          q: "1. Aus welchen drei Schichten besteht die menschliche Haut (von außen nach innen)?",
+          options: [
+            "Oberhaut, Lederhaut, Unterhaut",
+            "Hornschicht, Mittelhaut, Muskelschicht",
+            "Außenhaut, Innenhaut, Fetthaut"
+          ],
+          answer: 0,
+          explain: "Von außen nach innen folgen aufeinander: Oberhaut (Epidermis), Lederhaut (Dermis) und Unterhaut (Subcutis)."
+        },
+        {
+          topic: "Thema: Haut",
+          q: "2. Richtig oder Falsch: In der Oberhaut verlaufen viele dicke Blutgefäße.",
+          options: ["Richtig", "Falsch"],
+          answer: 1,
+          explain: "Falsch! Die Oberhaut enthält keine Blutgefäße. Blutgefäße liegen erst in der Lederhaut und Unterhaut."
+        },
+        {
+          topic: "Thema: Haut",
+          q: "3. Welche Funktion hat das Fettgewebe in der Unterhaut?",
+          options: [
+            "Es produziert Schweiß.",
+            "Es schützt vor Wärmeverlust (Kälte) und polstert Stöße ab.",
+            "Es empfängt Schallwellen."
+          ],
+          answer: 1,
+          explain: "Genau! Die Fettschicht isoliert den Körper gegen Kälte und wirkt wie ein Stoßdämpfer."
+        },
+        {
+          topic: "Thema: Haut",
+          q: "4. Wo befinden sich besonders viele Tastkörperchen auf engem Raum?",
+          options: [
+            "Am Ellenbogen und am Rücken",
+            "In den Fingerspitzen und in den Lippen",
+            "In den Fußnägeln"
+          ],
+          answer: 1,
+          explain: "Richtig! Fingerspitzen und Lippen sind extrem berührungsempfindlich, weil dort sehr viele Tastkörperchen liegen."
+        },
+        {
+          topic: "Thema: Ohr",
+          q: "5. Welche drei Gehörknöchelchen liegen im Mittelohr?",
+          options: [
+            "Hammer, Amboss und Steigbügel",
+            "Trommelfell, Hörschnecke und Hörnerv",
+            "Ohrmuschel, Gehörgang und Bogengänge"
+          ],
+          answer: 0,
+          explain: "Hammer, Amboss und Steigbügel bilden die Gehörknöchelchenkette im Mittelohr und verstärken den Schall."
+        },
+        {
+          topic: "Thema: Ohr",
+          q: "6. Was passiert in der Hörschnecke (Innenohr)?",
+          options: [
+            "Dort wird Ohrenschmalz gebildet.",
+            "Flüssigkeit bewegt feine Sinneshärchen, die den Schall in elektrische Signale umwandeln.",
+            "Dort wird die Luft angewärmt."
+          ],
+          answer: 1,
+          explain: "Super! Die Sinneshärchen in der Hörschnecke wandeln die Schwingungen in elektrische Nervenimpulse um."
+        },
+        {
+          topic: "Thema: Ohr",
+          q: "7. Welcher weitere Sinn sitzt direkt neben der Hörschnecke in den drei Bogengängen des Innenohrs?",
+          options: ["Der Geruchssinn", "Der Gleichgewichtssinn", "Der Geschmackssinn"],
+          answer: 1,
+          explain: "Klasse! Die drei Bogengänge im Innenohr sind unser Gleichgewichtsorgan."
+        },
+        {
+          topic: "Thema: Umweltreize",
+          q: "8. Ein Auto hupt laut auf deinem Schulweg. Was ist in diesem Beispiel der „Umweltreiz“?",
+          options: [
+            "Die Schallwellen des Hupens",
+            "Dein Ohr",
+            "Dass du am Bordstein stehen bleibst"
+          ],
+          answer: 0,
+          explain: "Richtig! Der Umweltreiz ist die Information aus der Umgebung – hier die Schallwellen der Autohupe."
+        },
+        {
+          topic: "Thema: Reiz-Reaktions-Kette",
+          q: "9. Welche Reihenfolge der Reiz-Reaktions-Kette stimmt?",
+          options: [
+            "Reaktion ➔ Gehirn ➔ Sinnesorgan ➔ Umweltreiz",
+            "Umweltreiz ➔ Sinnesorgan ➔ Nerv ➔ Gehirn ➔ Nerv ➔ Muskel ➔ Reaktion",
+            "Gehirn ➔ Umweltreiz ➔ Muskel ➔ Sinnesorgan"
+          ],
+          answer: 1,
+          explain: "Perfekt! Vom Umweltreiz über das Sinnesorgan und die Nerven ins Gehirn, und von dort über Nerven zu den Muskeln zur Reaktion."
+        },
+        {
+          topic: "Thema: Reiz-Reaktions-Kette",
+          q: "10. Richtig oder Falsch: Erst im Gehirn wird uns bewusst, was wir gerade sehen, hören oder fühlen.",
+          options: ["Richtig", "Falsch"],
+          answer: 0,
+          explain: "Richtig! Sinnesorgane nehmen Reize auf, aber erst das Gehirn verarbeitet die Signale und setzt sie zu einem Bild, Ton oder Gefühl zusammen."
+        }
+      ];
+
+      let finalIdx = 0;
+      let finalScore = 0;
+
+      function renderFinalQuiz() {
+        const area = document.getElementById("final-quiz-area");
+        const resultArea = document.getElementById("final-result-area");
+
+        if (finalIdx >= finalQuestions.length) {
+          area.style.display = "none";
+          resultArea.style.display = "block";
+          document.getElementById("final-quiz-counter").textContent = "Abgeschlossen!";
+          document.getElementById("cert-score-text").textContent = `${finalScore} von ${finalQuestions.length} Punkten`;
+
+          const nameInput = document.getElementById("student-name-input");
+          if (state.studentName) nameInput.value = state.studentName;
+
+          let remark = "";
+          if (finalScore >= 9) {
+            remark = "🌟 Überragend! Du bist bestens für die NaWi-Klassenarbeit vorbereitet!";
+          } else if (finalScore >= 6) {
+            remark = "👍 Starke Leistung! Schau dir deine kleinen Fehler noch einmal an, dann bist du unschlagbar!";
+          } else {
+            remark = "💪 Guter Anfang! Gehe die Module 1 bis 3 noch einmal in Ruhe durch und probiere den Test erneut!";
+          }
+          document.getElementById("cert-teacher-remark").textContent = remark;
+
+          if (!state.mod4Done) {
+            state.mod4Done = true;
+            addStars(5);
+          }
+          if (finalScore > state.mod4BestScore) {
+            state.mod4BestScore = finalScore;
+          }
+          saveState();
+          playTone("fanfare");
+          return;
+        }
+
+        area.style.display = "block";
+        resultArea.style.display = "none";
+
+        const item = finalQuestions[finalIdx];
+        document.getElementById("final-quiz-counter").textContent = `Frage ${finalIdx + 1} von ${finalQuestions.length}`;
+        document.getElementById("final-q-topic").textContent = item.topic;
+        document.getElementById("final-q-text").textContent = item.q;
+        document.getElementById("final-score-live").textContent = `Richtige Antworten: ${finalScore}`;
+
+        const optBox = document.getElementById("final-q-options");
+        const fb = document.getElementById("final-q-feedback");
+        const nextBtn = document.getElementById("final-next-btn");
+
+        optBox.innerHTML = "";
+        fb.className = "feedback-banner";
+        nextBtn.style.display = "none";
+
+        item.options.forEach((optText, idx) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "quiz-option";
+          btn.textContent = optText;
+          btn.addEventListener("click", () => {
+            const all = optBox.querySelectorAll(".quiz-option");
+            all.forEach((b) => (b.disabled = true));
+
+            if (idx === item.answer) {
+              btn.classList.add("correct");
+              finalScore++;
+              document.getElementById("final-score-live").textContent = `Richtige Antworten: ${finalScore}`;
+              fb.className = "feedback-banner show success";
+              fb.textContent = "✅ Richtig! " + item.explain;
+              playTone("success");
+              addStars(1);
+            } else {
+              btn.classList.add("wrong");
+              all[item.answer].classList.add("correct");
+              fb.className = "feedback-banner show error";
+              fb.textContent = "❌ Leider falsch! " + item.explain;
+              playTone("error");
+            }
+
+            nextBtn.textContent = finalIdx === finalQuestions.length - 1 ? "Urkunde anzeigen 🏆" : "Nächste Frage ➔";
+            nextBtn.style.display = "inline-flex";
+          });
+          optBox.appendChild(btn);
+        });
+      }
+
+      document.getElementById("final-next-btn").addEventListener("click", () => {
+        playTone("click");
+        finalIdx++;
+        renderFinalQuiz();
+      });
+
+      document.getElementById("retake-final-btn").addEventListener("click", () => {
+        playTone("click");
+        finalIdx = 0;
+        finalScore = 0;
+        renderFinalQuiz();
+      });
+
+      document.getElementById("student-name-input").addEventListener("input", (e) => {
+        state.studentName = e.target.value;
+        saveState();
+      });
+
+      renderFinalQuiz();
+
+      /* ======================================================================
+         8. SOUND-TOGGLE & FORTSCHRITTS-RESET MODAL
+         ====================================================================== */
+      document.getElementById("sound-toggle-btn").addEventListener("click", () => {
+        state.soundEnabled = !state.soundEnabled;
+        saveState();
+        if (state.soundEnabled) playTone("click");
+      });
+
+      const resetModal = document.getElementById("reset-modal");
+
+      document.getElementById("reset-open-btn").addEventListener("click", () => {
+        playTone("click");
+        resetModal.classList.add("open");
+      });
+
+      document.getElementById("reset-cancel-btn").addEventListener("click", () => {
+        playTone("click");
+        resetModal.classList.remove("open");
+      });
+
+      document.getElementById("reset-confirm-btn").addEventListener("click", () => {
+        localStorage.removeItem(STORAGE_KEY);
+        state = JSON.parse(JSON.stringify(defaultState));
+        resetModal.classList.remove("open");
+
+        // Alle Module auf Anfang setzen
+        mod1Index = 0;
+        renderSkinChips();
+        renderMod1Quiz();
+
+        waveStep = -1;
+        userEarSequence = [];
+        renderEarChips();
+        renderWaveJourney();
+        renderEarOrderExercise();
+
+        activeScenarioIdx = 0;
+        sorterIndex = 0;
+        sorterCorrectCount = 0;
+        renderChainScenario();
+        renderSorter();
+
+        finalIdx = 0;
+        finalScore = 0;
+        document.getElementById("student-name-input").value = "";
+        renderFinalQuiz();
+
+        saveState();
+      });
+
+      // Initiale UI-Aktualisierung
+      updateGlobalUI();
+    })();
+  </script>
+</body>
+</html>
