@@ -188,7 +188,57 @@
         .hud-right {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 0.5rem;
+        }
+
+        /* Musik-Steuerungsleiste im HUD */
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--purple-50);
+            border: 1.5px solid var(--purple-200);
+            padding: 0.28rem 0.55rem;
+            border-radius: 0.85rem;
+        }
+
+        .btn-music {
+            background: var(--purple-100);
+            border: 1px solid var(--purple-300);
+            color: var(--purple-700);
+            padding: 0.3rem 0.55rem;
+            border-radius: 0.6rem;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.15s;
+        }
+        .btn-music.active {
+            background: var(--purple-600);
+            border-color: var(--purple-700);
+            color: #ffffff;
+        }
+
+        .btn-mood {
+            background: #ffffff;
+            border: 1px solid var(--purple-200);
+            color: var(--slate-700);
+            padding: 0.28rem 0.45rem;
+            border-radius: 0.55rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-mood:hover { background: var(--purple-100); }
+
+        .volume-slider {
+            width: 3.6rem;
+            accent-color: var(--purple-600);
+            cursor: pointer;
         }
 
         .score-pill {
@@ -801,7 +851,17 @@
                 <span id="hud-score">0</span>
                 <span style="font-size: 0.78rem;">Punkte</span>
             </div>
-            <button id="sound-toggle" onclick="toggleSound()" class="btn-icon" title="Ton an/aus">🔊</button>
+            <!-- Hintergrundmusik-Steuerung -->
+            <div class="music-controls" title="Hintergrundmusik steuern">
+                <button id="music-toggle" onclick="toggleMusic()" class="btn-music active" title="Hintergrundmusik an/aus">
+                    <span>🎵</span> <span id="music-status-text">Musik: An</span>
+                </button>
+                <button id="music-mood-btn" onclick="cycleMusicMood()" class="btn-mood" title="Musik-Stimmung wechseln">
+                    🧭 Abenteuer
+                </button>
+                <input id="music-volume" type="range" min="0" max="100" value="35" oninput="changeMusicVolume(this.value)" class="volume-slider" aria-label="Musik-Lautstärke" title="Musik-Lautstärke">
+            </div>
+            <button id="sound-toggle" onclick="toggleSound()" class="btn-icon" title="Sound-Effekte an/aus">🔊</button>
         </div>
     </header>
 
@@ -1311,6 +1371,9 @@
             playerName: "Weltentdecker",
             score: 0,
             soundEnabled: true,
+            musicEnabled: true,
+            musicVolume: 0.35,
+            musicMood: "adventure", // "adventure" (Abenteuer-Reise) oder "focus" (Ruhiger Fokus)
             completedStages: { 1: false, 2: false, 3: false, 4: false },
             currentStage: null,
             currentStep: 0,
@@ -1324,6 +1387,9 @@
                     playerName: gameState.playerName,
                     score: gameState.score,
                     soundEnabled: gameState.soundEnabled,
+                    musicEnabled: gameState.musicEnabled,
+                    musicVolume: gameState.musicVolume,
+                    musicMood: gameState.musicMood,
                     completedStages: gameState.completedStages
                 };
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -1335,7 +1401,10 @@
         function loadProgress() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
-                if (!raw) return;
+                if (!raw) {
+                    updateMusicUI();
+                    return;
+                }
                 const saved = JSON.parse(raw);
                 if (saved.playerName) {
                     gameState.playerName = saved.playerName;
@@ -1349,6 +1418,16 @@
                     gameState.soundEnabled = saved.soundEnabled;
                     document.getElementById('sound-toggle').textContent = saved.soundEnabled ? '🔊' : '🔇';
                 }
+                if (typeof saved.musicEnabled === "boolean") {
+                    gameState.musicEnabled = saved.musicEnabled;
+                }
+                if (typeof saved.musicVolume === "number") {
+                    gameState.musicVolume = Math.max(0, Math.min(1, saved.musicVolume));
+                }
+                if (saved.musicMood === "adventure" || saved.musicMood === "focus") {
+                    gameState.musicMood = saved.musicMood;
+                }
+                updateMusicUI();
                 if (saved.completedStages) {
                     gameState.completedStages = { ...gameState.completedStages, ...saved.completedStages };
                 }
@@ -1359,27 +1438,34 @@
         }
 
         /* ==========================================================================
-           2. EIGENER WEB-AUDIO-SYNTHESIZER (KEINE EXTERNEN AUDIODATEIEN ODER CDNs)
+           2. EIGENER WEB-AUDIO-SYNTHESIZER & HINTERGRUNDMUSIK (100 % OFFLINE)
            ========================================================================== */
         let audioCtx = null;
+
+        function ensureAudioContext() {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) return null;
+            if (!audioCtx) audioCtx = new AudioContextClass();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        }
+
         function playSound(type) {
             if (!gameState.soundEnabled) return;
             try {
-                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-                if (!AudioContextClass) return;
-                if (!audioCtx) audioCtx = new AudioContextClass();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const ctx = ensureAudioContext();
+                if (!ctx) return;
 
-                const now = audioCtx.currentTime;
+                const now = ctx.currentTime;
                 const playNote = (freq, startOffset, duration, wave = 'triangle') => {
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
                     osc.type = wave;
                     osc.frequency.setValueAtTime(freq, now + startOffset);
                     gain.gain.setValueAtTime(0.14, now + startOffset);
                     gain.gain.exponentialRampToValueAtTime(0.001, now + startOffset + duration);
                     osc.connect(gain);
-                    gain.connect(audioCtx.destination);
+                    gain.connect(ctx.destination);
                     osc.start(now + startOffset);
                     osc.stop(now + startOffset + duration);
                 };
@@ -1400,11 +1486,280 @@
             } catch (e) {}
         }
 
+        /* --- Mehrspuriger Weltreise-Musik-Synthesizer (100 % lokal via Web Audio API) --- */
+        const bgMusicEngine = {
+            isPlaying: false,
+            timerId: null,
+            stepIndex: 0,
+            masterGain: null,
+
+            // Melodie- und Akkord-Sequenzen in C-Dur Pentatonik (warm, freundlich & motivierend)
+            // Takte: C-Dur -> a-Moll -> F-Dur -> G-Dur (32 Achtel-Schritte pro Schleife)
+            patterns: {
+                adventure: {
+                    stepMs: 360, // Entspanntes Entdecker-Tempo (~83 BPM)
+                    // Sanfte Kalimba-/Marimba-Melodie (Frequenzen in Hz, 0 = Pause)
+                    melody: [
+                        523.25, 0, 659.25, 587.33, 523.25, 0, 392.00, 440.00, // Takt 1 (C): C5 - E5 D5 C5 - G4 A4
+                        523.25, 0, 659.25, 783.99, 659.25, 0, 523.25, 0,      // Takt 2 (Am): C5 - E5 G5 E5 - C5 -
+                        440.00, 0, 523.25, 587.33, 659.25, 0, 523.25, 440.00, // Takt 3 (F): A4 - C5 D5 E5 - C5 A4
+                        392.00, 0, 440.00, 523.25, 587.33, 0, 392.00, 0       // Takt 4 (G): G4 - A4 C5 D5 - G4 -
+                    ],
+                    // Warme Pad-Akkorde alle 8 Schritte (pro Takt)
+                    chords: {
+                        0: [261.63, 329.63, 392.00], // C-Dur (C4, E4, G4)
+                        8: [220.00, 261.63, 329.63], // a-Moll (A3, C4, E4)
+                        16: [174.61, 220.00, 261.63], // F-Dur (F3, A3, C4)
+                        24: [196.00, 246.94, 293.66]  // G-Dur (G3, B3, D4)
+                    },
+                    // Sanfter Bass-Puls auf Schlag 1 und 3 jedes Taktes
+                    bass: {
+                        0: 130.81, 4: 196.00,
+                        8: 110.00, 12: 164.81,
+                        16: 87.31, 20: 130.81,
+                        24: 98.00, 28: 146.83
+                    }
+                },
+                focus: {
+                    stepMs: 520, // Ruhiges Denk- und Konzentrations-Tempo
+                    melody: [
+                        392.00, 0, 0, 523.25, 0, 0, 440.00, 0,
+                        329.63, 0, 0, 392.00, 0, 0, 261.63, 0,
+                        349.23, 0, 0, 440.00, 0, 0, 392.00, 0,
+                        293.66, 0, 0, 392.00, 0, 0, 261.63, 0
+                    ],
+                    chords: {
+                        0: [261.63, 329.63, 392.00],
+                        8: [220.00, 261.63, 329.63],
+                        16: [174.61, 220.00, 261.63],
+                        24: [196.00, 246.94, 293.66]
+                    },
+                    bass: {
+                        0: 130.81,
+                        8: 110.00,
+                        16: 87.31,
+                        24: 98.00
+                    }
+                }
+            },
+
+            initMasterGain(ctx) {
+                if (!this.masterGain) {
+                    this.masterGain = ctx.createGain();
+                    this.masterGain.connect(ctx.destination);
+                }
+                // Angenehme Grundlautstärke (maximal ca. 0.18, damit Effekte & Konzentration klar bleiben)
+                const scaledVol = gameState.musicEnabled ? (gameState.musicVolume * 0.18) : 0.0001;
+                this.masterGain.gain.setTargetAtTime(scaledVol, ctx.currentTime, 0.08);
+            },
+
+            playKalimbaNote(ctx, freq, duration) {
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const overtone = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const overGain = ctx.createGain();
+
+                // Sanfter Sinus-Grundton + leiser Oberton für einen warmen Kalimba-/Marimba-Klang
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+
+                overtone.type = 'triangle';
+                overtone.frequency.setValueAtTime(freq * 2, now);
+                overGain.gain.setValueAtTime(0.08, now);
+                overGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.32, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+                osc.connect(gain);
+                overtone.connect(overGain);
+                overGain.connect(gain);
+                gain.connect(this.masterGain);
+
+                osc.start(now);
+                overtone.start(now);
+                osc.stop(now + duration + 0.05);
+                overtone.stop(now + duration + 0.05);
+            },
+
+            playWarmPadChord(ctx, freqs, duration) {
+                const now = ctx.currentTime;
+                freqs.forEach(freq => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now);
+
+                    // Sehr weiches Ein- und Ausblenden (Pad-Teppich)
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(0.11, now + 0.45);
+                    gain.gain.setValueAtTime(0.11, now + duration - 0.5);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    osc.start(now);
+                    osc.stop(now + duration + 0.05);
+                });
+            },
+
+            playSoftBass(ctx, freq, duration) {
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.22, now + 0.04);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                osc.start(now);
+                osc.stop(now + duration + 0.05);
+            },
+
+            tick() {
+                if (!this.isPlaying || !gameState.musicEnabled) return;
+                const ctx = ensureAudioContext();
+                if (!ctx || ctx.state !== 'running') return;
+
+                this.initMasterGain(ctx);
+                const pattern = this.patterns[gameState.musicMood] || this.patterns.adventure;
+                const step = this.stepIndex % 32;
+                const stepSec = pattern.stepMs / 1000;
+
+                // 1. Pad-Akkord am Taktanfang
+                if (pattern.chords[step]) {
+                    this.playWarmPadChord(ctx, pattern.chords[step], stepSec * 8.2);
+                }
+
+                // 2. Sanfter Bass-Puls
+                if (pattern.bass[step]) {
+                    this.playSoftBass(ctx, pattern.bass[step], stepSec * 3.5);
+                }
+
+                // 3. Melodie-Note
+                const noteFreq = pattern.melody[step];
+                if (noteFreq && noteFreq > 0) {
+                    this.playKalimbaNote(ctx, noteFreq, stepSec * 1.9);
+                }
+
+                this.stepIndex = (this.stepIndex + 1) % 32;
+                this.timerId = setTimeout(() => this.tick(), pattern.stepMs);
+            },
+
+            start() {
+                if (!gameState.musicEnabled) return;
+                const ctx = ensureAudioContext();
+                if (!ctx) return;
+                this.initMasterGain(ctx);
+
+                if (this.isPlaying) return;
+                this.isPlaying = true;
+                this.tick();
+            },
+
+            stop() {
+                this.isPlaying = false;
+                if (this.timerId) {
+                    clearTimeout(this.timerId);
+                    this.timerId = null;
+                }
+            }
+        };
+
+        function updateMusicUI() {
+            const toggleBtn = document.getElementById('music-toggle');
+            const statusText = document.getElementById('music-status-text');
+            const moodBtn = document.getElementById('music-mood-btn');
+            const slider = document.getElementById('music-volume');
+
+            if (toggleBtn && statusText) {
+                if (gameState.musicEnabled) {
+                    toggleBtn.classList.add('active');
+                    statusText.textContent = "Musik: An";
+                } else {
+                    toggleBtn.classList.remove('active');
+                    statusText.textContent = "Musik: Aus";
+                }
+            }
+
+            if (moodBtn) {
+                moodBtn.textContent = gameState.musicMood === "adventure" ? "🧭 Abenteuer" : "🧘 Fokus";
+            }
+
+            if (slider) {
+                slider.value = Math.round(gameState.musicVolume * 100);
+            }
+        }
+
+        function toggleMusic() {
+            gameState.musicEnabled = !gameState.musicEnabled;
+            updateMusicUI();
+            saveProgress();
+
+            if (gameState.musicEnabled) {
+                bgMusicEngine.start();
+            } else {
+                bgMusicEngine.stop();
+            }
+        }
+
+        function changeMusicVolume(val) {
+            const num = Math.max(0, Math.min(100, Number(val)));
+            gameState.musicVolume = num / 100;
+            if (num > 0 && !gameState.musicEnabled) {
+                gameState.musicEnabled = true;
+                updateMusicUI();
+            }
+            saveProgress();
+
+            if (gameState.musicEnabled) {
+                if (!bgMusicEngine.isPlaying) {
+                    bgMusicEngine.start();
+                } else if (audioCtx && bgMusicEngine.masterGain) {
+                    bgMusicEngine.masterGain.gain.setTargetAtTime(gameState.musicVolume * 0.18, audioCtx.currentTime, 0.05);
+                }
+            }
+        }
+
+        function cycleMusicMood() {
+            gameState.musicMood = gameState.musicMood === "adventure" ? "focus" : "adventure";
+            updateMusicUI();
+            saveProgress();
+            if (gameState.musicEnabled) {
+                bgMusicEngine.stop();
+                bgMusicEngine.start();
+            }
+        }
+
         function toggleSound() {
             gameState.soundEnabled = !gameState.soundEnabled;
             document.getElementById('sound-toggle').textContent = gameState.soundEnabled ? '🔊' : '🔇';
             saveProgress();
         }
+
+        // Startet die Hintergrundmusik automatisch bei der ersten Nutzerinteraktion (falls aktiviert)
+        function handleFirstUserInteraction() {
+            if (gameState.musicEnabled && !bgMusicEngine.isPlaying) {
+                bgMusicEngine.start();
+            }
+        }
+        document.addEventListener('pointerdown', handleFirstUserInteraction, { once: true });
+        document.addEventListener('keydown', handleFirstUserInteraction, { once: true });
+
+        // Musik pausieren, wenn der Tab in den Hintergrund wechselt
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                bgMusicEngine.stop();
+            } else if (gameState.musicEnabled) {
+                bgMusicEngine.start();
+            }
+        });
 
         /* ==========================================================================
            3. FRAGEN-KATALOGE FÜR ALLE 4 ETAPPEN
