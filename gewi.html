@@ -1,0 +1,2589 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Die große Weltreise-Challenge – Gewi 5. Klasse</title>
+    <!-- Komplett eigenständiges Styling ohne externe Abhängigkeiten (100 % DSGVO-konform & offlinefähig) -->
+    <style>
+        :root {
+            --sky-50: #f0f9ff;
+            --sky-100: #e0f2fe;
+            --sky-200: #bae6fd;
+            --sky-300: #7dd3fc;
+            --sky-500: #0ea5e9;
+            --sky-600: #0284c7;
+            --sky-800: #075985;
+            --sky-900: #0c4a6e;
+            --emerald-50: #ecfdf5;
+            --emerald-100: #d1fae5;
+            --emerald-300: #6ee7b7;
+            --emerald-400: #34d399;
+            --emerald-500: #10b981;
+            --emerald-600: #059669;
+            --emerald-800: #065f46;
+            --emerald-900: #064e3b;
+            --amber-50: #fffbeb;
+            --amber-100: #fef3c7;
+            --amber-200: #fde68a;
+            --amber-300: #fcd34d;
+            --amber-400: #fbbf24;
+            --amber-500: #f59e0b;
+            --amber-700: #b45309;
+            --amber-800: #92400e;
+            --amber-900: #78350f;
+            --rose-50: #fff1f2;
+            --rose-100: #ffe4e6;
+            --rose-300: #fda4af;
+            --rose-400: #fb7185;
+            --rose-600: #e11d48;
+            --rose-900: #881337;
+            --purple-50: #faf5ff;
+            --purple-100: #f3e8ff;
+            --purple-200: #e9d5ff;
+            --purple-300: #d8b4fe;
+            --purple-500: #a855f7;
+            --purple-600: #9333ea;
+            --purple-700: #7e22ce;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-500: #64748b;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, var(--sky-100) 0%, var(--sky-200) 50%, var(--amber-100) 100%);
+            min-height: 100vh;
+            color: var(--slate-800);
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+        }
+
+        @media (min-width: 640px) {
+            body { padding: 1.5rem; }
+        }
+
+        h1, h2, h3, h4, .font-title {
+            font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, -apple-system, sans-serif;
+            letter-spacing: -0.01em;
+        }
+
+        .hidden { display: none !important; }
+
+        /* 3D-Spielbuttons */
+        .btn-game {
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.18);
+        }
+        .btn-game:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 rgba(0, 0, 0, 0.18);
+        }
+        .btn-game:active:not(:disabled) {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
+        }
+
+        /* HUD Statusleiste oben */
+        #game-hud {
+            width: 100%;
+            max-width: 66rem;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 1.25rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid var(--sky-200);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .hud-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-hub-back {
+            background: var(--slate-100);
+            border: 1px solid var(--slate-300);
+            color: var(--slate-700);
+            font-weight: 700;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: background 0.2s;
+        }
+        .btn-hub-back:hover { background: var(--slate-200); }
+
+        .hud-subtitle {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--sky-600);
+            display: block;
+        }
+
+        #hud-stage-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--slate-800);
+        }
+
+        .hud-progress-wrap {
+            flex: 1;
+            min-width: 150px;
+            max-width: 240px;
+        }
+
+        .hud-progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 0.25rem;
+        }
+
+        .progress-track {
+            width: 100%;
+            background: var(--slate-200);
+            border-radius: 999px;
+            height: 0.75rem;
+            overflow: hidden;
+        }
+
+        #hud-progress-bar {
+            background: linear-gradient(90deg, var(--emerald-400), var(--emerald-600));
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .hud-right {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Musik-Steuerungsleiste im HUD */
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--purple-50);
+            border: 1.5px solid var(--purple-200);
+            padding: 0.28rem 0.55rem;
+            border-radius: 0.85rem;
+        }
+
+        .btn-music {
+            background: var(--purple-100);
+            border: 1px solid var(--purple-300);
+            color: var(--purple-700);
+            padding: 0.3rem 0.55rem;
+            border-radius: 0.6rem;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.15s;
+        }
+        .btn-music.active {
+            background: var(--purple-600);
+            border-color: var(--purple-700);
+            color: #ffffff;
+        }
+
+        .btn-mood {
+            background: #ffffff;
+            border: 1px solid var(--purple-200);
+            color: var(--slate-700);
+            padding: 0.28rem 0.45rem;
+            border-radius: 0.55rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-mood:hover { background: var(--purple-100); }
+
+        .volume-slider {
+            width: 3.6rem;
+            accent-color: var(--purple-600);
+            cursor: pointer;
+        }
+
+        .score-pill {
+            background: var(--amber-100);
+            border: 2px solid var(--amber-300);
+            padding: 0.35rem 0.85rem;
+            border-radius: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 800;
+            color: var(--amber-800);
+        }
+
+        #hud-score { font-size: 1.2rem; }
+
+        .btn-icon {
+            background: var(--sky-100);
+            border: 1px solid var(--sky-300);
+            color: var(--sky-800);
+            padding: 0.45rem 0.65rem;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        .btn-icon:hover { background: var(--sky-200); }
+
+        /* Haupt-Container */
+        main {
+            width: 100%;
+            max-width: 66rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-panel {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 1.75rem;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.12);
+            padding: 1.25rem;
+            border: 4px solid #ffffff;
+        }
+
+        @media (min-width: 640px) {
+            .card-panel { padding: 2rem; }
+        }
+
+        /* Startbildschirm */
+        #screen-start { text-align: center; }
+
+        .pill-badge {
+            display: inline-block;
+            background: var(--amber-100);
+            color: var(--amber-800);
+            font-weight: 800;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--amber-300);
+        }
+
+        .hero-emoji {
+            font-size: 3.75rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-title {
+            font-size: clamp(1.85rem, 4vw, 3rem);
+            font-weight: 800;
+            color: var(--slate-800);
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-title span { color: var(--sky-600); }
+
+        .hero-desc {
+            color: var(--slate-600);
+            font-size: 1.05rem;
+            max-width: 40rem;
+            margin: 0 auto 1.5rem auto;
+            line-height: 1.6;
+        }
+
+        .name-box {
+            max-width: 26rem;
+            margin: 0 auto 1.5rem auto;
+            background: var(--sky-50);
+            padding: 1rem;
+            border-radius: 1.25rem;
+            border: 2px solid var(--sky-200);
+        }
+
+        .name-box label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--sky-900);
+            margin-bottom: 0.5rem;
+        }
+
+        #player-name {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.85rem;
+            border: 2px solid var(--sky-300);
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: var(--slate-800);
+            outline: none;
+        }
+        #player-name:focus { border-color: var(--sky-600); }
+
+        .btn-start {
+            background: linear-gradient(90deg, var(--emerald-500), var(--emerald-600));
+            color: #ffffff;
+            font-size: 1.35rem;
+            font-weight: 800;
+            padding: 1rem 2.25rem;
+            border-radius: 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Hub / Etappen-Übersicht */
+        .hub-header { text-align: center; margin-bottom: 1.5rem; }
+        .hub-header h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); margin-bottom: 0.35rem; }
+        .hub-header h2 span { color: var(--sky-600); }
+        .hub-header p { color: var(--slate-600); }
+
+        .stages-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .stages-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+        }
+
+        .stage-card {
+            cursor: pointer;
+            border-radius: 1.25rem;
+            padding: 1.25rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border: 3px solid transparent;
+        }
+        .stage-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); }
+        .stage-card.completed { box-shadow: 0 0 0 4px var(--emerald-400); }
+
+        .stage-1-bg { background: linear-gradient(135deg, var(--sky-50), var(--sky-100)); border-color: var(--sky-300); }
+        .stage-2-bg { background: linear-gradient(135deg, var(--amber-50), var(--amber-100)); border-color: var(--amber-300); }
+        .stage-3-bg { background: linear-gradient(135deg, var(--emerald-50), var(--emerald-100)); border-color: var(--emerald-300); }
+        .stage-4-bg { background: linear-gradient(135deg, var(--purple-50), var(--purple-100)); border-color: var(--purple-300); }
+
+        .stage-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .stage-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #fff;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+        }
+
+        .stage-badge {
+            background: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid var(--slate-200);
+        }
+        .stage-badge.done {
+            background: var(--emerald-500);
+            color: #ffffff;
+            border-color: var(--emerald-600);
+        }
+
+        .stage-card h3 { font-size: 1.2rem; margin-bottom: 0.35rem; color: var(--slate-800); }
+        .stage-card p { font-size: 0.9rem; color: var(--slate-600); line-height: 1.45; }
+
+        .hub-footer {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--slate-200);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Spielbildschirm Aufgaben-Banner */
+        .task-banner {
+            background: var(--sky-50);
+            border: 2px solid var(--sky-200);
+            border-radius: 1.25rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .task-left {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            flex: 1;
+            min-width: 240px;
+        }
+
+        #task-icon {
+            font-size: 2rem;
+            background: #ffffff;
+            padding: 0.5rem;
+            border-radius: 0.85rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+        }
+
+        #task-category {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--sky-600);
+            display: block;
+            margin-bottom: 0.15rem;
+        }
+
+        #task-question {
+            font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+            font-weight: 800;
+            color: var(--slate-800);
+            line-height: 1.3;
+        }
+
+        .btn-help {
+            background: var(--amber-100);
+            border: 2px solid var(--amber-300);
+            color: var(--amber-900);
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 0.55rem 0.9rem;
+            border-radius: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-help:hover { background: var(--amber-200); }
+
+        #feedback-banner {
+            border-radius: 1rem;
+            padding: 0.85rem 1rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .fb-correct {
+            background: var(--emerald-100);
+            color: var(--emerald-900);
+            border: 2px solid var(--emerald-400);
+        }
+        .fb-wrong {
+            background: var(--rose-100);
+            color: var(--rose-900);
+            border: 2px solid var(--rose-400);
+        }
+
+        /* SVG & Etappe 1 */
+        .map-frame {
+            background: var(--sky-200);
+            border-radius: 1.25rem;
+            padding: 0.5rem;
+            border: 2px solid var(--sky-300);
+            overflow: hidden;
+        }
+        svg { display: block; width: 100%; height: auto; border-radius: 0.85rem; }
+
+        .continent-path {
+            transition: all 0.25s ease;
+            cursor: pointer;
+            stroke: #ffffff;
+            stroke-width: 1.5;
+        }
+        .continent-path:hover {
+            filter: brightness(1.12);
+            stroke: var(--amber-500);
+            stroke-width: 3;
+        }
+        .continent-found {
+            fill: #22c55e !important;
+            stroke: #14532d !important;
+            stroke-width: 2 !important;
+        }
+
+        .ocean-zone { cursor: pointer; transition: all 0.25s ease; }
+        .ocean-zone:hover rect {
+            fill: rgba(255, 255, 255, 0.5);
+            stroke: var(--amber-500);
+            stroke-width: 2.5;
+        }
+        .ocean-found rect {
+            fill: rgba(34, 197, 94, 0.88) !important;
+            stroke: #ffffff !important;
+        }
+        .ocean-found text {
+            fill: #ffffff !important;
+            font-weight: 800;
+        }
+
+        /* Etappe 2: Kompass */
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .two-col-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .compass-box {
+            background: var(--amber-50);
+            border: 2px solid var(--amber-200);
+            border-radius: 1.25rem;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .compass-dial {
+            position: relative;
+            width: 17rem;
+            height: 17rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem 0;
+        }
+
+        .compass-btn {
+            position: absolute;
+            width: 2.6rem;
+            height: 2.6rem;
+            border-radius: 999px;
+            background: #ffffff;
+            color: var(--slate-700);
+            font-weight: 800;
+            font-size: 0.9rem;
+            border: 2px solid var(--amber-300);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+        .compass-btn:hover { transform: scale(1.12); }
+        .compass-btn.north {
+            background: #ef4444;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+        .compass-found {
+            background: #22c55e !important;
+            color: #ffffff !important;
+            border-color: #15803d !important;
+        }
+
+        /* Etappe 3: Gradnetz (1/3 + 2/3 Grid) */
+        .grid-stage-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            align-items: stretch;
+        }
+        @media (min-width: 900px) {
+            .grid-stage-layout { grid-template-columns: 1.75fr 1fr; }
+        }
+
+        .grid-map-box {
+            background: var(--sky-100);
+            border: 2px solid var(--sky-300);
+            border-radius: 1.25rem;
+            padding: 0.65rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .grid-legend-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--slate-700);
+        }
+
+        .legend-dot {
+            display: inline-block;
+            width: 14px;
+            height: 4px;
+            border-radius: 2px;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+
+        .grid-side-panel {
+            background: var(--emerald-50);
+            border: 2px solid var(--emerald-200);
+            border-radius: 1.25rem;
+            padding: 1.15rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.85rem;
+        }
+
+        #grid-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        .option-btn {
+            background: #ffffff;
+            border: 2px solid var(--emerald-300);
+            color: var(--slate-800);
+            font-weight: 700;
+            padding: 0.75rem 1rem;
+            border-radius: 0.9rem;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        .option-btn:hover { background: var(--emerald-100); }
+
+        .mnemonic-box {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px dashed var(--emerald-400);
+            border-radius: 0.85rem;
+            padding: 0.65rem 0.75rem;
+            font-size: 0.78rem;
+            color: var(--emerald-900);
+            line-height: 1.4;
+        }
+
+        /* Etappe 4: Kartentypen */
+        .maptype-btn {
+            text-align: left;
+            padding: 0.85rem 1rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            border: 2px solid transparent;
+            width: 100%;
+        }
+        .mt-physisch { background: var(--emerald-50); border-color: var(--emerald-300); }
+        .mt-politisch { background: var(--rose-50); border-color: var(--rose-300); }
+        .mt-thematisch { background: var(--amber-50); border-color: var(--amber-300); }
+        .mt-stadtplan { background: var(--sky-50); border-color: var(--sky-300); }
+
+        .mt-icon {
+            font-size: 1.65rem;
+            background: #ffffff;
+            padding: 0.45rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        /* Urkunde */
+        .certificate-bg {
+            background: radial-gradient(circle at center, var(--amber-50) 0%, var(--amber-100) 70%, var(--amber-200) 100%);
+            border: 8px double var(--amber-700);
+            border-radius: 1.75rem;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.15);
+        }
+
+        .cert-score-box {
+            background: rgba(255, 255, 255, 0.88);
+            border: 2px solid var(--amber-400);
+            border-radius: 1.25rem;
+            padding: 1rem;
+            max-width: 24rem;
+            margin: 1.25rem auto;
+        }
+
+        .cert-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-around;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--amber-300);
+            font-weight: 800;
+            color: var(--amber-900);
+            font-size: 0.9rem;
+        }
+
+        .cert-stamp {
+            border: 2px solid #dc2626;
+            color: #dc2626;
+            padding: 0.3rem 0.75rem;
+            border-radius: 0.5rem;
+            transform: rotate(-3deg);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Modal für Merkhilfe */
+        #help-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            max-width: 28rem;
+            width: 100%;
+            padding: 1.5rem;
+            border: 4px solid var(--amber-300);
+            box-shadow: 0 25px 40px rgba(0,0,0,0.25);
+        }
+
+        /* Animationen */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.85; }
+            100% { transform: scale(1.9); opacity: 0; }
+        }
+        .pulse-target {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #certificate-container, #certificate-container * { visibility: visible; }
+            #certificate-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- OBERE STATUSLEISTE (HUD) -->
+    <header id="game-hud" class="hidden">
+        <div class="hud-left">
+            <a href="index.html" class="btn-hub-back" style="text-decoration: none;" title="Zurück zur Modul-Auswahl">
+                <span>🏠</span> <span>Startseite</span>
+            </a>
+            <button onclick="returnToHub()" class="btn-hub-back" title="Zur Etappen-Übersicht">
+                <span>🗺️</span> <span>Reisekarte</span>
+            </button>
+            <div>
+                <span class="hud-subtitle">Weltreise-Challenge • Gewi 5</span>
+                <h2 id="hud-stage-title">Etappe 1</h2>
+            </div>
+        </div>
+
+        <div class="hud-progress-wrap">
+            <div class="hud-progress-labels">
+                <span>Fortschritt</span>
+                <span id="hud-progress-text">0 / 4</span>
+            </div>
+            <div class="progress-track">
+                <div id="hud-progress-bar"></div>
+            </div>
+        </div>
+
+        <div class="hud-right">
+            <div class="score-pill">
+                <span>⭐</span>
+                <span id="hud-score">0</span>
+                <span style="font-size: 0.78rem;">Punkte</span>
+            </div>
+            <!-- Hintergrundmusik-Steuerung -->
+            <div class="music-controls" title="Hintergrundmusik steuern">
+                <button id="music-toggle" onclick="toggleMusic()" class="btn-music active" title="Hintergrundmusik an/aus">
+                    <span>🎵</span> <span id="music-status-text">Musik: An</span>
+                </button>
+                <button id="music-mood-btn" onclick="cycleMusicMood()" class="btn-mood" title="Musik-Stimmung wechseln">
+                    🧭 Abenteuer
+                </button>
+                <input id="music-volume" type="range" min="0" max="100" value="35" oninput="changeMusicVolume(this.value)" class="volume-slider" aria-label="Musik-Lautstärke" title="Musik-Lautstärke">
+            </div>
+            <button id="sound-toggle" onclick="toggleSound()" class="btn-icon" title="Sound-Effekte an/aus">🔊</button>
+        </div>
+    </header>
+
+    <!-- HAUPTBEREICH -->
+    <main>
+
+        <!-- 1. STARTBILDSCHIRM -->
+        <section id="screen-start" class="card-panel">
+            <div style="display: flex; justify-content: flex-start; margin-bottom: 0.5rem;">
+                <a href="index.html" class="btn-hub-back" style="text-decoration: none;">
+                    <span>🏠</span> <span>Zur Modul-Auswahl</span>
+                </a>
+            </div>
+            <div class="pill-badge">🌍 Gesellschaftswissenschaften (Gewi) • Klasse 5</div>
+            <div class="hero-emoji">🧭🗺️⛵</div>
+            <h1 class="hero-title">Die große <span>Weltreise</span>-Challenge</h1>
+            <p class="hero-desc">
+                Willkommen an Bord, Entdeckerin oder Entdecker! Meistere <strong>4 spannende Etappen</strong> rund um den Globus:
+                Kontinente &amp; Ozeane, Kompass &amp; Himmelsrichtungen, das <strong>große Gradnetz-Training</strong> mit Längen- und Breitengraden sowie alle Kartentypen!
+            </p>
+
+            <div class="name-box">
+                <label for="player-name">Wie heißt du? (Für deine Entdecker-Urkunde am Ende):</label>
+                <input type="text" id="player-name" placeholder="Dein Vorname..." maxlength="25">
+            </div>
+
+            <button onclick="startGame()" class="btn-game btn-start">
+                <span>Reise starten!</span>
+                <span>🚀</span>
+            </button>
+            <p id="saved-session-hint" class="hidden" style="margin-top: 0.85rem; font-size: 0.85rem; color: var(--emerald-800); font-weight: 700;">
+                💾 Dein gespeicherter Spielstand wurde geladen!
+            </p>
+        </section>
+
+        <!-- 2. ETAPPEN-ÜBERSICHT (HUB) -->
+        <section id="screen-hub" class="card-panel hidden">
+            <div class="hub-header">
+                <h2>Deine Reiseroute, <span id="hub-player-name">Entdecker</span>!</h2>
+                <p>Wähle eine Etappe aus. Dein Fortschritt wird automatisch gespeichert!</p>
+            </div>
+
+            <div class="stages-grid">
+                <!-- Etappe 1 -->
+                <div id="card-stage-1" onclick="startStage(1)" class="stage-card stage-1-bg">
+                    <div class="stage-top">
+                        <div class="stage-icon" style="background: var(--sky-500);">🌍</div>
+                        <span id="badge-stage-1" class="stage-badge">10 Aufgaben</span>
+                    </div>
+                    <h3>1. Kontinente &amp; Ozeane</h3>
+                    <p>Finde alle 7 Kontinente und 3 Ozeane direkt auf der großen Weltkarte.</p>
+                </div>
+
+                <!-- Etappe 2 -->
+                <div id="card-stage-2" onclick="startStage(2)" class="stage-card stage-2-bg">
+                    <div class="stage-top">
+                        <div class="stage-icon" style="background: var(--amber-500);">🧭</div>
+                        <span id="badge-stage-2" class="stage-badge">9 Aufgaben</span>
+                    </div>
+                    <h3>2. Kompass &amp; Richtungen</h3>
+                    <p>Baue die Kompassrose zusammen und bestimme Himmelsrichtungen auf der Karte.</p>
+                </div>
+
+                <!-- Etappe 3 (Ausgebautes Modul!) -->
+                <div id="card-stage-3" onclick="startStage(3)" class="stage-card stage-3-bg">
+                    <div class="stage-top">
+                        <div class="stage-icon" style="background: var(--emerald-500);">🌐</div>
+                        <span id="badge-stage-3" class="stage-badge">14 Aufgaben • XXL</span>
+                    </div>
+                    <h3>3. Gradnetz &amp; Koordinaten</h3>
+                    <p>Breitenkreise, Meridiane, Halbkugeln, Schatzsuche &amp; Weltstädte-Koordinaten!</p>
+                </div>
+
+                <!-- Etappe 4 -->
+                <div id="card-stage-4" onclick="startStage(4)" class="stage-card stage-4-bg">
+                    <div class="stage-top">
+                        <div class="stage-icon" style="background: var(--purple-500);">🗺️</div>
+                        <span id="badge-stage-4" class="stage-badge">4 Aufgaben</span>
+                    </div>
+                    <h3>4. Kartentypen-Profi</h3>
+                    <p>Physisch, politisch, thematisch oder Stadtplan? Erkenne den Unterschied!</p>
+                </div>
+            </div>
+
+            <div class="hub-footer">
+                <button id="btn-finish-all" onclick="showCertificate()" class="hidden btn-game" style="background: linear-gradient(90deg, var(--amber-500), #ea580c); color: #fff; font-size: 1.2rem; font-weight: 800; padding: 0.9rem 2rem; border-radius: 1.15rem;">
+                    🏆 Entdecker-Urkunde abholen!
+                </button>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; align-items: center;">
+                    <p id="hub-hint" style="font-size: 0.9rem; font-weight: 700; color: var(--slate-600);">
+                        Tipp: Klicke auf eine Etappe, um loszulegen!
+                    </p>
+                    <button onclick="resetFullGame()" style="background: none; border: 1px solid var(--slate-300); color: var(--slate-500); font-size: 0.78rem; padding: 0.3rem 0.65rem; border-radius: 0.6rem; cursor: pointer;">
+                        Spielstand zurücksetzen
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SPIELBEREICH FÜR ALLE ETAPPEN -->
+        <section id="screen-play" class="card-panel hidden">
+            
+            <!-- Aufgaben-Banner oben -->
+            <div class="task-banner">
+                <div class="task-left">
+                    <span id="task-icon">🎯</span>
+                    <div>
+                        <span id="task-category">Aufgabe</span>
+                        <h3 id="task-question">Lade Aufgabe...</h3>
+                    </div>
+                </div>
+                <button onclick="showHelpTip()" class="btn-help">💡 Merkhilfe &amp; Eselsbrücke</button>
+            </div>
+
+            <!-- Feedback-Box -->
+            <div id="feedback-banner" class="hidden"></div>
+
+            <!-- ETAPPE 1: WELTKARTE (KONTINENTE & OZEANE) -->
+            <div id="stage-1-view" class="hidden">
+                <div class="map-frame">
+                    <svg id="world-map-svg" viewBox="0 0 1000 500" style="background: linear-gradient(180deg, #0284c7 0%, #38bdf8 22%, #7dd3fc 50%, #38bdf8 78%, #0284c7 100%);">
+                        <defs>
+                            <filter id="land-shadow" x="-5%" y="-5%" width="110%" height="110%">
+                                <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0c4a6e" flood-opacity="0.28"/>
+                            </filter>
+                            <radialGradient id="ocean-glow" cx="50%" cy="50%" r="60%">
+                                <stop offset="0%" stop-color="#bae6fd" stop-opacity="0.45"/>
+                                <stop offset="100%" stop-color="#0369a1" stop-opacity="0.25"/>
+                            </radialGradient>
+                        </defs>
+                        <rect width="1000" height="500" fill="url(#ocean-glow)"/>
+                        <!-- Gradnetz-Orientierungslinien -->
+                        <line x1="0" y1="250" x2="1000" y2="250" stroke="#0369a1" stroke-width="1.2" stroke-dasharray="6,6" opacity="0.45"/>
+                        <line x1="485" y1="0" x2="485" y2="500" stroke="#0369a1" stroke-width="1.2" stroke-dasharray="6,6" opacity="0.45"/>
+                        <line x1="0" y1="189" x2="1000" y2="189" stroke="#0284c7" stroke-width="0.8" stroke-dasharray="3,6" opacity="0.3"/>
+                        <line x1="0" y1="311" x2="1000" y2="311" stroke="#0284c7" stroke-width="0.8" stroke-dasharray="3,6" opacity="0.3"/>
+
+                        <!-- OZEANE -->
+                        <g id="ocean-Pazifischer Ozean" class="ocean-zone" onclick="checkMapTarget('Pazifischer Ozean')">
+                            <rect x="18" y="210" width="160" height="55" rx="14" fill="rgba(255,255,255,0.34)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <text x="98" y="235" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">🌊 Ozean (West)</text>
+                            <text x="98" y="253" text-anchor="middle" fill="#0c4a6e" font-size="12" font-weight="600">Klick mich!</text>
+
+                            <rect x="850" y="190" width="135" height="55" rx="14" fill="rgba(255,255,255,0.34)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <text x="917" y="215" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">🌊 Ozean (Ost)</text>
+                            <text x="917" y="233" text-anchor="middle" fill="#0c4a6e" font-size="12" font-weight="600">Klick mich!</text>
+                        </g>
+
+                        <g id="ocean-Atlantischer Ozean" class="ocean-zone" onclick="checkMapTarget('Atlantischer Ozean')">
+                            <rect x="308" y="162" width="128" height="58" rx="15" fill="rgba(255,255,255,0.34)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <text x="372" y="188" text-anchor="middle" fill="#0c4a6e" font-size="12.5" font-weight="700">🌊 Ozean zwischen</text>
+                            <text x="372" y="206" text-anchor="middle" fill="#0c4a6e" font-size="12.5" font-weight="700">Amerika &amp; Europa</text>
+                        </g>
+
+                        <g id="ocean-Indischer Ozean" class="ocean-zone" onclick="checkMapTarget('Indischer Ozean')">
+                            <rect x="625" y="282" width="145" height="55" rx="16" fill="rgba(255,255,255,0.34)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <text x="697" y="307" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">🌊 Ozean südlich</text>
+                            <text x="697" y="325" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">von Asien</text>
+                        </g>
+
+                        <!-- KONTINENTE (realistische Küstenlinien inkl. Inseln) -->
+                        <g filter="url(#land-shadow)">
+                            <path id="cont-Nordamerika" class="continent-path" fill="#f59e0b" onclick="checkMapTarget('Nordamerika')"
+                                d="M 39.8,78.4 L 55.7,68.0 L 87.5,68.0 L 114.0,70.6 L 140.5,68.0 L 167.0,60.2 L 206.8,57.6 L 233.2,62.8 L 259.8,68.0 L 267.7,83.6 L 241.2,88.8 L 235.9,99.2 L 251.8,114.8 L 273.0,117.4 L 278.3,104.4 L 283.6,88.8 L 312.8,94.0 L 336.6,114.8 L 326.0,130.4 L 310.1,135.6 L 299.5,140.8 L 288.9,146.0 L 283.6,159.0 L 270.4,169.4 L 273.0,185.0 L 267.7,185.0 L 265.1,174.6 L 251.8,172.0 L 233.2,174.6 L 227.9,182.4 L 230.6,198.0 L 241.2,203.2 L 251.8,195.4 L 254.5,195.4 L 251.8,208.4 L 262.4,211.0 L 265.1,221.4 L 273.0,226.6 L 278.3,229.2 L 273.0,231.8 L 265.1,226.6 L 257.1,221.4 L 241.2,213.6 L 230.6,211.0 L 206.8,200.6 L 201.4,190.2 L 193.5,187.6 L 185.6,172.0 L 190.9,187.6 L 182.9,177.2 L 174.9,166.8 L 164.4,159.0 L 159.1,151.2 L 156.4,140.8 L 156.4,125.2 L 145.8,117.4 L 129.9,104.4 L 114.0,94.0 L 92.8,94.0 L 76.9,101.8 L 55.7,107.0 L 45.1,96.6 L 55.7,86.2 L 39.8,78.4 Z M 347.2,94.0 L 368.4,94.0 L 384.3,81.0 L 421.4,68.0 L 437.3,52.4 L 426.7,36.8 L 379.0,34.2 L 339.2,39.4 L 304.8,49.8 L 331.3,62.8 L 344.6,78.4 L 347.2,94.0 Z M 259.8,192.8 L 273.0,190.2 L 286.2,195.4 L 288.9,198.0 L 275.6,198.0 L 262.4,195.4 L 259.8,192.8 Z" />
+
+                            <path id="cont-Südamerika" class="continent-path" fill="#eab308" onclick="checkMapTarget('Südamerika')"
+                                d="M 278.3,226.6 L 286.2,221.4 L 299.5,218.8 L 315.4,224.0 L 326.0,226.6 L 344.6,237.0 L 352.5,247.4 L 363.1,252.6 L 379.0,257.8 L 392.2,265.6 L 392.2,276.0 L 381.6,289.0 L 379.0,304.6 L 371.1,309.8 L 357.8,317.6 L 352.5,328.0 L 341.9,338.4 L 331.3,348.8 L 315.4,356.6 L 310.1,367.0 L 304.8,380.0 L 307.5,390.4 L 296.9,393.0 L 288.9,385.2 L 286.2,369.6 L 291.6,354.0 L 294.2,341.0 L 296.9,322.8 L 299.5,302.0 L 288.9,291.6 L 278.3,281.2 L 270.4,263.0 L 273.0,255.2 L 278.3,242.2 L 278.3,226.6 Z" />
+
+                            <path id="cont-Europa" class="continent-path" fill="#3b82f6" onclick="checkMapTarget('Europa')"
+                                d="M 461.1,153.8 L 461.1,138.2 L 479.7,138.2 L 471.8,125.2 L 490.3,117.4 L 506.2,109.6 L 506.2,101.8 L 511.5,101.8 L 514.1,107.0 L 511.5,94.0 L 498.2,91.4 L 500.9,83.6 L 516.8,75.8 L 538.0,68.0 L 559.2,65.4 L 569.8,70.6 L 596.3,75.8 L 630.8,73.2 L 644.0,75.8 L 644.0,107.0 L 625.5,120.0 L 609.5,133.0 L 596.3,138.2 L 580.4,133.0 L 564.5,130.4 L 559.2,140.8 L 553.9,146.0 L 546.0,151.2 L 543.3,153.8 L 538.0,146.0 L 527.4,135.6 L 522.1,133.0 L 516.8,135.6 L 527.4,143.4 L 532.7,146.0 L 527.4,151.2 L 516.8,143.4 L 508.9,135.6 L 498.2,138.2 L 492.9,140.8 L 485.0,148.6 L 471.8,156.4 L 461.1,153.8 Z M 471.8,120.0 L 477.1,117.4 L 471.8,112.2 L 477.1,107.0 L 469.1,101.8 L 477.1,99.2 L 479.7,104.4 L 487.6,112.2 L 487.6,117.4 L 479.7,120.0 L 471.8,120.0 Z M 458.5,114.8 L 461.1,109.6 L 469.1,107.0 L 469.1,114.8 L 458.5,114.8 Z M 516.8,151.2 L 524.8,151.2 L 524.8,153.8 L 516.8,153.8 L 516.8,151.2 Z" />
+
+                            <path id="cont-Afrika" class="continent-path" fill="#ef4444" onclick="checkMapTarget('Afrika')"
+                                d="M 439.9,211.0 L 442.6,195.4 L 458.5,172.0 L 469.1,156.4 L 492.9,153.8 L 511.5,153.8 L 516.8,164.2 L 538.0,166.8 L 551.2,169.4 L 569.8,169.4 L 577.8,182.4 L 585.7,198.0 L 599.0,218.8 L 620.1,218.8 L 614.9,237.0 L 596.3,255.2 L 591.0,276.0 L 577.8,302.0 L 569.8,320.2 L 559.2,335.8 L 538.0,341.0 L 532.7,338.4 L 524.8,317.6 L 516.8,294.2 L 516.8,265.6 L 508.9,239.6 L 492.9,234.4 L 471.8,237.0 L 458.5,234.4 L 445.2,221.4 L 439.9,211.0 Z M 601.6,315.0 L 609.5,315.0 L 617.5,289.0 L 614.9,281.2 L 606.9,291.6 L 601.6,304.6 L 601.6,315.0 Z" />
+
+                            <path id="cont-Asien" class="continent-path" fill="#8b5cf6" onclick="checkMapTarget('Asien')"
+                                d="M 553.9,146.0 L 564.5,143.4 L 580.4,143.4 L 593.6,143.4 L 609.5,133.0 L 625.5,120.0 L 644.0,107.0 L 644.0,75.8 L 670.5,62.8 L 710.2,60.2 L 763.2,52.4 L 803.0,60.2 L 856.0,62.8 L 922.2,73.2 L 956.7,78.4 L 935.5,88.8 L 914.3,96.6 L 901.0,114.8 L 909.0,104.4 L 887.8,94.0 L 861.3,99.2 L 850.7,109.6 L 858.6,117.4 L 842.8,135.6 L 826.8,146.0 L 826.8,159.0 L 818.9,159.0 L 813.6,148.6 L 805.6,151.2 L 808.3,169.4 L 803.0,185.0 L 787.1,192.8 L 773.8,198.0 L 773.8,218.8 L 760.6,224.0 L 758.0,244.8 L 750.0,234.4 L 744.7,213.6 L 739.4,205.8 L 726.1,192.8 L 715.5,198.0 L 697.0,218.8 L 691.7,229.2 L 683.8,213.6 L 675.8,198.0 L 665.2,190.2 L 649.3,185.0 L 633.4,182.4 L 620.1,182.4 L 630.8,190.2 L 641.4,192.8 L 622.8,211.0 L 601.6,216.2 L 591.0,198.0 L 577.8,177.2 L 577.8,161.6 L 580.4,153.8 L 564.5,156.4 L 556.5,151.2 L 553.9,146.0 Z M 829.5,166.8 L 840.1,161.6 L 853.3,159.0 L 858.6,146.0 L 869.2,135.6 L 858.6,133.0 L 853.3,146.0 L 845.4,153.8 L 832.1,161.6 L 829.5,166.8 Z M 697.0,224.0 L 702.3,229.2 L 699.6,234.4 L 694.4,229.2 L 697.0,224.0 Z M 739.4,237.0 L 760.6,252.6 L 765.9,265.6 L 755.3,260.4 L 739.4,242.2 L 739.4,237.0 Z M 773.8,247.4 L 789.8,234.4 L 800.3,237.0 L 795.0,257.8 L 779.1,257.8 L 773.8,247.4 Z M 765.9,265.6 L 787.1,268.2 L 787.1,273.4 L 765.9,268.2 L 765.9,265.6 Z" />
+
+                            <path id="cont-Australien" class="continent-path" fill="#ec4899" onclick="checkMapTarget('Australien')"
+                                d="M 787.1,307.2 L 808.3,294.2 L 829.5,281.2 L 845.4,281.2 L 845.4,289.0 L 858.6,294.2 L 861.3,278.6 L 871.9,294.2 L 890.5,317.6 L 882.5,341.0 L 871.9,348.8 L 856.0,348.8 L 845.4,341.0 L 832.1,333.2 L 808.3,338.4 L 789.8,338.4 L 787.1,320.2 L 787.1,307.2 Z M 869.2,356.6 L 877.2,356.6 L 877.2,361.8 L 869.2,361.8 L 869.2,356.6 Z M 943.5,341.0 L 956.7,348.8 L 948.8,356.6 L 940.8,364.4 L 927.5,369.6 L 935.5,359.2 L 946.1,351.4 L 943.5,341.0 Z" />
+
+                            <path id="cont-Antarktika" class="continent-path" fill="#f8fafc" onclick="checkMapTarget('Antarktika')"
+                                d="M 8.0,437.2 L 87.5,442.4 L 167.0,439.8 L 246.5,437.2 L 312.8,419.0 L 331.3,413.8 L 320.7,426.8 L 352.5,445.0 L 405.5,442.4 L 485.0,432.0 L 564.5,429.4 L 644.0,426.8 L 723.5,424.2 L 803.0,424.2 L 882.5,429.4 L 935.5,437.2 L 922.2,450.2 L 962.0,450.2 L 962.0,471.0 L 8.0,471.0 L 8.0,437.2 Z" />
+                        </g>
+
+                        <g id="found-labels" pointer-events="none" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle"></g>
+                    </svg>
+                </div>
+                <p style="text-align: center; font-size: 0.85rem; color: var(--slate-500); margin-top: 0.5rem;">
+                    Tipp: Klicke direkt auf den gesuchten Kontinent oder das gesuchte Ozean-Feld auf der Karte!
+                </p>
+            </div>
+
+            <!-- ETAPPE 2: KOMPASS & HIMMELSRICHTUNGEN -->
+            <div id="stage-2-view" class="hidden">
+                <div class="two-col-grid">
+                    <div class="compass-box">
+                        <h4 style="color: var(--amber-900); margin-bottom: 0.35rem;">Interaktive Kompassrose</h4>
+                        
+                        <div class="compass-dial">
+                            <svg viewBox="0 0 200 200">
+                                <circle cx="100" cy="100" r="90" fill="#fffbeb" stroke="#d97706" stroke-width="4"/>
+                                <circle cx="100" cy="100" r="72" fill="none" stroke="#fcd34d" stroke-width="1.5" stroke-dasharray="4,4"/>
+                                <line x1="100" y1="15" x2="100" y2="185" stroke="#cbd5e1" stroke-width="2"/>
+                                <line x1="15" y1="100" x2="185" y2="100" stroke="#cbd5e1" stroke-width="2"/>
+                                <line x1="40" y1="40" x2="160" y2="160" stroke="#e2e8f0" stroke-width="1.5"/>
+                                <line x1="160" y1="40" x2="40" y2="160" stroke="#e2e8f0" stroke-width="1.5"/>
+                                <polygon points="100,30 110,100 90,100" fill="#ef4444"/>
+                                <polygon points="100,170 110,100 90,100" fill="#3b82f6"/>
+                                <circle cx="100" cy="100" r="8" fill="#1e293b"/>
+                            </svg>
+
+                            <button id="comp-N" onclick="checkCompass('N')" class="compass-btn north" style="top: 0; left: 50%; transform: translateX(-50%);">N</button>
+                            <button id="comp-NO" onclick="checkCompass('NO')" class="compass-btn" style="top: 1.5rem; right: 1.5rem;">?</button>
+                            <button id="comp-O" onclick="checkCompass('O')" class="compass-btn" style="top: 50%; right: 0; transform: translateY(-50%);">?</button>
+                            <button id="comp-SO" onclick="checkCompass('SO')" class="compass-btn" style="bottom: 1.5rem; right: 1.5rem;">?</button>
+                            <button id="comp-S" onclick="checkCompass('S')" class="compass-btn" style="bottom: 0; left: 50%; transform: translateX(-50%);">?</button>
+                            <button id="comp-SW" onclick="checkCompass('SW')" class="compass-btn" style="bottom: 1.5rem; left: 1.5rem;">?</button>
+                            <button id="comp-W" onclick="checkCompass('W')" class="compass-btn" style="top: 50%; left: 0; transform: translateY(-50%);">?</button>
+                            <button id="comp-NW" onclick="checkCompass('NW')" class="compass-btn" style="top: 1.5rem; left: 1.5rem;">?</button>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--amber-900); font-weight: 700; text-align: center;">
+                            Merksatz: <strong>N</strong>ie <strong>O</strong>hne <strong>S</strong>eife <strong>W</strong>aschen! (im Uhrzeigersinn)
+                        </p>
+                    </div>
+
+                    <div style="background: var(--sky-50); border: 2px solid var(--sky-200); border-radius: 1.25rem; padding: 1.25rem;">
+                        <h4 style="color: var(--sky-900); margin-bottom: 0.35rem;">Orientierungs-Karte</h4>
+                        <p id="compass-instruction" style="font-size: 0.9rem; color: var(--slate-600); margin-bottom: 0.75rem;">
+                            Klicke auf die richtige Stelle an der Kompassrose links!
+                        </p>
+
+                        <svg viewBox="0 0 400 220" style="background: linear-gradient(180deg, #38bdf8 0%, #bae6fd 50%, #38bdf8 100%); border: 1px solid var(--sky-300);">
+                            <line x1="0" y1="122" x2="400" y2="122" stroke="#0369a1" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.45"/>
+                            <line x1="195" y1="0" x2="195" y2="220" stroke="#0369a1" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.45"/>
+                            <path d="M 20.3,46.1 L 26.5,41.5 L 39.0,41.5 L 49.4,42.7 L 59.8,41.5 L 70.2,38.1 L 85.8,36.9 L 96.2,39.2 L 106.6,41.5 L 109.7,48.4 L 99.3,50.7 L 97.2,55.3 L 103.5,62.2 L 111.8,63.4 L 113.9,57.6 L 116.0,50.7 L 127.4,53.0 L 136.8,62.2 L 132.6,69.1 L 126.4,71.4 L 122.2,73.7 L 118.0,76.0 L 116.0,81.8 L 110.8,86.3 L 111.8,93.2 L 109.7,93.2 L 108.7,88.7 L 103.5,87.5 L 96.2,88.7 L 94.1,92.1 L 95.2,99.0 L 99.3,101.3 L 103.5,97.8 L 104.5,97.8 L 103.5,103.6 L 107.6,104.8 L 108.7,109.3 L 111.8,111.7 L 113.9,112.8 L 111.8,114.0 L 108.7,111.7 L 105.6,109.3 L 99.3,105.9 L 95.2,104.8 L 85.8,100.2 L 83.7,95.5 L 80.6,94.4 L 77.5,87.5 L 79.6,94.4 L 76.4,89.8 L 73.3,85.2 L 69.2,81.8 L 67.1,78.3 L 66.0,73.7 L 66.0,66.8 L 61.9,63.4 L 55.6,57.6 L 49.4,53.0 L 41.1,53.0 L 34.8,56.5 L 26.5,58.8 L 22.4,54.2 L 26.5,49.6 L 20.3,46.1 Z M 140.9,53.0 L 149.2,53.0 L 155.5,47.2 L 170.0,41.5 L 176.3,34.6 L 172.1,27.7 L 153.4,26.6 L 137.8,28.9 L 124.3,33.5 L 134.7,39.2 L 139.9,46.1 L 140.9,53.0 Z M 106.6,96.7 L 111.8,95.5 L 117.0,97.8 L 118.0,99.0 L 112.8,99.0 L 107.6,97.8 L 106.6,96.7 Z" fill="#f59e0b" stroke="#fff" stroke-width="1"/>
+                            <text x="86" y="72" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Nordamerika</text>
+
+                            <path d="M 113.9,111.7 L 117.0,109.3 L 122.2,108.2 L 128.4,110.5 L 132.6,111.7 L 139.9,116.2 L 143.0,120.8 L 147.2,123.2 L 153.4,125.5 L 158.6,128.9 L 158.6,133.5 L 154.4,139.2 L 153.4,146.2 L 150.3,148.4 L 145.1,151.9 L 143.0,156.5 L 138.8,161.1 L 134.7,165.7 L 128.4,169.2 L 126.4,173.8 L 124.3,179.5 L 125.3,184.1 L 121.2,185.2 L 118.0,181.8 L 117.0,174.9 L 119.1,168.0 L 120.1,162.2 L 121.2,154.2 L 122.2,145.0 L 118.0,140.4 L 113.9,135.8 L 110.8,127.8 L 111.8,124.3 L 113.9,118.5 L 113.9,111.7 Z" fill="#eab308" stroke="#fff" stroke-width="1"/>
+                            <text x="133" y="142" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Südamerika</text>
+
+                            <path d="M 185.6,79.5 L 185.6,72.6 L 192.9,72.6 L 189.8,66.8 L 197.1,63.4 L 203.3,59.9 L 203.3,56.5 L 205.4,56.5 L 206.4,58.8 L 205.4,53.0 L 200.2,51.9 L 201.2,48.4 L 207.5,45.0 L 215.8,41.5 L 224.1,40.4 L 228.3,42.7 L 238.7,45.0 L 252.2,43.8 L 257.4,45.0 L 257.4,58.8 L 250.1,64.5 L 243.9,70.2 L 238.7,72.6 L 232.4,70.2 L 226.2,69.1 L 224.1,73.7 L 222.0,76.0 L 218.9,78.3 L 217.9,79.5 L 215.8,76.0 L 211.6,71.4 L 209.6,70.2 L 207.5,71.4 L 211.6,74.8 L 213.7,76.0 L 211.6,78.3 L 207.5,74.8 L 204.4,71.4 L 200.2,72.6 L 198.1,73.7 L 195.0,77.2 L 189.8,80.6 L 185.6,79.5 Z M 189.8,64.5 L 191.9,63.4 L 189.8,61.1 L 191.9,58.8 L 188.8,56.5 L 191.9,55.3 L 192.9,57.6 L 196.0,61.1 L 196.0,63.4 L 192.9,64.5 L 189.8,64.5 Z M 184.6,62.2 L 185.6,59.9 L 188.8,58.8 L 188.8,62.2 L 184.6,62.2 Z M 207.5,78.3 L 210.6,78.3 L 210.6,79.5 L 207.5,79.5 L 207.5,78.3 Z" fill="#3b82f6" stroke="#fff" stroke-width="1"/>
+                            <text x="218" y="63" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Europa</text>
+
+                            <path d="M 177.3,104.8 L 178.4,97.8 L 184.6,87.5 L 188.8,80.6 L 198.1,79.5 L 205.4,79.5 L 207.5,84.1 L 215.8,85.2 L 221.0,86.3 L 228.3,86.3 L 231.4,92.1 L 234.5,99.0 L 239.7,108.2 L 248.0,108.2 L 246.0,116.2 L 238.7,124.3 L 236.6,133.5 L 231.4,145.0 L 228.3,153.1 L 224.1,159.9 L 215.8,162.2 L 213.7,161.1 L 210.6,151.9 L 207.5,141.6 L 207.5,128.9 L 204.4,117.4 L 198.1,115.1 L 189.8,116.2 L 184.6,115.1 L 179.4,109.3 L 177.3,104.8 Z M 240.8,150.8 L 243.9,150.8 L 247.0,139.2 L 246.0,135.8 L 242.8,140.4 L 240.8,146.2 L 240.8,150.8 Z" fill="#ef4444" stroke="#fff" stroke-width="1"/>
+                            <text x="212" y="114" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Afrika</text>
+
+                            <path d="M 222.0,76.0 L 226.2,74.8 L 232.4,74.8 L 237.6,74.8 L 243.9,70.2 L 250.1,64.5 L 257.4,58.8 L 257.4,45.0 L 267.8,39.2 L 283.4,38.1 L 304.2,34.6 L 319.8,38.1 L 340.6,39.2 L 366.6,43.8 L 380.1,46.1 L 371.8,50.7 L 363.5,54.2 L 358.3,62.2 L 361.4,57.6 L 353.1,53.0 L 342.7,55.3 L 338.5,59.9 L 341.6,63.4 L 335.4,71.4 L 329.2,76.0 L 329.2,81.8 L 326.0,81.8 L 324.0,77.2 L 320.8,78.3 L 321.9,86.3 L 319.8,93.2 L 313.6,96.7 L 308.4,99.0 L 308.4,108.2 L 303.2,110.5 L 302.1,119.7 L 299.0,115.1 L 296.9,105.9 L 294.8,102.5 L 289.6,96.7 L 285.5,99.0 L 278.2,108.2 L 276.1,112.8 L 273.0,105.9 L 269.9,99.0 L 265.7,95.5 L 259.5,93.2 L 253.2,92.1 L 248.0,92.1 L 252.2,95.5 L 256.4,96.7 L 249.1,104.8 L 240.8,107.0 L 236.6,99.0 L 231.4,89.8 L 231.4,82.9 L 232.4,79.5 L 226.2,80.6 L 223.1,78.3 L 222.0,76.0 Z M 330.2,85.2 L 334.4,82.9 L 339.6,81.8 L 341.6,76.0 L 345.8,71.4 L 341.6,70.2 L 339.6,76.0 L 336.4,79.5 L 331.2,82.9 L 330.2,85.2 Z M 278.2,110.5 L 280.3,112.8 L 279.2,115.1 L 277.2,112.8 L 278.2,110.5 Z M 294.8,116.2 L 303.2,123.2 L 305.2,128.9 L 301.1,126.6 L 294.8,118.5 L 294.8,116.2 Z M 308.4,120.8 L 314.6,115.1 L 318.8,116.2 L 316.7,125.5 L 310.4,125.5 L 308.4,120.8 Z M 305.2,128.9 L 313.6,130.1 L 313.6,132.3 L 305.2,130.1 L 305.2,128.9 Z" fill="#8b5cf6" stroke="#fff" stroke-width="1"/>
+                            <text x="295" y="74" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Asien</text>
+
+                            <path d="M 313.6,147.3 L 321.9,141.6 L 330.2,135.8 L 336.4,135.8 L 336.4,139.2 L 341.6,141.6 L 342.7,134.7 L 346.8,141.6 L 354.1,151.9 L 351.0,162.2 L 346.8,165.7 L 340.6,165.7 L 336.4,162.2 L 331.2,158.8 L 321.9,161.1 L 314.6,161.1 L 313.6,153.1 L 313.6,147.3 Z M 345.8,169.2 L 348.9,169.2 L 348.9,171.4 L 345.8,171.4 L 345.8,169.2 Z M 374.9,162.2 L 380.1,165.7 L 377.0,169.2 L 373.9,172.6 L 368.7,174.9 L 371.8,170.3 L 376.0,166.8 L 374.9,162.2 Z" fill="#ec4899" stroke="#fff" stroke-width="1"/>
+                            <text x="334" y="155" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Australien</text>
+                        </svg>
+
+                        <div id="compass-mc-options" class="hidden" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.85rem;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ETAPPE 3: GRADNETZ & KOORDINATEN (ERWEITERTES XXL-MODUL) -->
+            <div id="stage-3-view" class="hidden">
+                <div class="grid-stage-layout">
+                    <!-- Visuelles Gradnetz-Gitter auf Weltkarte -->
+                    <div class="grid-map-box">
+                        <svg id="grid-map-svg" viewBox="0 0 700 390" style="background: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 50%, #7dd3fc 100%);">
+                            <!-- Realistische Kontinent-Silhouetten (exakt auf 0°=370/195, 30°Lon=45px, 30°Lat=48px projiziert) -->
+                            <g fill="#cbd5e1" stroke="#64748b" stroke-width="1" opacity="0.82">
+                                <!-- Nordamerika inkl. Grönland & Kuba -->
+                                <path d="M 118.0,89.4 L 127.0,83.0 L 145.0,83.0 L 160.0,84.6 L 175.0,83.0 L 190.0,78.2 L 212.5,76.6 L 227.5,79.8 L 242.5,83.0 L 247.0,92.6 L 232.0,95.8 L 229.0,102.2 L 238.0,111.8 L 250.0,113.4 L 253.0,105.4 L 256.0,95.8 L 272.5,99.0 L 286.0,111.8 L 280.0,121.4 L 271.0,124.6 L 265.0,127.8 L 259.0,131.0 L 256.0,139.0 L 248.5,145.4 L 250.0,155.0 L 247.0,155.0 L 245.5,148.6 L 238.0,147.0 L 227.5,148.6 L 224.5,153.4 L 226.0,163.0 L 232.0,166.2 L 238.0,161.4 L 239.5,161.4 L 238.0,169.4 L 244.0,171.0 L 245.5,177.4 L 250.0,180.6 L 253.0,182.2 L 250.0,183.8 L 245.5,180.6 L 241.0,177.4 L 232.0,172.6 L 226.0,171.0 L 212.5,164.6 L 209.5,158.2 L 205.0,156.6 L 200.5,147.0 L 203.5,156.6 L 199.0,150.2 L 194.5,143.8 L 188.5,139.0 L 185.5,134.2 L 184.0,127.8 L 184.0,118.2 L 178.0,113.4 L 169.0,105.4 L 160.0,99.0 L 148.0,99.0 L 139.0,103.8 L 127.0,107.0 L 121.0,100.6 L 127.0,94.2 L 118.0,89.4 Z M 292.0,99.0 L 304.0,99.0 L 313.0,91.0 L 334.0,83.0 L 343.0,73.4 L 337.0,63.8 L 310.0,62.2 L 287.5,65.4 L 268.0,71.8 L 283.0,79.8 L 290.5,89.4 L 292.0,99.0 Z M 242.5,159.8 L 250.0,158.2 L 257.5,161.4 L 259.0,163.0 L 251.5,163.0 L 244.0,161.4 L 242.5,159.8 Z"/>
+                                <!-- Südamerika -->
+                                <path d="M 253.0,180.6 L 257.5,177.4 L 265.0,175.8 L 274.0,179.0 L 280.0,180.6 L 290.5,187.0 L 295.0,193.4 L 301.0,196.6 L 310.0,199.8 L 317.5,204.6 L 317.5,211.0 L 311.5,219.0 L 310.0,228.6 L 305.5,231.8 L 298.0,236.6 L 295.0,243.0 L 289.0,249.4 L 283.0,255.8 L 274.0,260.6 L 271.0,267.0 L 268.0,275.0 L 269.5,281.4 L 263.5,283.0 L 259.0,278.2 L 257.5,268.6 L 260.5,259.0 L 262.0,251.0 L 263.5,239.8 L 265.0,227.0 L 259.0,220.6 L 253.0,214.2 L 248.5,203.0 L 250.0,198.2 L 253.0,190.2 L 253.0,180.6 Z"/>
+                                <!-- Europa inkl. Großbritannien, Irland & Sizilien -->
+                                <path d="M 356.5,135.8 L 356.5,126.2 L 367.0,126.2 L 362.5,118.2 L 373.0,113.4 L 382.0,108.6 L 382.0,103.8 L 385.0,103.8 L 386.5,107.0 L 385.0,99.0 L 377.5,97.4 L 379.0,92.6 L 388.0,87.8 L 400.0,83.0 L 412.0,81.4 L 418.0,84.6 L 433.0,87.8 L 452.5,86.2 L 460.0,87.8 L 460.0,107.0 L 449.5,115.0 L 440.5,123.0 L 433.0,126.2 L 424.0,123.0 L 415.0,121.4 L 412.0,127.8 L 409.0,131.0 L 404.5,134.2 L 403.0,135.8 L 400.0,131.0 L 394.0,124.6 L 391.0,123.0 L 388.0,124.6 L 394.0,129.4 L 397.0,131.0 L 394.0,134.2 L 388.0,129.4 L 383.5,124.6 L 377.5,126.2 L 374.5,127.8 L 370.0,132.6 L 362.5,137.4 L 356.5,135.8 Z M 362.5,115.0 L 365.5,113.4 L 362.5,110.2 L 365.5,107.0 L 361.0,103.8 L 365.5,102.2 L 367.0,105.4 L 371.5,110.2 L 371.5,113.4 L 367.0,115.0 L 362.5,115.0 Z M 355.0,111.8 L 356.5,108.6 L 361.0,107.0 L 361.0,111.8 L 355.0,111.8 Z M 388.0,134.2 L 392.5,134.2 L 392.5,135.8 L 388.0,135.8 L 388.0,134.2 Z"/>
+                                <!-- Afrika inkl. Madagaskar -->
+                                <path d="M 344.5,171.0 L 346.0,161.4 L 355.0,147.0 L 361.0,137.4 L 374.5,135.8 L 385.0,135.8 L 388.0,142.2 L 400.0,143.8 L 407.5,145.4 L 418.0,145.4 L 422.5,153.4 L 427.0,163.0 L 434.5,175.8 L 446.5,175.8 L 443.5,187.0 L 433.0,198.2 L 430.0,211.0 L 422.5,227.0 L 418.0,238.2 L 412.0,247.8 L 400.0,251.0 L 397.0,249.4 L 392.5,236.6 L 388.0,222.2 L 388.0,204.6 L 383.5,188.6 L 374.5,185.4 L 362.5,187.0 L 355.0,185.4 L 347.5,177.4 L 344.5,171.0 Z M 436.0,235.0 L 440.5,235.0 L 445.0,219.0 L 443.5,214.2 L 439.0,220.6 L 436.0,228.6 L 436.0,235.0 Z"/>
+                                <!-- Asien inkl. Japan, Sri Lanka & Indonesien -->
+                                <path d="M 409.0,131.0 L 415.0,129.4 L 424.0,129.4 L 431.5,129.4 L 440.5,123.0 L 449.5,115.0 L 460.0,107.0 L 460.0,87.8 L 475.0,79.8 L 497.5,78.2 L 527.5,73.4 L 550.0,78.2 L 580.0,79.8 L 617.5,86.2 L 637.0,89.4 L 625.0,95.8 L 613.0,100.6 L 605.5,111.8 L 610.0,105.4 L 598.0,99.0 L 583.0,102.2 L 577.0,108.6 L 581.5,113.4 L 572.5,124.6 L 563.5,131.0 L 563.5,139.0 L 559.0,139.0 L 556.0,132.6 L 551.5,134.2 L 553.0,145.4 L 550.0,155.0 L 541.0,159.8 L 533.5,163.0 L 533.5,175.8 L 526.0,179.0 L 524.5,191.8 L 520.0,185.4 L 517.0,172.6 L 514.0,167.8 L 506.5,159.8 L 500.5,163.0 L 490.0,175.8 L 487.0,182.2 L 482.5,172.6 L 478.0,163.0 L 472.0,158.2 L 463.0,155.0 L 454.0,153.4 L 446.5,153.4 L 452.5,158.2 L 458.5,159.8 L 448.0,171.0 L 436.0,174.2 L 430.0,163.0 L 422.5,150.2 L 422.5,140.6 L 424.0,135.8 L 415.0,137.4 L 410.5,134.2 L 409.0,131.0 Z M 565.0,143.8 L 571.0,140.6 L 578.5,139.0 L 581.5,131.0 L 587.5,124.6 L 581.5,123.0 L 578.5,131.0 L 574.0,135.8 L 566.5,140.6 L 565.0,143.8 Z M 490.0,179.0 L 493.0,182.2 L 491.5,185.4 L 488.5,182.2 L 490.0,179.0 Z M 514.0,187.0 L 526.0,196.6 L 529.0,204.6 L 523.0,201.4 L 514.0,190.2 L 514.0,187.0 Z M 533.5,193.4 L 542.5,185.4 L 548.5,187.0 L 545.5,199.8 L 536.5,199.8 L 533.5,193.4 Z M 529.0,204.6 L 541.0,206.2 L 541.0,209.4 L 529.0,206.2 L 529.0,204.6 Z"/>
+                                <!-- Australien inkl. Tasmanien & Neuseeland -->
+                                <path d="M 541.0,230.2 L 553.0,222.2 L 565.0,214.2 L 574.0,214.2 L 574.0,219.0 L 581.5,222.2 L 583.0,212.6 L 589.0,222.2 L 599.5,236.6 L 595.0,251.0 L 589.0,255.8 L 580.0,255.8 L 574.0,251.0 L 566.5,246.2 L 553.0,249.4 L 542.5,249.4 L 541.0,238.2 L 541.0,230.2 Z M 587.5,260.6 L 592.0,260.6 L 592.0,263.8 L 587.5,263.8 L 587.5,260.6 Z M 629.5,251.0 L 637.0,255.8 L 632.5,260.6 L 628.0,265.4 L 620.5,268.6 L 625.0,262.2 L 631.0,257.4 L 629.5,251.0 Z"/>
+                            </g>
+
+                            <!-- GRADNETZ-KOORDINATENSYSTEM:
+                                 Nullpunkt (0° Breite, 0° Länge) liegt exakt bei X = 370, Y = 195
+                                 Längengrade (Meridiane): alle 30° = 45px
+                                 120°W(190), 90°W(235), 60°W(280), 30°W(325), 0°(370), 30°O(415), 60°O(460), 90°O(505), 120°O(550), 150°O(595)
+                                 Breitenkreise: alle 30° = 48px
+                                 60°N(99), 30°N(147), 0° Äquator(195), 30°S(243), 60°S(291)
+                            -->
+
+                            <!-- Senkrechte Längengrade (Meridiane) -->
+                            <g stroke="#334155" stroke-width="1" stroke-dasharray="4,4" opacity="0.75">
+                                <line x1="190" y1="28" x2="190" y2="355"/>
+                                <line x1="235" y1="28" x2="235" y2="355"/>
+                                <line x1="280" y1="28" x2="280" y2="355"/>
+                                <line x1="325" y1="28" x2="325" y2="355"/>
+                                <line x1="415" y1="28" x2="415" y2="355"/>
+                                <line x1="460" y1="28" x2="460" y2="355"/>
+                                <line x1="505" y1="28" x2="505" y2="355"/>
+                                <line x1="550" y1="28" x2="550" y2="355"/>
+                                <line x1="595" y1="28" x2="595" y2="355"/>
+                            </g>
+
+                            <!-- Längengrad-Beschriftung oben -->
+                            <g font-size="10.5" font-weight="800" fill="#1e293b" text-anchor="middle">
+                                <text x="190" y="20">120°W</text>
+                                <text x="235" y="20">90°W</text>
+                                <text x="280" y="20">60°W</text>
+                                <text x="325" y="20">30°W</text>
+                                <text x="370" y="19" fill="#1d4ed8" font-size="12">0° Nullmeridian</text>
+                                <text x="415" y="20">30°O</text>
+                                <text x="460" y="20">60°O</text>
+                                <text x="505" y="20">90°O</text>
+                                <text x="550" y="20">120°O</text>
+                                <text x="595" y="20">150°O</text>
+                            </g>
+
+                            <!-- NULLMERIDIAN (0° Länge) -->
+                            <line x1="370" y1="26" x2="370" y2="355" stroke="#2563eb" stroke-width="3.2"/>
+
+                            <!-- Waagerechte Breitenkreise -->
+                            <g stroke="#334155" stroke-width="1" stroke-dasharray="4,4" opacity="0.75">
+                                <line x1="72" y1="99" x2="645" y2="99"/>
+                                <line x1="72" y1="147" x2="645" y2="147"/>
+                                <line x1="72" y1="243" x2="645" y2="243"/>
+                                <line x1="72" y1="291" x2="645" y2="291"/>
+                            </g>
+
+                            <!-- Breitenkreis-Beschriftung links -->
+                            <g font-size="11" font-weight="800" fill="#1e293b" text-anchor="end">
+                                <text x="66" y="103">60° N</text>
+                                <text x="66" y="151">30° N</text>
+                                <text x="66" y="199" fill="#b91c1c" font-size="12">0° Äquator</text>
+                                <text x="66" y="247">30° S</text>
+                                <text x="66" y="295">60° S</text>
+                            </g>
+
+                            <!-- ÄQUATOR (0° Breite) -->
+                            <line x1="72" y1="195" x2="645" y2="195" stroke="#dc2626" stroke-width="3.2"/>
+
+                            <!-- Halbkugel-Hinweise in den Ecken -->
+                            <g font-size="10" font-weight="700" fill="#0369a1" opacity="0.85">
+                                <text x="85" y="45">Nord- &amp; Westhalbkugel</text>
+                                <text x="635" y="45" text-anchor="end">Nord- &amp; Osthalbkugel</text>
+                                <text x="85" y="345">Süd- &amp; Westhalbkugel</text>
+                                <text x="635" y="345" text-anchor="end">Süd- &amp; Osthalbkugel</text>
+                            </g>
+
+                            <!-- Positions-Marker für Ablese- und Städte-Aufgaben -->
+                            <g id="grid-treasure-marker" class="hidden">
+                                <circle cx="370" cy="195" r="18" fill="#f59e0b" opacity="0.45" class="pulse-target"/>
+                                <circle cx="370" cy="195" r="9" fill="#ef4444" stroke="#ffffff" stroke-width="2.5"/>
+                                <text id="grid-marker-emoji" x="370" y="177" text-anchor="middle" font-size="20">🏴‍☠️</text>
+                                <rect id="grid-marker-badge" x="325" y="207" width="90" height="20" rx="6" fill="#1e293b" opacity="0.9"/>
+                                <text id="grid-marker-label" x="370" y="221" text-anchor="middle" font-size="11" font-weight="800" fill="#ffffff">Zielpunkt</text>
+                            </g>
+
+                            <!-- Klickbare Schnittpunkte für interaktive Koordinaten-Klicks -->
+                            <g id="grid-clickable-nodes"></g>
+                        </svg>
+
+                        <div class="grid-legend-bar">
+                            <span><span class="legend-dot" style="background:#dc2626;"></span>Äquator (0° Breite → Nord/Süd)</span>
+                            <span><span class="legend-dot" style="background:#2563eb;"></span>Nullmeridian (0° Länge → Ost/West)</span>
+                        </div>
+                    </div>
+
+                    <!-- Antwort-Panel rechts -->
+                    <div class="grid-side-panel">
+                        <div>
+                            <span id="grid-topic-tag" style="display:inline-block; background: var(--emerald-100); color: var(--emerald-800); font-size:0.72rem; font-weight:800; padding:0.2rem 0.6rem; border-radius:999px; margin-bottom:0.4rem;">
+                                Grundlagen
+                            </span>
+                            <h4 style="color: var(--emerald-900); font-size: 1.1rem; margin-bottom: 0.35rem;">Gradnetz-Navigator</h4>
+                            <p id="grid-subtext" style="font-size: 0.88rem; color: var(--slate-700); line-height: 1.45;">
+                                Lies die Frage oben und wähle die richtige Antwort aus!
+                            </p>
+                        </div>
+
+                        <div id="grid-options"></div>
+
+                        <div class="mnemonic-box">
+                            <strong>🧠 Wichtige Eselsbrücke:</strong><br>
+                            Erst die <strong>B</strong>reite (Nord/Süd), dann die <strong>L</strong>änge (Ost/West) – genau wie im Alphabet: <strong>B</strong> kommt vor <strong>L</strong>!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ETAPPE 4: KARTENTYPEN-PROFI -->
+            <div id="stage-4-view" class="hidden">
+                <div class="two-col-grid">
+                    <div style="background: var(--purple-50); border: 2px solid var(--purple-200); border-radius: 1.25rem; padding: 1.25rem; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--purple-700); margin-bottom: 0.5rem;">
+                            Karten-Ausschnitt untersuchen
+                        </span>
+                        <div id="map-type-illustration" style="width: 100%; max-width: 22rem; border-radius: 0.9rem; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); border: 2px solid #fff; background: #fff;"></div>
+                        <p id="map-type-legend" style="font-size: 0.82rem; color: var(--slate-600); margin-top: 0.65rem; text-align: center; font-weight: 700;">
+                            Schau dir die Farben und Zeichen auf dieser Karte genau an!
+                        </p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                        <h4 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Welcher Kartentyp ist das?</h4>
+                        
+                        <button onclick="checkMapType('physisch')" class="btn-game maptype-btn mt-physisch">
+                            <span class="mt-icon">🏔️</span>
+                            <div>
+                                <div class="font-title" style="font-weight: 800; color: var(--emerald-900);">Physische Karte</div>
+                                <div style="font-size: 0.8rem; color: var(--emerald-800);">Zeigt die Natur: Berge (braun), Tiefland (grün), Flüsse &amp; Meere (blau).</div>
+                            </div>
+                        </button>
+
+                        <button onclick="checkMapType('politisch')" class="btn-game maptype-btn mt-politisch">
+                            <span class="mt-icon">🚩</span>
+                            <div>
+                                <div class="font-title" style="font-weight: 800; color: var(--rose-900);">Politische Karte</div>
+                                <div style="font-size: 0.8rem; color: var(--rose-900);">Zeigt Länder in bunten Flächen, Staatsgrenzen und Hauptstädte.</div>
+                            </div>
+                        </button>
+
+                        <button onclick="checkMapType('thematisch')" class="btn-game maptype-btn mt-thematisch">
+                            <span class="mt-icon">🌦️</span>
+                            <div>
+                                <div class="font-title" style="font-weight: 800; color: var(--amber-900);">Thematische Karte</div>
+                                <div style="font-size: 0.8rem; color: var(--amber-900);">Zeigt ein bestimmtes Thema, z. B. Wetter, Tiere, Bodenschätze oder Verkehr.</div>
+                            </div>
+                        </button>
+
+                        <button onclick="checkMapType('stadtplan')" class="btn-game maptype-btn mt-stadtplan">
+                            <span class="mt-icon">🏙️</span>
+                            <div>
+                                <div class="font-title" style="font-weight: 800; color: var(--sky-900);">Stadtplan</div>
+                                <div style="font-size: 0.8rem; color: var(--sky-900);">Zeigt eine Stadt ganz genau mit Straßen, Plätzen, Parks und Gebäuden.</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 4. ABSCHLUSS-URKUNDE -->
+        <section id="screen-certificate" class="hidden">
+            <div id="certificate-container" class="certificate-bg">
+                <div style="font-size: 3rem; margin-bottom: 0.35rem;">🏆🌍🧭</div>
+                <span style="text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.82rem; font-weight: 800; color: var(--amber-800); display: block; margin-bottom: 0.25rem;">
+                    Offizielle Auszeichnung • Gesellschaftswissenschaften
+                </span>
+                <h2 style="font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; color: var(--amber-900); margin-bottom: 0.75rem;">
+                    Entdecker-Urkunde
+                </h2>
+
+                <p style="color: var(--amber-900); font-size: 1.05rem;">Hiermit wird feierlich bestätigt, dass</p>
+                
+                <div id="cert-name" class="font-title" style="font-size: clamp(1.85rem, 4vw, 2.65rem); font-weight: 800; color: var(--sky-800); text-decoration: underline wavy var(--amber-500); text-underline-offset: 8px; margin: 1rem 0;">
+                    Weltentdecker/in
+                </div>
+
+                <p style="color: var(--amber-900); font-size: 1.05rem; max-width: 36rem; margin: 0 auto;">
+                    <strong>„Die große Weltreise-Challenge“</strong> erfolgreich gemeistert hat und nun ein echter Profi für Kontinente, Ozeane, Himmelsrichtungen, Längen- &amp; Breitengrade sowie Kartentypen ist!
+                </p>
+
+                <div class="cert-score-box">
+                    <div style="font-size: 0.82rem; font-weight: 800; color: var(--amber-800); text-transform: uppercase;">Erreichte Gesamtpunktzahl</div>
+                    <div id="cert-score" class="font-title" style="font-size: 2.35rem; font-weight: 800; color: var(--emerald-600); margin: 0.2rem 0;">0 Punkte</div>
+                    <div id="cert-rank" style="display: inline-block; background: var(--amber-200); color: var(--amber-900); font-weight: 800; font-size: 0.88rem; padding: 0.3rem 0.9rem; border-radius: 999px;">
+                        Rang: Meister-Navigator
+                    </div>
+                </div>
+
+                <div class="cert-footer">
+                    <div>Datum: <span id="cert-date"></span></div>
+                    <div class="cert-stamp">Geprüft &amp; Bestanden ✓</div>
+                    <div>Fach: Gewi (Klasse 5)</div>
+                </div>
+            </div>
+
+            <div class="no-print" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 1.25rem;">
+                <a href="index.html" class="btn-game" style="background: var(--slate-700); color: #fff; font-weight: 800; padding: 0.85rem 1.5rem; border-radius: 1rem; font-size: 1rem; text-decoration: none;">
+                    🏠 Zur Modul-Auswahl
+                </a>
+                <button onclick="window.print()" class="btn-game" style="background: var(--sky-600); color: #fff; font-weight: 800; padding: 0.85rem 1.5rem; border-radius: 1rem; font-size: 1rem;">
+                    🖨️ Urkunde drucken
+                </button>
+                <button onclick="resetFullGame()" class="btn-game" style="background: var(--emerald-600); color: #fff; font-weight: 800; padding: 0.85rem 1.5rem; border-radius: 1rem; font-size: 1rem;">
+                    🔄 Nochmal spielen
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL FÜR MERKHILFE -->
+    <div id="help-modal" class="hidden" onclick="if(event.target === this) closeHelpTip()">
+        <div class="modal-card">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                <h3 style="font-size: 1.4rem; color: var(--amber-800);">💡 Entdecker-Merkhilfe</h3>
+                <button onclick="closeHelpTip()" style="background: var(--slate-100); border: none; width: 2rem; height: 2rem; border-radius: 999px; font-weight: 800; cursor: pointer;">✕</button>
+            </div>
+            <p id="help-modal-text" style="color: var(--slate-700); line-height: 1.55; margin-bottom: 1.25rem; font-size: 0.98rem;">
+                Hilfetext...
+            </p>
+            <button onclick="closeHelpTip()" class="btn-game" style="width: 100%; background: var(--amber-500); color: #fff; font-weight: 800; padding: 0.8rem; border-radius: 0.9rem; font-size: 1rem;">
+                Alles klar, weiter geht's!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           1. SPIELZUSTAND & LOCALSTORAGE-SPEICHERUNG (DSGVO-KONFORM LOKAL)
+           ========================================================================== */
+        const STORAGE_KEY = "gewi5_weltreise_save_v2";
+
+        const gameState = {
+            playerName: "Weltentdecker",
+            score: 0,
+            soundEnabled: true,
+            musicEnabled: true,
+            musicVolume: 0.35,
+            musicMood: "adventure", // "adventure" (Abenteuer-Reise) oder "focus" (Ruhiger Fokus)
+            completedStages: { 1: false, 2: false, 3: false, 4: false },
+            currentStage: null,
+            currentStep: 0,
+            totalSteps: 0,
+            isTransitioning: false
+        };
+
+        function saveProgress() {
+            try {
+                const payload = {
+                    playerName: gameState.playerName,
+                    score: gameState.score,
+                    soundEnabled: gameState.soundEnabled,
+                    musicEnabled: gameState.musicEnabled,
+                    musicVolume: gameState.musicVolume,
+                    musicMood: gameState.musicMood,
+                    completedStages: gameState.completedStages
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+            } catch (e) {
+                // Falls localStorage im privaten Modus blockiert ist, still ignorieren
+            }
+        }
+
+        function loadProgress() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) {
+                    updateMusicUI();
+                    return;
+                }
+                const saved = JSON.parse(raw);
+                if (saved.playerName) {
+                    gameState.playerName = saved.playerName;
+                    document.getElementById('player-name').value = saved.playerName;
+                }
+                if (typeof saved.score === "number") {
+                    gameState.score = saved.score;
+                    document.getElementById('hud-score').textContent = saved.score;
+                }
+                if (typeof saved.soundEnabled === "boolean") {
+                    gameState.soundEnabled = saved.soundEnabled;
+                    document.getElementById('sound-toggle').textContent = saved.soundEnabled ? '🔊' : '🔇';
+                }
+                if (typeof saved.musicEnabled === "boolean") {
+                    gameState.musicEnabled = saved.musicEnabled;
+                }
+                if (typeof saved.musicVolume === "number") {
+                    gameState.musicVolume = Math.max(0, Math.min(1, saved.musicVolume));
+                }
+                if (saved.musicMood === "adventure" || saved.musicMood === "focus") {
+                    gameState.musicMood = saved.musicMood;
+                }
+                updateMusicUI();
+                if (saved.completedStages) {
+                    gameState.completedStages = { ...gameState.completedStages, ...saved.completedStages };
+                }
+                if (gameState.score > 0 || Object.values(gameState.completedStages).some(Boolean)) {
+                    document.getElementById('saved-session-hint').classList.remove('hidden');
+                }
+            } catch (e) {}
+        }
+
+        /* ==========================================================================
+           2. EIGENER WEB-AUDIO-SYNTHESIZER & HINTERGRUNDMUSIK (100 % OFFLINE)
+           ========================================================================== */
+        let audioCtx = null;
+
+        function ensureAudioContext() {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) return null;
+            if (!audioCtx) audioCtx = new AudioContextClass();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        }
+
+        function playSound(type) {
+            if (!gameState.soundEnabled) return;
+            try {
+                const ctx = ensureAudioContext();
+                if (!ctx) return;
+
+                const now = ctx.currentTime;
+                const playNote = (freq, startOffset, duration, wave = 'triangle') => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = wave;
+                    osc.frequency.setValueAtTime(freq, now + startOffset);
+                    gain.gain.setValueAtTime(0.14, now + startOffset);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + startOffset + duration);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now + startOffset);
+                    osc.stop(now + startOffset + duration);
+                };
+
+                if (type === 'correct') {
+                    playNote(523.25, 0, 0.14);      // C5
+                    playNote(659.25, 0.08, 0.16);   // E5
+                    playNote(783.99, 0.16, 0.24);   // G5
+                } else if (type === 'wrong') {
+                    playNote(196.00, 0, 0.22, 'sawtooth');     // G3
+                    playNote(174.61, 0.14, 0.28, 'sawtooth');  // F3
+                } else if (type === 'win') {
+                    playNote(523.25, 0, 0.15);
+                    playNote(659.25, 0.12, 0.15);
+                    playNote(783.99, 0.24, 0.15);
+                    playNote(1046.50, 0.36, 0.4);
+                }
+            } catch (e) {}
+        }
+
+        /* --- Mehrspuriger Weltreise-Musik-Synthesizer (100 % lokal via Web Audio API) --- */
+        const bgMusicEngine = {
+            isPlaying: false,
+            timerId: null,
+            stepIndex: 0,
+            masterGain: null,
+
+            // Melodie- und Akkord-Sequenzen in C-Dur Pentatonik (warm, freundlich & motivierend)
+            // Takte: C-Dur -> a-Moll -> F-Dur -> G-Dur (32 Achtel-Schritte pro Schleife)
+            patterns: {
+                adventure: {
+                    stepMs: 360, // Entspanntes Entdecker-Tempo (~83 BPM)
+                    // Sanfte Kalimba-/Marimba-Melodie (Frequenzen in Hz, 0 = Pause)
+                    melody: [
+                        523.25, 0, 659.25, 587.33, 523.25, 0, 392.00, 440.00, // Takt 1 (C): C5 - E5 D5 C5 - G4 A4
+                        523.25, 0, 659.25, 783.99, 659.25, 0, 523.25, 0,      // Takt 2 (Am): C5 - E5 G5 E5 - C5 -
+                        440.00, 0, 523.25, 587.33, 659.25, 0, 523.25, 440.00, // Takt 3 (F): A4 - C5 D5 E5 - C5 A4
+                        392.00, 0, 440.00, 523.25, 587.33, 0, 392.00, 0       // Takt 4 (G): G4 - A4 C5 D5 - G4 -
+                    ],
+                    // Warme Pad-Akkorde alle 8 Schritte (pro Takt)
+                    chords: {
+                        0: [261.63, 329.63, 392.00], // C-Dur (C4, E4, G4)
+                        8: [220.00, 261.63, 329.63], // a-Moll (A3, C4, E4)
+                        16: [174.61, 220.00, 261.63], // F-Dur (F3, A3, C4)
+                        24: [196.00, 246.94, 293.66]  // G-Dur (G3, B3, D4)
+                    },
+                    // Sanfter Bass-Puls auf Schlag 1 und 3 jedes Taktes
+                    bass: {
+                        0: 130.81, 4: 196.00,
+                        8: 110.00, 12: 164.81,
+                        16: 87.31, 20: 130.81,
+                        24: 98.00, 28: 146.83
+                    }
+                },
+                focus: {
+                    stepMs: 520, // Ruhiges Denk- und Konzentrations-Tempo
+                    melody: [
+                        392.00, 0, 0, 523.25, 0, 0, 440.00, 0,
+                        329.63, 0, 0, 392.00, 0, 0, 261.63, 0,
+                        349.23, 0, 0, 440.00, 0, 0, 392.00, 0,
+                        293.66, 0, 0, 392.00, 0, 0, 261.63, 0
+                    ],
+                    chords: {
+                        0: [261.63, 329.63, 392.00],
+                        8: [220.00, 261.63, 329.63],
+                        16: [174.61, 220.00, 261.63],
+                        24: [196.00, 246.94, 293.66]
+                    },
+                    bass: {
+                        0: 130.81,
+                        8: 110.00,
+                        16: 87.31,
+                        24: 98.00
+                    }
+                }
+            },
+
+            initMasterGain(ctx) {
+                if (!this.masterGain) {
+                    this.masterGain = ctx.createGain();
+                    this.masterGain.connect(ctx.destination);
+                }
+                // Angenehme Grundlautstärke (maximal ca. 0.18, damit Effekte & Konzentration klar bleiben)
+                const scaledVol = gameState.musicEnabled ? (gameState.musicVolume * 0.18) : 0.0001;
+                this.masterGain.gain.setTargetAtTime(scaledVol, ctx.currentTime, 0.08);
+            },
+
+            playKalimbaNote(ctx, freq, duration) {
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const overtone = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const overGain = ctx.createGain();
+
+                // Sanfter Sinus-Grundton + leiser Oberton für einen warmen Kalimba-/Marimba-Klang
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+
+                overtone.type = 'triangle';
+                overtone.frequency.setValueAtTime(freq * 2, now);
+                overGain.gain.setValueAtTime(0.08, now);
+                overGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.32, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+                osc.connect(gain);
+                overtone.connect(overGain);
+                overGain.connect(gain);
+                gain.connect(this.masterGain);
+
+                osc.start(now);
+                overtone.start(now);
+                osc.stop(now + duration + 0.05);
+                overtone.stop(now + duration + 0.05);
+            },
+
+            playWarmPadChord(ctx, freqs, duration) {
+                const now = ctx.currentTime;
+                freqs.forEach(freq => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now);
+
+                    // Sehr weiches Ein- und Ausblenden (Pad-Teppich)
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(0.11, now + 0.45);
+                    gain.gain.setValueAtTime(0.11, now + duration - 0.5);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    osc.start(now);
+                    osc.stop(now + duration + 0.05);
+                });
+            },
+
+            playSoftBass(ctx, freq, duration) {
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.22, now + 0.04);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                osc.start(now);
+                osc.stop(now + duration + 0.05);
+            },
+
+            tick() {
+                if (!this.isPlaying || !gameState.musicEnabled) return;
+                const ctx = ensureAudioContext();
+                if (!ctx || ctx.state !== 'running') return;
+
+                this.initMasterGain(ctx);
+                const pattern = this.patterns[gameState.musicMood] || this.patterns.adventure;
+                const step = this.stepIndex % 32;
+                const stepSec = pattern.stepMs / 1000;
+
+                // 1. Pad-Akkord am Taktanfang
+                if (pattern.chords[step]) {
+                    this.playWarmPadChord(ctx, pattern.chords[step], stepSec * 8.2);
+                }
+
+                // 2. Sanfter Bass-Puls
+                if (pattern.bass[step]) {
+                    this.playSoftBass(ctx, pattern.bass[step], stepSec * 3.5);
+                }
+
+                // 3. Melodie-Note
+                const noteFreq = pattern.melody[step];
+                if (noteFreq && noteFreq > 0) {
+                    this.playKalimbaNote(ctx, noteFreq, stepSec * 1.9);
+                }
+
+                this.stepIndex = (this.stepIndex + 1) % 32;
+                this.timerId = setTimeout(() => this.tick(), pattern.stepMs);
+            },
+
+            start() {
+                if (!gameState.musicEnabled) return;
+                const ctx = ensureAudioContext();
+                if (!ctx) return;
+                this.initMasterGain(ctx);
+
+                if (this.isPlaying) return;
+                this.isPlaying = true;
+                this.tick();
+            },
+
+            stop() {
+                this.isPlaying = false;
+                if (this.timerId) {
+                    clearTimeout(this.timerId);
+                    this.timerId = null;
+                }
+            }
+        };
+
+        function updateMusicUI() {
+            const toggleBtn = document.getElementById('music-toggle');
+            const statusText = document.getElementById('music-status-text');
+            const moodBtn = document.getElementById('music-mood-btn');
+            const slider = document.getElementById('music-volume');
+
+            if (toggleBtn && statusText) {
+                if (gameState.musicEnabled) {
+                    toggleBtn.classList.add('active');
+                    statusText.textContent = "Musik: An";
+                } else {
+                    toggleBtn.classList.remove('active');
+                    statusText.textContent = "Musik: Aus";
+                }
+            }
+
+            if (moodBtn) {
+                moodBtn.textContent = gameState.musicMood === "adventure" ? "🧭 Abenteuer" : "🧘 Fokus";
+            }
+
+            if (slider) {
+                slider.value = Math.round(gameState.musicVolume * 100);
+            }
+        }
+
+        function toggleMusic() {
+            gameState.musicEnabled = !gameState.musicEnabled;
+            updateMusicUI();
+            saveProgress();
+
+            if (gameState.musicEnabled) {
+                bgMusicEngine.start();
+            } else {
+                bgMusicEngine.stop();
+            }
+        }
+
+        function changeMusicVolume(val) {
+            const num = Math.max(0, Math.min(100, Number(val)));
+            gameState.musicVolume = num / 100;
+            if (num > 0 && !gameState.musicEnabled) {
+                gameState.musicEnabled = true;
+                updateMusicUI();
+            }
+            saveProgress();
+
+            if (gameState.musicEnabled) {
+                if (!bgMusicEngine.isPlaying) {
+                    bgMusicEngine.start();
+                } else if (audioCtx && bgMusicEngine.masterGain) {
+                    bgMusicEngine.masterGain.gain.setTargetAtTime(gameState.musicVolume * 0.18, audioCtx.currentTime, 0.05);
+                }
+            }
+        }
+
+        function cycleMusicMood() {
+            gameState.musicMood = gameState.musicMood === "adventure" ? "focus" : "adventure";
+            updateMusicUI();
+            saveProgress();
+            if (gameState.musicEnabled) {
+                bgMusicEngine.stop();
+                bgMusicEngine.start();
+            }
+        }
+
+        function toggleSound() {
+            gameState.soundEnabled = !gameState.soundEnabled;
+            document.getElementById('sound-toggle').textContent = gameState.soundEnabled ? '🔊' : '🔇';
+            saveProgress();
+        }
+
+        // Startet die Hintergrundmusik automatisch bei der ersten Nutzerinteraktion (falls aktiviert)
+        function handleFirstUserInteraction() {
+            if (gameState.musicEnabled && !bgMusicEngine.isPlaying) {
+                bgMusicEngine.start();
+            }
+        }
+        document.addEventListener('pointerdown', handleFirstUserInteraction, { once: true });
+        document.addEventListener('keydown', handleFirstUserInteraction, { once: true });
+
+        // Musik pausieren, wenn der Tab in den Hintergrund wechselt
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                bgMusicEngine.stop();
+            } else if (gameState.musicEnabled) {
+                bgMusicEngine.start();
+            }
+        });
+
+        /* ==========================================================================
+           3. FRAGEN-KATALOGE FÜR ALLE 4 ETAPPEN
+           ========================================================================== */
+
+        // ETAPPE 1: Alle 7 Kontinente + 3 Ozeane (10 Aufgaben)
+        const stage1Questions = [
+            { target: "Europa", type: "Kontinent", hint: "Hier liegt Deutschland! Europa liegt nördlich von Afrika und westlich von Asien.", labelX: 540, labelY: 112 },
+            { target: "Afrika", type: "Kontinent", hint: "Dieser Kontinent liegt südlich von Europa. Der Äquator verläuft mitten durch ihn hindurch.", labelX: 530, labelY: 230 },
+            { target: "Asien", type: "Kontinent", hint: "Der größte Kontinent der Erde! Er liegt östlich von Europa.", labelX: 735, labelY: 130 },
+            { target: "Nordamerika", type: "Kontinent", hint: "Liegt im Nordwesten der Weltkarte (dort liegen z. B. die USA und Kanada).", labelX: 205, labelY: 135 },
+            { target: "Südamerika", type: "Kontinent", hint: "Liegt südlich von Nordamerika und hat die Form einer großen Eistüte.", labelX: 332, labelY: 292 },
+            { target: "Australien", type: "Kontinent", hint: "Der kleinste Kontinent – eine große Insel im Südosten der Karte.", labelX: 838, labelY: 322 },
+            { target: "Antarktika", type: "Kontinent", hint: "Der eisige Kontinent ganz unten am Südpol!", labelX: 500, labelY: 460 },
+            { target: "Atlantischer Ozean", type: "Ozean", hint: "Dieser Ozean liegt wie ein großes 'S' zwischen Amerika und Europa/Afrika." },
+            { target: "Pazifischer Ozean", type: "Ozean", hint: "Der größte Ozean der Welt! Er liegt ganz links (westlich von Amerika) und ganz rechts (östlich von Asien)." },
+            { target: "Indischer Ozean", type: "Ozean", hint: "Er liegt südlich von Asien, östlich von Afrika und westlich von Australien." }
+        ];
+
+        // ETAPPE 2: Kompassrose & Himmelsrichtungen (9 Aufgaben)
+        const stage2Questions = [
+            { mode: "compass", answer: "S", question: "Klicke auf der Kompassrose auf: Süden (S)", hint: "Süden liegt genau gegenüber von Norden – also ganz unten!" },
+            { mode: "compass", answer: "O", question: "Klicke auf der Kompassrose auf: Osten (O)", hint: "Denk an den Spruch: Nie Ohne Seife Waschen (im Uhrzeigersinn). Osten ist rechts!" },
+            { mode: "compass", answer: "W", question: "Klicke auf der Kompassrose auf: Westen (W)", hint: "Westen liegt genau gegenüber von Osten – also links!" },
+            { mode: "compass", answer: "NO", question: "Klicke auf die Zwischenhimmelsrichtung: Nordosten (NO)", hint: "Nordosten liegt genau in der Mitte zwischen Norden (oben) und Osten (rechts)." },
+            { mode: "compass", answer: "SW", question: "Klicke auf die Zwischenhimmelsrichtung: Südwesten (SW)", hint: "Südwesten liegt zwischen Süden (unten) und Westen (links)." },
+            { mode: "compass", answer: "NW", question: "Klicke auf die Zwischenhimmelsrichtung: Nordwesten (NW)", hint: "Nordwesten liegt zwischen Norden (oben) und Westen (links)." },
+            { mode: "compass", answer: "SO", question: "Klicke auf die Zwischenhimmelsrichtung: Südosten (SO)", hint: "Südosten liegt zwischen Süden (unten) und Osten (rechts)." },
+            {
+                mode: "mc",
+                question: "Schau auf die Karte rechts: In welcher Richtung liegt Europa von Afrika aus?",
+                options: ["Im Norden (N)", "Im Süden (S)", "Im Westen (W)", "Im Südosten (SO)"],
+                answer: "Im Norden (N)",
+                hint: "Starte mit dem Finger auf Afrika und fahre nach oben zu Europa. Oben auf der Karte ist immer Norden!"
+            },
+            {
+                mode: "mc",
+                question: "In welcher Richtung liegt Australien von Asien aus gesehen?",
+                options: ["Im Nordwesten (NW)", "Im Südosten (SO)", "Im Südwesten (SW)", "Im Norden (N)"],
+                answer: "Im Südosten (SO)",
+                hint: "Australien liegt weiter unten (Süden) und weiter rechts (Osten) als Asien – also im Südosten!"
+            }
+        ];
+
+        /* ETAPPE 3: GRADNETZ & KOORDINATEN – XXL-EDITION (14 Aufgaben!)
+           Koordinaten-Umrechnung für unser SVG (viewBox 700x390):
+           - Nullpunkt (0° Breite, 0° Länge): X = 370, Y = 195
+           - 30° Länge = 45 px  (West = minus, Ost = plus) -> z.B. 60°O = 370 + 90 = 460
+           - 30° Breite = 48 px (Nord = minus, Süd = plus) -> z.B. 30°N = 195 - 48 = 147
+        */
+        const stage3Questions = [
+            // --- Teil A: Grundlagen & Begriffe ---
+            {
+                tag: "1/14 • Grundlagen",
+                type: "mc",
+                question: "Wie heißt die rote Linie bei 0°, die die Erde in Nord- und Südhalbkugel teilt?",
+                subtext: "Schau dir die rote waagerechte Linie in der Mitte der Weltkarte an.",
+                options: ["Der Äquator", "Der Nullmeridian", "Der Nordpol", "Der Wendekreis"],
+                answer: "Der Äquator",
+                hint: "Eselsbrücke: Der Äquator verläuft wie ein Gürtel um den Bauch der Erde (0° Breite)."
+            },
+            {
+                tag: "2/14 • Grundlagen",
+                type: "mc",
+                question: "Durch welchen berühmten Ort in London verläuft der blaue Nullmeridian (0° Länge)?",
+                subtext: "Er teilt die Erde in eine westliche und eine östliche Halbkugel.",
+                options: ["Greenwich (London)", "Berlin", "New York", "Rom"],
+                answer: "Greenwich (London)",
+                hint: "Im Londoner Stadtteil Greenwich steht eine alte Sternwarte – genau dort wurde 0° Länge festgelegt!"
+            },
+            // --- Teil B: Typische Stolperfallen trainieren ---
+            {
+                tag: "3/14 • Stolperfalle!",
+                type: "mc",
+                question: "Achtung Stolperfalle! Breitenkreise verlaufen von West nach Ost. Was geben sie aber an?",
+                subtext: "Überlege: Wenn du vom Äquator aus zu einem anderen Breitenkreis gehst, in welche Richtung wanderst du?",
+                options: [
+                    "Den Abstand nach Norden (N) oder Süden (S)",
+                    "Den Abstand nach Osten (O) oder Westen (W)",
+                    "Die Höhe der Berge in Metern",
+                    "Die Uhrzeit in einem Land"
+                ],
+                answer: "Den Abstand nach Norden (N) oder Süden (S)",
+                hint: "Stell dir eine Leiter vor: Die Sprossen liegen waagerecht (West–Ost), aber du kletterst auf ihnen nach oben (Norden) oder unten (Süden)!"
+            },
+            {
+                tag: "4/14 • Stolperfalle!",
+                type: "mc",
+                question: "Längengrade (Meridiane) laufen vom Nordpol zum Südpol. Was messen sie?",
+                subtext: "Schau dir die senkrechten Linien links und rechts vom Nullmeridian an.",
+                options: [
+                    "Den Abstand nach Osten (O) oder Westen (W)",
+                    "Den Abstand nach Norden (N) oder Süden (S)",
+                    "Die Länge eines Flusses",
+                    "Nur die Temperatur am Südpol"
+                ],
+                answer: "Den Abstand nach Osten (O) oder Westen (W)",
+                hint: "Längengrade teilen die Erde wie Orangenspalten nach links (Westen) und rechts (Osten) vom Nullmeridian!"
+            },
+            {
+                tag: "5/14 • Reihenfolge-Regel",
+                type: "mc",
+                question: "In welcher Reihenfolge schreibt man geografische Koordinaten immer richtig auf?",
+                subtext: "Nutze die Alphabet-Eselsbrücke unten rechts!",
+                options: [
+                    "Erst Breite (N/S), dann Länge (O/W)",
+                    "Erst Länge (O/W), dann Breite (N/S)",
+                    "Immer zuerst Osten, dann Süden",
+                    "Die Reihenfolge ist völlig egal"
+                ],
+                answer: "Erst Breite (N/S), dann Länge (O/W)",
+                hint: "Im Alphabet kommt B (wie Breite) vor L (wie Länge)! Darum steht immer N oder S vorne und O oder W hinten."
+            },
+            // --- Teil C: Interaktive Karten-Klick-Aufgaben auf dem Gradnetz ---
+            {
+                tag: "6/14 • Karten-Klick",
+                type: "click_coord",
+                targetX: 370, targetY: 195, // 0° Breite, 0° Länge
+                question: "Klicke auf der Karte auf den Nullpunkt der Erde: 0° Breite / 0° Länge!",
+                subtext: "Wo kreuzen sich der rote Äquator und der blaue Nullmeridian? Klicke den Punkt im Atlantik an!",
+                hint: "Suche den Schnittpunkt genau in der Mitte der Karte, wo sich die rote und die blaue Linie treffen (vor der Küste Afrikas)."
+            },
+            {
+                tag: "7/14 • Karten-Klick",
+                type: "click_coord",
+                targetX: 415, targetY: 147, // 30° N, 30° O
+                question: "Klicke auf dem Gradnetz genau auf: 30° N / 30° O",
+                subtext: "Fahre auf dem Breitenkreis 30° N nach rechts bis zum Längengrad 30° O!",
+                hint: "30° N liegt eine Linie über dem Äquator. 30° O liegt eine Linie rechts vom blauen Nullmeridian (in Nordafrika / Ägypten)."
+            },
+            {
+                tag: "8/14 • Karten-Klick",
+                type: "click_coord",
+                targetX: 280, targetY: 243, // 30° S, 60° W
+                question: "Schatzsuche! Klicke auf der Karte auf: 30° S / 60° W",
+                subtext: "Dieser Schatz liegt auf der Süd- und Westhalbkugel in Südamerika!",
+                hint: "Gehe eine Linie unter den Äquator (30° S) und zwei Linien nach links vom Nullmeridian (60° W)."
+            },
+            {
+                tag: "9/14 • Karten-Klick",
+                type: "click_coord",
+                targetX: 550, targetY: 147, // 30° N, 120° O
+                question: "Expedition nach Ostasien! Klicke auf: 30° N / 120° O",
+                subtext: "Suche den Schnittpunkt von 30° Nord und 120° Ost!",
+                hint: "Bleibe auf der Linie 30° N (über dem Äquator) und wandere weit nach rechts bis zur Linie 120° O."
+            },
+            // --- Teil D: Schatz-Koordinaten von der Karte ablesen ---
+            {
+                tag: "10/14 • Koordinaten ablesen",
+                type: "read_coord",
+                markerX: 235, markerY: 99, // 60° N, 90° W
+                markerEmoji: "🏴‍☠️",
+                markerLabel: "Schatz A",
+                question: "Welche Koordinaten hat die Piratenflagge 🏴‍☠️ in Nordamerika?",
+                subtext: "Lies zuerst links den Breitengrad (N/S) ab und dann oben den Längengrad (O/W)!",
+                options: ["60° N / 90° W", "90° N / 60° W", "60° S / 90° W", "60° N / 90° O"],
+                answer: "60° N / 90° W",
+                hint: "Die Flagge liegt ganz oben auf der Linie 60° N und links vom Nullmeridian auf der Linie 90° W."
+            },
+            {
+                tag: "11/14 • Koordinaten ablesen",
+                type: "read_coord",
+                markerX: 595, markerY: 243, // 30° S, 150° O
+                markerEmoji: "💎",
+                markerLabel: "Juwel",
+                question: "Ein Diamant 💎 wurde an der Ostküste Australiens entdeckt! Wie lauten seine Koordinaten?",
+                subtext: "Achte auf Südhalbkugel (S) und Osthalbkugel (O)!",
+                options: ["30° S / 150° O", "150° O / 30° S", "30° N / 150° O", "30° S / 150° W"],
+                answer: "30° S / 150° O",
+                hint: "Unter dem Äquator = 30° S. Ganz rechts vom Nullmeridian = 150° O. Erst Breite, dann Länge!"
+            },
+            // --- Teil E: Weltstädte & Halbkugeln ---
+            {
+                tag: "12/14 • Weltstädte",
+                type: "read_coord",
+                markerX: 390, markerY: 112, // Berlin ca. 52° N / 13° O
+                markerEmoji: "🐻",
+                markerLabel: "Berlin",
+                question: "Unsere Hauptstadt Berlin liegt bei 52° N / 13° O. Auf welchen zwei Halbkugeln liegt Berlin?",
+                subtext: "Schau auf den Bären 🐻 auf der Karte: Wo liegt er im Vergleich zu Äquator und Nullmeridian?",
+                options: [
+                    "Auf der Nord- und Osthalbkugel",
+                    "Auf der Nord- und Westhalbkugel",
+                    "Auf der Süd- und Osthalbkugel",
+                    "Auf der Süd- und Westhalbkugel"
+                ],
+                answer: "Auf der Nord- und Osthalbkugel",
+                hint: "52° N bedeutet Nordhalbkugel (über dem Äquator). 13° O bedeutet Osthalbkugel (rechts vom Nullmeridian)."
+            },
+            {
+                tag: "13/14 • Weltstädte",
+                type: "read_coord",
+                markerX: 259, markerY: 130, // New York ca. 41° N / 74° W
+                markerEmoji: "🗽",
+                markerLabel: "New York",
+                question: "Ordne der Weltstadt New York (USA) 🗽 ihre richtigen Koordinaten zu!",
+                subtext: "New York liegt nördlich des Äquators und westlich des Nullmeridians.",
+                options: [
+                    "41° N / 74° W",
+                    "41° S / 74° O",
+                    "74° N / 41° W",
+                    "41° N / 74° O"
+                ],
+                answer: "41° N / 74° W",
+                hint: "Da New York auf der Nord- und Westhalbkugel liegt, müssen N (für Nord) und W (für West) in den Koordinaten stehen!"
+            },
+            {
+                tag: "14/14 • Weltstädte-Finale",
+                type: "mc",
+                question: "Welcher dieser drei berühmten Orte liegt als einziger auf der Südhalbkugel?",
+                subtext: "Vergleiche die Buchstaben hinter den Gradzahlen (N = Nord, S = Süd)!",
+                options: [
+                    "Rio de Janeiro (23° S / 43° W)",
+                    "Kairo (30° N / 31° O)",
+                    "Tokio (36° N / 140° O)",
+                    "Alle drei liegen auf der Nordhalbkugel"
+                ],
+                answer: "Rio de Janeiro (23° S / 43° W)",
+                hint: "Nur bei Rio de Janeiro steht ein 'S' für Südliche Breite (23° S) – die Stadt liegt in Südamerika unterhalb des Äquators!"
+            }
+        ];
+
+        // ETAPPE 4: Kartentypen (4 Aufgaben mit eigenen SVG-Illustrationen)
+        const stage4Questions = [
+            {
+                answer: "physisch",
+                question: "Schau dir die Höhenfarben an: Grün für Tiefland, Braun für hohe Gebirge, Blau für Flüsse.",
+                legend: "Farben zeigen die Höhe der Landschaft (Tiefland = grün, Gebirge = braun).",
+                hint: "Diese Karte zeigt die natürliche Oberfläche der Erde (Berge, Täler, Flüsse) – so wie sie von Natur aus aussieht.",
+                svg: `
+                <svg viewBox="0 0 300 180" style="background: #bae6fd;">
+                    <path d="M 20,20 L 280,20 L 270,160 L 30,155 Z" fill="#86efac"/>
+                    <path d="M 60,55 Q 150,35 230,70 Q 250,120 180,140 Q 80,145 60,55 Z" fill="#fde047"/>
+                    <polygon points="105,115 135,60 165,115" fill="#92400e"/>
+                    <polygon points="126,76 135,60 144,76" fill="#ffffff"/>
+                    <polygon points="150,120 185,55 215,120" fill="#78350f"/>
+                    <polygon points="174,75 185,55 196,75" fill="#ffffff"/>
+                    <path d="M 135,115 Q 120,140 90,165" fill="none" stroke="#0284c7" stroke-width="5" stroke-linecap="round"/>
+                    <rect x="10" y="10" width="95" height="44" rx="6" fill="rgba(255,255,255,0.92)"/>
+                    <rect x="16" y="17" width="12" height="10" fill="#86efac"/><text x="33" y="25" font-size="9" font-weight="bold">0-200m</text>
+                    <rect x="16" y="33" width="12" height="10" fill="#78350f"/><text x="33" y="41" font-size="9" font-weight="bold">über 2000m</text>
+                </svg>`
+            },
+            {
+                answer: "politisch",
+                question: "Jedes Land hat hier eine eigene bunte Farbe, klare Grenzen und eingezeichnete Hauptstädte.",
+                legend: "Verschiedene Farben trennen die einzelnen Staaten voneinander.",
+                hint: "Hier geht es um Staaten, Grenzen und Hauptstädte (wie z. B. Deutschland, Frankreich, Polen).",
+                svg: `
+                <svg viewBox="0 0 300 180" style="background: #bae6fd;">
+                    <path d="M 25,30 L 145,25 L 135,105 L 35,110 Z" fill="#fda4af" stroke="#be123c" stroke-width="2.5"/>
+                    <circle cx="85" cy="65" r="4" fill="#be123c"/>
+                    <text x="85" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#881337">★ Hauptstadt A</text>
+                    <path d="M 145,25 L 270,35 L 260,115 L 135,105 Z" fill="#fde047" stroke="#a16207" stroke-width="2.5"/>
+                    <circle cx="205" cy="70" r="4" fill="#a16207"/>
+                    <text x="205" y="60" text-anchor="middle" font-size="11" font-weight="bold" fill="#713f12">★ Hauptstadt B</text>
+                    <path d="M 55,110 L 235,115 L 220,165 L 65,160 Z" fill="#c4b5fd" stroke="#5b21b6" stroke-width="2.5"/>
+                    <circle cx="150" cy="140" r="4" fill="#5b21b6"/>
+                    <text x="150" y="153" text-anchor="middle" font-size="11" font-weight="bold" fill="#4c1d95">★ Hauptstadt C</text>
+                </svg>`
+            },
+            {
+                answer: "stadtplan",
+                question: "Hier erkennst du einzelne Straßen, einen Bahnhof, einen Stadtpark und wichtige Gebäude.",
+                legend: "Maßstab sehr groß: Einzelne Straßen und Häuserblocks sind erkennbar.",
+                hint: "Wenn du in einer fremden Stadt den Weg vom Bahnhof zum Museum suchst, brauchst du genau diese Karte!",
+                svg: `
+                <svg viewBox="0 0 300 180" style="background: #f1f5f9;">
+                    <rect x="25" y="20" width="95" height="65" rx="10" fill="#86efac" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="72" y="56" text-anchor="middle" font-size="11" font-weight="bold" fill="#14532d">🌳 Stadtpark</text>
+                    <rect x="145" y="20" width="60" height="45" fill="#cbd5e1"/>
+                    <rect x="225" y="20" width="55" height="45" fill="#cbd5e1"/>
+                    <rect x="145" y="105" width="135" height="55" fill="#cbd5e1"/>
+                    <line x1="132" y1="0" x2="132" y2="180" stroke="#ffffff" stroke-width="14"/>
+                    <line x1="132" y1="0" x2="132" y2="180" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5,5"/>
+                    <line x1="0" y1="90" x2="300" y2="90" stroke="#ffffff" stroke-width="14"/>
+                    <text x="210" y="93" text-anchor="middle" font-size="9" font-weight="bold" fill="#475569">Hauptstraße</text>
+                    <rect x="30" y="115" width="85" height="35" rx="6" fill="#3b82f6"/>
+                    <text x="72" y="136" text-anchor="middle" font-size="10" font-weight="bold" fill="#ffffff">🚆 Bahnhof</text>
+                </svg>`
+            },
+            {
+                answer: "thematisch",
+                question: "Diese Karte zeigt speziell, wo in einem Land Erdöl, Kohle oder Windparks vorkommen.",
+                legend: "Spezielle Symbole erklären ein ganz bestimmtes Thema (hier: Energie & Bodenschätze).",
+                hint: "Diese Karte konzentriert sich auf ein einziges Thema – zum Beispiel Klima, Tiere, Verkehr oder Rohstoffe.",
+                svg: `
+                <svg viewBox="0 0 300 180" style="background: #fffbeb;">
+                    <path d="M 45,25 L 255,25 L 245,155 L 55,155 Z" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+                    <text x="95" y="65" font-size="24">🌬️</text>
+                    <text x="165" y="55" font-size="24">🌬️</text>
+                    <text x="205" y="115" font-size="24">🛢️</text>
+                    <text x="115" y="130" font-size="24">⛏️</text>
+                    <rect x="10" y="125" width="115" height="48" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+                    <text x="18" y="140" font-size="9" font-weight="bold">🌬️ Windenergie</text>
+                    <text x="18" y="153" font-size="9" font-weight="bold">🛢️ Erdöl  ⛏️ Kohle</text>
+                    <text x="18" y="166" font-size="8" fill="#64748b">Thema: Rohstoffe</text>
+                </svg>`
+            }
+        ];
+
+        /* ==========================================================================
+           4. NAVIGATION & SPIELSTEUERUNG
+           ========================================================================== */
+
+        function showScreen(screenId) {
+            ['screen-start', 'screen-hub', 'screen-play', 'screen-certificate'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+
+            const hud = document.getElementById('game-hud');
+            if (screenId === 'screen-play' || screenId === 'screen-hub') {
+                hud.classList.remove('hidden');
+            } else {
+                hud.classList.add('hidden');
+            }
+        }
+
+        function startGame() {
+            const inputName = document.getElementById('player-name').value.trim();
+            if (inputName.length > 0) {
+                gameState.playerName = inputName;
+            }
+            document.getElementById('hub-player-name').textContent = gameState.playerName;
+            saveProgress();
+            playSound('correct');
+            returnToHub();
+        }
+
+        function returnToHub() {
+            gameState.currentStage = null;
+            document.getElementById('hud-stage-title').textContent = "Reise-Übersicht";
+            const doneCount = Object.values(gameState.completedStages).filter(Boolean).length;
+            document.getElementById('hud-progress-text').textContent = `${doneCount} / 4 Etappen`;
+            document.getElementById('hud-progress-bar').style.width = `${(doneCount / 4) * 100}%`;
+
+            const defaultLabels = { 1: "10 Aufgaben", 2: "9 Aufgaben", 3: "14 Aufgaben • XXL", 4: "4 Aufgaben" };
+
+            for (let i = 1; i <= 4; i++) {
+                const badge = document.getElementById(`badge-stage-${i}`);
+                const card = document.getElementById(`card-stage-${i}`);
+                if (gameState.completedStages[i]) {
+                    badge.textContent = "Geschafft! ✅";
+                    badge.classList.add('done');
+                    card.classList.add('completed');
+                } else {
+                    badge.textContent = defaultLabels[i];
+                    badge.classList.remove('done');
+                    card.classList.remove('completed');
+                }
+            }
+
+            if (doneCount === 4) {
+                document.getElementById('btn-finish-all').classList.remove('hidden');
+                document.getElementById('hub-hint').textContent = "Fantastisch! Du hast alle 4 Etappen gemeistert!";
+            } else {
+                document.getElementById('btn-finish-all').classList.add('hidden');
+                document.getElementById('hub-hint').textContent = "Tipp: Klicke auf eine Etappe, um loszulegen!";
+            }
+
+            showScreen('screen-hub');
+        }
+
+        function updateScore(points) {
+            gameState.score = Math.max(0, gameState.score + points);
+            document.getElementById('hud-score').textContent = gameState.score;
+            saveProgress();
+        }
+
+        function showFeedback(isCorrect, message) {
+            const banner = document.getElementById('feedback-banner');
+            banner.classList.remove('hidden', 'fb-correct', 'fb-wrong');
+            if (isCorrect) {
+                banner.classList.add('fb-correct');
+                banner.innerHTML = `🎉 ${message}`;
+            } else {
+                banner.classList.add('fb-wrong');
+                banner.innerHTML = `🤔 ${message}`;
+            }
+        }
+
+        function hideFeedback() {
+            document.getElementById('feedback-banner').classList.add('hidden');
+        }
+
+        /* ==========================================================================
+           5. ETAPPEN-INITIALISIERUNG
+           ========================================================================== */
+
+        function startStage(stageNum) {
+            gameState.currentStage = stageNum;
+            gameState.currentStep = 0;
+            gameState.isTransitioning = false;
+            hideFeedback();
+
+            ['stage-1-view', 'stage-2-view', 'stage-3-view', 'stage-4-view'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+
+            showScreen('screen-play');
+
+            if (stageNum === 1) {
+                document.getElementById('hud-stage-title').textContent = "Etappe 1: Kontinente & Ozeane";
+                document.getElementById('stage-1-view').classList.remove('hidden');
+                gameState.totalSteps = stage1Questions.length;
+                resetStage1Visuals();
+                loadStage1Question();
+            } else if (stageNum === 2) {
+                document.getElementById('hud-stage-title').textContent = "Etappe 2: Kompass & Richtungen";
+                document.getElementById('stage-2-view').classList.remove('hidden');
+                gameState.totalSteps = stage2Questions.length;
+                resetStage2Visuals();
+                loadStage2Question();
+            } else if (stageNum === 3) {
+                document.getElementById('hud-stage-title').textContent = "Etappe 3: Gradnetz & Koordinaten (XXL)";
+                document.getElementById('stage-3-view').classList.remove('hidden');
+                gameState.totalSteps = stage3Questions.length;
+                loadStage3Question();
+            } else if (stageNum === 4) {
+                document.getElementById('hud-stage-title').textContent = "Etappe 4: Kartentypen-Profi";
+                document.getElementById('stage-4-view').classList.remove('hidden');
+                gameState.totalSteps = stage4Questions.length;
+                loadStage4Question();
+            }
+            updateStageProgress();
+        }
+
+        function updateStageProgress() {
+            document.getElementById('hud-progress-text').textContent = `${gameState.currentStep} / ${gameState.totalSteps}`;
+            const pct = (gameState.currentStep / gameState.totalSteps) * 100;
+            document.getElementById('hud-progress-bar').style.width = `${pct}%`;
+        }
+
+        function completeCurrentStage() {
+            playSound('win');
+            gameState.completedStages[gameState.currentStage] = true;
+            updateScore(25);
+            saveProgress();
+            showFeedback(true, `Super gemacht! Du hast Etappe ${gameState.currentStage} komplett abgeschlossen! (+25 Bonus-Punkte)`);
+            setTimeout(() => {
+                returnToHub();
+            }, 2200);
+        }
+
+        /* ==========================================================================
+           6. ETAPPE 1 LOGIK: WELTKARTE
+           ========================================================================== */
+        function resetStage1Visuals() {
+            document.querySelectorAll('.continent-path').forEach(el => el.classList.remove('continent-found'));
+            document.querySelectorAll('.ocean-zone').forEach(el => el.classList.remove('ocean-found'));
+            document.getElementById('found-labels').innerHTML = '';
+        }
+
+        function loadStage1Question() {
+            if (gameState.currentStep >= stage1Questions.length) {
+                completeCurrentStage();
+                return;
+            }
+            const q = stage1Questions[gameState.currentStep];
+            document.getElementById('task-icon').textContent = q.type === "Kontinent" ? "🌍" : "🌊";
+            document.getElementById('task-category').textContent = `Gesuchter ${q.type} (${gameState.currentStep + 1}/${stage1Questions.length})`;
+            document.getElementById('task-question').textContent = `Klicke auf der Karte auf: ${q.target}`;
+        }
+
+        function checkMapTarget(clickedName) {
+            if (gameState.isTransitioning || gameState.currentStage !== 1) return;
+            const q = stage1Questions[gameState.currentStep];
+
+            if (clickedName === q.target) {
+                gameState.isTransitioning = true;
+                playSound('correct');
+                updateScore(10);
+                showFeedback(true, `Volltreffer! Das ist ${q.target}! (+10 Punkte)`);
+
+                if (q.type === "Kontinent") {
+                    if (q.target === "Nordamerika") {
+                        document.querySelectorAll('#cont-Nordamerika, path[onclick*="Nordamerika"]').forEach(p => p.classList.add('continent-found'));
+                    } else {
+                        const el = document.getElementById(`cont-${q.target}`);
+                        if (el) el.classList.add('continent-found');
+                    }
+                    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    label.setAttribute("x", q.labelX);
+                    label.setAttribute("y", q.labelY);
+                    label.textContent = q.target;
+                    document.getElementById('found-labels').appendChild(label);
+                } else {
+                    const el = document.getElementById(`ocean-${q.target}`);
+                    if (el) {
+                        el.classList.add('ocean-found');
+                        const texts = el.querySelectorAll('text');
+                        if (texts.length > 0) texts[0].textContent = `✓ ${q.target}`;
+                        if (texts.length > 1) texts[1].textContent = "";
+                    }
+                }
+
+                gameState.currentStep++;
+                updateStageProgress();
+
+                setTimeout(() => {
+                    hideFeedback();
+                    gameState.isTransitioning = false;
+                    loadStage1Question();
+                }, 1050);
+            } else {
+                playSound('wrong');
+                updateScore(-2);
+                showFeedback(false, `Das war ${clickedName}. Gesucht wird aber ${q.target}! (-2 Punkte)`);
+            }
+        }
+
+        /* ==========================================================================
+           7. ETAPPE 2 LOGIK: KOMPASS & HIMMELSRICHTUNGEN
+           ========================================================================== */
+        function resetStage2Visuals() {
+            ['NO', 'O', 'SO', 'S', 'SW', 'W', 'NW'].forEach(d => {
+                const btn = document.getElementById(`comp-${d}`);
+                btn.textContent = '?';
+                btn.classList.remove('compass-found');
+            });
+            document.getElementById('compass-mc-options').classList.add('hidden');
+        }
+
+        function loadStage2Question() {
+            if (gameState.currentStep >= stage2Questions.length) {
+                completeCurrentStage();
+                return;
+            }
+            const q = stage2Questions[gameState.currentStep];
+            document.getElementById('task-icon').textContent = "🧭";
+            document.getElementById('task-category').textContent = `Kompass-Training (${gameState.currentStep + 1}/${stage2Questions.length})`;
+            document.getElementById('task-question').textContent = q.question;
+
+            const mcContainer = document.getElementById('compass-mc-options');
+            if (q.mode === "compass") {
+                mcContainer.classList.add('hidden');
+                document.getElementById('compass-instruction').textContent = "Klicke auf den passenden Kreis an der Kompassrose links!";
+            } else {
+                document.getElementById('compass-instruction').textContent = "Wähle unten die richtige Himmelsrichtung aus:";
+                mcContainer.innerHTML = '';
+                mcContainer.classList.remove('hidden');
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "btn-game option-btn";
+                    btn.style.textAlign = "center";
+                    btn.textContent = opt;
+                    btn.onclick = () => checkCompassMC(opt);
+                    mcContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function checkCompass(dir) {
+            if (gameState.isTransitioning || gameState.currentStage !== 2) return;
+            const q = stage2Questions[gameState.currentStep];
+            if (q.mode !== "compass") return;
+
+            if (dir === q.answer) {
+                gameState.isTransitioning = true;
+                playSound('correct');
+                updateScore(10);
+                const btn = document.getElementById(`comp-${dir}`);
+                btn.textContent = dir;
+                btn.classList.add('compass-found');
+                showFeedback(true, `Richtig! ${dir} ist an der richtigen Stelle! (+10 Punkte)`);
+
+                gameState.currentStep++;
+                updateStageProgress();
+                setTimeout(() => {
+                    hideFeedback();
+                    gameState.isTransitioning = false;
+                    loadStage2Question();
+                }, 950);
+            } else {
+                playSound('wrong');
+                updateScore(-2);
+                showFeedback(false, `Nicht ganz! Schau nochmal auf den Merksatz oder nutze die Merkhilfe.`);
+            }
+        }
+
+        function checkCompassMC(selected) {
+            if (gameState.isTransitioning || gameState.currentStage !== 2) return;
+            const q = stage2Questions[gameState.currentStep];
+
+            if (selected === q.answer) {
+                gameState.isTransitioning = true;
+                playSound('correct');
+                updateScore(10);
+                showFeedback(true, `Genau richtig! ${selected}! (+10 Punkte)`);
+
+                gameState.currentStep++;
+                updateStageProgress();
+                setTimeout(() => {
+                    hideFeedback();
+                    gameState.isTransitioning = false;
+                    loadStage2Question();
+                }, 1050);
+            } else {
+                playSound('wrong');
+                updateScore(-2);
+                showFeedback(false, `Leider falsch. Denke daran: Oben ist Norden, unten Süden, rechts Osten, links Westen.`);
+            }
+        }
+
+        /* ==========================================================================
+           8. ETAPPE 3 LOGIK: GRADNETZ & KOORDINATEN (14 AUFGABEN)
+           ========================================================================== */
+        function loadStage3Question() {
+            if (gameState.currentStep >= stage3Questions.length) {
+                completeCurrentStage();
+                return;
+            }
+            const q = stage3Questions[gameState.currentStep];
+            document.getElementById('task-icon').textContent = "🌐";
+            document.getElementById('task-category').textContent = `Gradnetz & Koordinaten (${gameState.currentStep + 1}/${stage3Questions.length})`;
+            document.getElementById('task-question').textContent = q.question;
+            document.getElementById('grid-topic-tag').textContent = q.tag || "Gradnetz";
+            document.getElementById('grid-subtext').textContent = q.subtext;
+
+            const marker = document.getElementById('grid-treasure-marker');
+            const nodesContainer = document.getElementById('grid-clickable-nodes');
+            const optionsContainer = document.getElementById('grid-options');
+
+            marker.classList.add('hidden');
+            nodesContainer.innerHTML = '';
+            optionsContainer.innerHTML = '';
+
+            if (q.type === "mc" || q.type === "read_coord") {
+                if (q.type === "read_coord") {
+                    marker.classList.remove('hidden');
+                    marker.querySelectorAll('circle').forEach(c => {
+                        c.setAttribute('cx', q.markerX);
+                        c.setAttribute('cy', q.markerY);
+                    });
+                    document.getElementById('grid-marker-emoji').setAttribute('x', q.markerX);
+                    document.getElementById('grid-marker-emoji').setAttribute('y', q.markerY - 16);
+                    document.getElementById('grid-marker-emoji').textContent = q.markerEmoji || "🏴‍☠️";
+
+                    const badge = document.getElementById('grid-marker-badge');
+                    const label = document.getElementById('grid-marker-label');
+                    badge.setAttribute('x', q.markerX - 42);
+                    badge.setAttribute('y', q.markerY + 13);
+                    label.setAttribute('x', q.markerX);
+                    label.setAttribute('y', q.markerY + 27);
+                    label.textContent = q.markerLabel || "Zielpunkt";
+                }
+
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "btn-game option-btn";
+                    btn.textContent = opt;
+                    btn.onclick = () => checkStage3Answer(opt === q.answer, q.hint);
+                    optionsContainer.appendChild(btn);
+                });
+            } else if (q.type === "click_coord") {
+                optionsContainer.innerHTML = `
+                    <div style="background: var(--amber-100); border: 2px solid var(--amber-300); padding: 0.85rem; border-radius: 0.9rem; font-size: 0.88rem; font-weight: 800; color: var(--amber-900); text-align: center;">
+                        👆 Klicke direkt auf den richtigen grünen Kreuzungspunkt auf der Gradnetz-Karte links!
+                    </div>`;
+                
+                // Relevante Schnittpunkte auf dem Gradnetz-Gitter als klickbare Kreise erzeugen
+                const xCoords = [190, 235, 280, 325, 370, 415, 460, 505, 550, 595];
+                const yCoords = [99, 147, 195, 243, 291];
+
+                xCoords.forEach(x => {
+                    yCoords.forEach(y => {
+                        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                        dot.setAttribute("cx", x);
+                        dot.setAttribute("cy", y);
+                        dot.setAttribute("r", "9.5");
+                        dot.setAttribute("fill", "rgba(16, 185, 129, 0.35)");
+                        dot.setAttribute("stroke", "#059669");
+                        dot.setAttribute("stroke-width", "1.8");
+                        dot.style.cursor = "pointer";
+                        dot.onmouseenter = () => dot.setAttribute("fill", "rgba(245, 158, 11, 0.85)");
+                        dot.onmouseleave = () => dot.setAttribute("fill", "rgba(16, 185, 129, 0.35)");
+                        dot.onclick = () => {
+                            const isHit = (x === q.targetX && y === q.targetY);
+                            if (isHit) {
+                                dot.setAttribute("fill", "#22c55e");
+                                dot.setAttribute("r", "12");
+                            }
+                            checkStage3Answer(isHit, q.hint);
+                        };
+                        nodesContainer.appendChild(dot);
+                    });
+                });
+            }
+        }
+
+        function checkStage3Answer(isCorrect, hintText) {
+            if (gameState.isTransitioning || gameState.currentStage !== 3) return;
+
+            if (isCorrect) {
+                gameState.isTransitioning = true;
+                playSound('correct');
+                updateScore(15);
+                showFeedback(true, `Volltreffer! Perfekt im Gradnetz orientiert! (+15 Punkte)`);
+
+                gameState.currentStep++;
+                updateStageProgress();
+                setTimeout(() => {
+                    hideFeedback();
+                    gameState.isTransitioning = false;
+                    loadStage3Question();
+                }, 1150);
+            } else {
+                playSound('wrong');
+                updateScore(-2);
+                showFeedback(false, `Noch nicht ganz richtig! Tipp: ${hintText}`);
+            }
+        }
+
+        /* ==========================================================================
+           9. ETAPPE 4 LOGIK: KARTENTYPEN
+           ========================================================================== */
+        function loadStage4Question() {
+            if (gameState.currentStep >= stage4Questions.length) {
+                completeCurrentStage();
+                return;
+            }
+            const q = stage4Questions[gameState.currentStep];
+            document.getElementById('task-icon').textContent = "🗺️";
+            document.getElementById('task-category').textContent = `Kartentyp erkennen (${gameState.currentStep + 1}/${stage4Questions.length})`;
+            document.getElementById('task-question').textContent = q.question;
+            document.getElementById('map-type-illustration').innerHTML = q.svg;
+            document.getElementById('map-type-legend').textContent = q.legend;
+        }
+
+        function checkMapType(selectedType) {
+            if (gameState.isTransitioning || gameState.currentStage !== 4) return;
+            const q = stage4Questions[gameState.currentStep];
+
+            if (selectedType === q.answer) {
+                gameState.isTransitioning = true;
+                playSound('correct');
+                updateScore(15);
+                const label = selectedType === 'stadtplan' ? 'ein Stadtplan' : `eine ${selectedType}e Karte`;
+                showFeedback(true, `Richtig erkannt! Das ist ${label}! (+15 Punkte)`);
+
+                gameState.currentStep++;
+                updateStageProgress();
+                setTimeout(() => {
+                    hideFeedback();
+                    gameState.isTransitioning = false;
+                    loadStage4Question();
+                }, 1150);
+            } else {
+                playSound('wrong');
+                updateScore(-2);
+                showFeedback(false, `Nicht ganz! Lies dir die Beschreibung der vier Kartentypen rechts noch einmal genau durch.`);
+            }
+        }
+
+        /* ==========================================================================
+           10. MERKHILFE-MODAL & URKUNDE
+           ========================================================================== */
+        function showHelpTip() {
+            let hintText = "Schau dir die Karte genau an und nutze die Eselsbrücken!";
+            const step = gameState.currentStep;
+
+            if (gameState.currentStage === 1 && stage1Questions[step]) {
+                hintText = stage1Questions[step].hint;
+            } else if (gameState.currentStage === 2 && stage2Questions[step]) {
+                hintText = stage2Questions[step].hint;
+            } else if (gameState.currentStage === 3 && stage3Questions[step]) {
+                hintText = stage3Questions[step].hint;
+            } else if (gameState.currentStage === 4 && stage4Questions[step]) {
+                hintText = stage4Questions[step].hint;
+            }
+
+            document.getElementById('help-modal-text').textContent = hintText;
+            document.getElementById('help-modal').classList.remove('hidden');
+        }
+
+        function closeHelpTip() {
+            document.getElementById('help-modal').classList.add('hidden');
+        }
+
+        function showCertificate() {
+            playSound('win');
+            document.getElementById('cert-name').textContent = gameState.playerName;
+            document.getElementById('cert-score').textContent = `${gameState.score} Punkte`;
+            
+            // Gesamtpunktzahl angepasst an die 39 Aufgaben + 100 Bonuspunkte (Maximalwert ca. 580 Punkte)
+            let rank = "Weltreise-Entdecker/in 🧭";
+            if (gameState.score >= 520) {
+                rank = "Legendärer Großmeister der Geographie 👑";
+            } else if (gameState.score >= 420) {
+                rank = "Meister-Navigator/in der Weltmeere ⛵";
+            } else if (gameState.score >= 300) {
+                rank = "Erfahrene/r Globus-Profi 🌍";
+            }
+            document.getElementById('cert-rank').textContent = `Rang: ${rank}`;
+
+            const today = new Date();
+            document.getElementById('cert-date').textContent = today.toLocaleDateString('de-DE');
+
+            showScreen('screen-certificate');
+        }
+
+        function resetFullGame() {
+            gameState.score = 0;
+            gameState.completedStages = { 1: false, 2: false, 3: false, 4: false };
+            document.getElementById('hud-score').textContent = "0";
+            document.getElementById('saved-session-hint').classList.add('hidden');
+            saveProgress();
+            showScreen('screen-start');
+        }
+
+        // Beim Laden der Seite gespeicherten Stand wiederherstellen
+        window.addEventListener('DOMContentLoaded', loadProgress);
+    </script>
+</body>
+</html>
