@@ -844,10 +844,10 @@
                 <div id="card-stage-1" onclick="startStage(1)" class="stage-card stage-1-bg">
                     <div class="stage-top">
                         <div class="stage-icon" style="background: var(--sky-500);">🌍</div>
-                        <span id="badge-stage-1" class="stage-badge">12 Aufgaben</span>
+                        <span id="badge-stage-1" class="stage-badge">10 Aufgaben</span>
                     </div>
                     <h3>1. Kontinente &amp; Ozeane</h3>
-                    <p>Finde alle 7 Kontinente und 5 Ozeane direkt auf der großen Weltkarte.</p>
+                    <p>Finde alle 7 Kontinente und 3 Ozeane direkt auf der großen Weltkarte.</p>
                 </div>
 
                 <!-- Etappe 2 -->
@@ -917,66 +917,69 @@
             <!-- ETAPPE 1: WELTKARTE (KONTINENTE & OZEANE) -->
             <div id="stage-1-view" class="hidden">
                 <div class="map-frame">
-                    <svg id="world-map-svg" viewBox="0 0 1000 500" style="background: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 50%, #7dd3fc 100%);">
-                        <line x1="0" y1="250" x2="1000" y2="250" stroke="#0284c7" stroke-width="1" stroke-dasharray="6,6" opacity="0.5"/>
-                        <line x1="485" y1="0" x2="485" y2="500" stroke="#0284c7" stroke-width="1" stroke-dasharray="6,6" opacity="0.5"/>
+                    <svg id="world-map-svg" viewBox="0 0 1000 500" style="background: linear-gradient(180deg, #0284c7 0%, #38bdf8 22%, #7dd3fc 50%, #38bdf8 78%, #0284c7 100%);">
+                        <defs>
+                            <filter id="land-shadow" x="-5%" y="-5%" width="110%" height="110%">
+                                <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0c4a6e" flood-opacity="0.28"/>
+                            </filter>
+                            <radialGradient id="ocean-glow" cx="50%" cy="50%" r="60%">
+                                <stop offset="0%" stop-color="#bae6fd" stop-opacity="0.45"/>
+                                <stop offset="100%" stop-color="#0369a1" stop-opacity="0.25"/>
+                            </radialGradient>
+                        </defs>
+                        <rect width="1000" height="500" fill="url(#ocean-glow)"/>
+                        <!-- Gradnetz-Orientierungslinien -->
+                        <line x1="0" y1="250" x2="1000" y2="250" stroke="#0369a1" stroke-width="1.2" stroke-dasharray="6,6" opacity="0.45"/>
+                        <line x1="485" y1="0" x2="485" y2="500" stroke="#0369a1" stroke-width="1.2" stroke-dasharray="6,6" opacity="0.45"/>
+                        <line x1="0" y1="189" x2="1000" y2="189" stroke="#0284c7" stroke-width="0.8" stroke-dasharray="3,6" opacity="0.3"/>
+                        <line x1="0" y1="311" x2="1000" y2="311" stroke="#0284c7" stroke-width="0.8" stroke-dasharray="3,6" opacity="0.3"/>
 
                         <!-- OZEANE -->
-                        <g id="ocean-Arktischer Ozean" class="ocean-zone" onclick="checkMapTarget('Arktischer Ozean')">
-                            <rect x="330" y="10" width="340" height="36" rx="18" fill="rgba(255,255,255,0.3)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
-                            <text x="500" y="33" text-anchor="middle" fill="#0c4a6e" font-size="14" font-weight="700">🌊 ??? Ozean (Norden)</text>
-                        </g>
-
                         <g id="ocean-Pazifischer Ozean" class="ocean-zone" onclick="checkMapTarget('Pazifischer Ozean')">
-                            <rect x="20" y="210" width="160" height="55" rx="14" fill="rgba(255,255,255,0.3)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
-                            <text x="100" y="235" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">🌊 Ozean (West)</text>
-                            <text x="100" y="253" text-anchor="middle" fill="#0c4a6e" font-size="12" font-weight="600">Klick mich!</text>
+                            <rect x="18" y="210" width="160" height="55" rx="14" fill="rgba(255,255,255,0.34)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <text x="98" y="235" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">🌊 Ozean (West)</text>
+                            <text x="98" y="253" text-anchor="middle" fill="#0c4a6e" font-size="12" font-weight="600">Klick mich!</text>
 
-                            <rect x="850" y="190" width="135" height="55" rx="14" fill="rgba(255,255,255,0.3)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <rect x="850" y="190" width="135" height="55" rx="14" fill="rgba(255,255,255,0.34)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
                             <text x="917" y="215" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">🌊 Ozean (Ost)</text>
                             <text x="917" y="233" text-anchor="middle" fill="#0c4a6e" font-size="12" font-weight="600">Klick mich!</text>
                         </g>
 
                         <g id="ocean-Atlantischer Ozean" class="ocean-zone" onclick="checkMapTarget('Atlantischer Ozean')">
-                            <rect x="315" y="195" width="135" height="65" rx="16" fill="rgba(255,255,255,0.3)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
-                            <text x="382" y="225" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">🌊 Ozean zwischen</text>
-                            <text x="382" y="243" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">Amerika &amp; Europa</text>
+                            <rect x="308" y="162" width="128" height="58" rx="15" fill="rgba(255,255,255,0.34)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <text x="372" y="188" text-anchor="middle" fill="#0c4a6e" font-size="12.5" font-weight="700">🌊 Ozean zwischen</text>
+                            <text x="372" y="206" text-anchor="middle" fill="#0c4a6e" font-size="12.5" font-weight="700">Amerika &amp; Europa</text>
                         </g>
 
                         <g id="ocean-Indischer Ozean" class="ocean-zone" onclick="checkMapTarget('Indischer Ozean')">
-                            <rect x="605" y="280" width="145" height="55" rx="16" fill="rgba(255,255,255,0.3)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
-                            <text x="677" y="305" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">🌊 Ozean südlich</text>
-                            <text x="677" y="323" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">von Asien</text>
+                            <rect x="625" y="282" width="145" height="55" rx="16" fill="rgba(255,255,255,0.34)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <text x="697" y="307" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">🌊 Ozean südlich</text>
+                            <text x="697" y="325" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="700">von Asien</text>
                         </g>
 
-                        <g id="ocean-Südlicher Ozean" class="ocean-zone" onclick="checkMapTarget('Südlicher Ozean')">
-                            <rect x="310" y="405" width="380" height="34" rx="17" fill="rgba(255,255,255,0.3)" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,3"/>
-                            <text x="500" y="427" text-anchor="middle" fill="#0c4a6e" font-size="14" font-weight="700">🌊 ??? Ozean (rund um die Antarktis)</text>
+                        <!-- KONTINENTE (realistische Küstenlinien inkl. Inseln) -->
+                        <g filter="url(#land-shadow)">
+                            <path id="cont-Nordamerika" class="continent-path" fill="#f59e0b" onclick="checkMapTarget('Nordamerika')"
+                                d="M 39.8,78.4 L 55.7,68.0 L 87.5,68.0 L 114.0,70.6 L 140.5,68.0 L 167.0,60.2 L 206.8,57.6 L 233.2,62.8 L 259.8,68.0 L 267.7,83.6 L 241.2,88.8 L 235.9,99.2 L 251.8,114.8 L 273.0,117.4 L 278.3,104.4 L 283.6,88.8 L 312.8,94.0 L 336.6,114.8 L 326.0,130.4 L 310.1,135.6 L 299.5,140.8 L 288.9,146.0 L 283.6,159.0 L 270.4,169.4 L 273.0,185.0 L 267.7,185.0 L 265.1,174.6 L 251.8,172.0 L 233.2,174.6 L 227.9,182.4 L 230.6,198.0 L 241.2,203.2 L 251.8,195.4 L 254.5,195.4 L 251.8,208.4 L 262.4,211.0 L 265.1,221.4 L 273.0,226.6 L 278.3,229.2 L 273.0,231.8 L 265.1,226.6 L 257.1,221.4 L 241.2,213.6 L 230.6,211.0 L 206.8,200.6 L 201.4,190.2 L 193.5,187.6 L 185.6,172.0 L 190.9,187.6 L 182.9,177.2 L 174.9,166.8 L 164.4,159.0 L 159.1,151.2 L 156.4,140.8 L 156.4,125.2 L 145.8,117.4 L 129.9,104.4 L 114.0,94.0 L 92.8,94.0 L 76.9,101.8 L 55.7,107.0 L 45.1,96.6 L 55.7,86.2 L 39.8,78.4 Z M 347.2,94.0 L 368.4,94.0 L 384.3,81.0 L 421.4,68.0 L 437.3,52.4 L 426.7,36.8 L 379.0,34.2 L 339.2,39.4 L 304.8,49.8 L 331.3,62.8 L 344.6,78.4 L 347.2,94.0 Z M 259.8,192.8 L 273.0,190.2 L 286.2,195.4 L 288.9,198.0 L 275.6,198.0 L 262.4,195.4 L 259.8,192.8 Z" />
+
+                            <path id="cont-Südamerika" class="continent-path" fill="#eab308" onclick="checkMapTarget('Südamerika')"
+                                d="M 278.3,226.6 L 286.2,221.4 L 299.5,218.8 L 315.4,224.0 L 326.0,226.6 L 344.6,237.0 L 352.5,247.4 L 363.1,252.6 L 379.0,257.8 L 392.2,265.6 L 392.2,276.0 L 381.6,289.0 L 379.0,304.6 L 371.1,309.8 L 357.8,317.6 L 352.5,328.0 L 341.9,338.4 L 331.3,348.8 L 315.4,356.6 L 310.1,367.0 L 304.8,380.0 L 307.5,390.4 L 296.9,393.0 L 288.9,385.2 L 286.2,369.6 L 291.6,354.0 L 294.2,341.0 L 296.9,322.8 L 299.5,302.0 L 288.9,291.6 L 278.3,281.2 L 270.4,263.0 L 273.0,255.2 L 278.3,242.2 L 278.3,226.6 Z" />
+
+                            <path id="cont-Europa" class="continent-path" fill="#3b82f6" onclick="checkMapTarget('Europa')"
+                                d="M 461.1,153.8 L 461.1,138.2 L 479.7,138.2 L 471.8,125.2 L 490.3,117.4 L 506.2,109.6 L 506.2,101.8 L 511.5,101.8 L 514.1,107.0 L 511.5,94.0 L 498.2,91.4 L 500.9,83.6 L 516.8,75.8 L 538.0,68.0 L 559.2,65.4 L 569.8,70.6 L 596.3,75.8 L 630.8,73.2 L 644.0,75.8 L 644.0,107.0 L 625.5,120.0 L 609.5,133.0 L 596.3,138.2 L 580.4,133.0 L 564.5,130.4 L 559.2,140.8 L 553.9,146.0 L 546.0,151.2 L 543.3,153.8 L 538.0,146.0 L 527.4,135.6 L 522.1,133.0 L 516.8,135.6 L 527.4,143.4 L 532.7,146.0 L 527.4,151.2 L 516.8,143.4 L 508.9,135.6 L 498.2,138.2 L 492.9,140.8 L 485.0,148.6 L 471.8,156.4 L 461.1,153.8 Z M 471.8,120.0 L 477.1,117.4 L 471.8,112.2 L 477.1,107.0 L 469.1,101.8 L 477.1,99.2 L 479.7,104.4 L 487.6,112.2 L 487.6,117.4 L 479.7,120.0 L 471.8,120.0 Z M 458.5,114.8 L 461.1,109.6 L 469.1,107.0 L 469.1,114.8 L 458.5,114.8 Z M 516.8,151.2 L 524.8,151.2 L 524.8,153.8 L 516.8,153.8 L 516.8,151.2 Z" />
+
+                            <path id="cont-Afrika" class="continent-path" fill="#ef4444" onclick="checkMapTarget('Afrika')"
+                                d="M 439.9,211.0 L 442.6,195.4 L 458.5,172.0 L 469.1,156.4 L 492.9,153.8 L 511.5,153.8 L 516.8,164.2 L 538.0,166.8 L 551.2,169.4 L 569.8,169.4 L 577.8,182.4 L 585.7,198.0 L 599.0,218.8 L 620.1,218.8 L 614.9,237.0 L 596.3,255.2 L 591.0,276.0 L 577.8,302.0 L 569.8,320.2 L 559.2,335.8 L 538.0,341.0 L 532.7,338.4 L 524.8,317.6 L 516.8,294.2 L 516.8,265.6 L 508.9,239.6 L 492.9,234.4 L 471.8,237.0 L 458.5,234.4 L 445.2,221.4 L 439.9,211.0 Z M 601.6,315.0 L 609.5,315.0 L 617.5,289.0 L 614.9,281.2 L 606.9,291.6 L 601.6,304.6 L 601.6,315.0 Z" />
+
+                            <path id="cont-Asien" class="continent-path" fill="#8b5cf6" onclick="checkMapTarget('Asien')"
+                                d="M 553.9,146.0 L 564.5,143.4 L 580.4,143.4 L 593.6,143.4 L 609.5,133.0 L 625.5,120.0 L 644.0,107.0 L 644.0,75.8 L 670.5,62.8 L 710.2,60.2 L 763.2,52.4 L 803.0,60.2 L 856.0,62.8 L 922.2,73.2 L 956.7,78.4 L 935.5,88.8 L 914.3,96.6 L 901.0,114.8 L 909.0,104.4 L 887.8,94.0 L 861.3,99.2 L 850.7,109.6 L 858.6,117.4 L 842.8,135.6 L 826.8,146.0 L 826.8,159.0 L 818.9,159.0 L 813.6,148.6 L 805.6,151.2 L 808.3,169.4 L 803.0,185.0 L 787.1,192.8 L 773.8,198.0 L 773.8,218.8 L 760.6,224.0 L 758.0,244.8 L 750.0,234.4 L 744.7,213.6 L 739.4,205.8 L 726.1,192.8 L 715.5,198.0 L 697.0,218.8 L 691.7,229.2 L 683.8,213.6 L 675.8,198.0 L 665.2,190.2 L 649.3,185.0 L 633.4,182.4 L 620.1,182.4 L 630.8,190.2 L 641.4,192.8 L 622.8,211.0 L 601.6,216.2 L 591.0,198.0 L 577.8,177.2 L 577.8,161.6 L 580.4,153.8 L 564.5,156.4 L 556.5,151.2 L 553.9,146.0 Z M 829.5,166.8 L 840.1,161.6 L 853.3,159.0 L 858.6,146.0 L 869.2,135.6 L 858.6,133.0 L 853.3,146.0 L 845.4,153.8 L 832.1,161.6 L 829.5,166.8 Z M 697.0,224.0 L 702.3,229.2 L 699.6,234.4 L 694.4,229.2 L 697.0,224.0 Z M 739.4,237.0 L 760.6,252.6 L 765.9,265.6 L 755.3,260.4 L 739.4,242.2 L 739.4,237.0 Z M 773.8,247.4 L 789.8,234.4 L 800.3,237.0 L 795.0,257.8 L 779.1,257.8 L 773.8,247.4 Z M 765.9,265.6 L 787.1,268.2 L 787.1,273.4 L 765.9,268.2 L 765.9,265.6 Z" />
+
+                            <path id="cont-Australien" class="continent-path" fill="#ec4899" onclick="checkMapTarget('Australien')"
+                                d="M 787.1,307.2 L 808.3,294.2 L 829.5,281.2 L 845.4,281.2 L 845.4,289.0 L 858.6,294.2 L 861.3,278.6 L 871.9,294.2 L 890.5,317.6 L 882.5,341.0 L 871.9,348.8 L 856.0,348.8 L 845.4,341.0 L 832.1,333.2 L 808.3,338.4 L 789.8,338.4 L 787.1,320.2 L 787.1,307.2 Z M 869.2,356.6 L 877.2,356.6 L 877.2,361.8 L 869.2,361.8 L 869.2,356.6 Z M 943.5,341.0 L 956.7,348.8 L 948.8,356.6 L 940.8,364.4 L 927.5,369.6 L 935.5,359.2 L 946.1,351.4 L 943.5,341.0 Z" />
+
+                            <path id="cont-Antarktika" class="continent-path" fill="#f8fafc" onclick="checkMapTarget('Antarktika')"
+                                d="M 8.0,437.2 L 87.5,442.4 L 167.0,439.8 L 246.5,437.2 L 312.8,419.0 L 331.3,413.8 L 320.7,426.8 L 352.5,445.0 L 405.5,442.4 L 485.0,432.0 L 564.5,429.4 L 644.0,426.8 L 723.5,424.2 L 803.0,424.2 L 882.5,429.4 L 935.5,437.2 L 922.2,450.2 L 962.0,450.2 L 962.0,471.0 L 8.0,471.0 L 8.0,437.2 Z" />
                         </g>
-
-                        <!-- KONTINENTE -->
-                        <path id="cont-Nordamerika" class="continent-path" fill="#f59e0b" onclick="checkMapTarget('Nordamerika')"
-                            d="M 110,75 L 250,65 L 315,95 L 290,145 L 245,180 L 225,225 L 245,245 L 225,255 L 195,220 L 165,175 L 125,130 Z" />
-                        <path class="continent-path" fill="#f59e0b" onclick="checkMapTarget('Nordamerika')"
-                            d="M 325,52 L 385,48 L 375,95 L 335,100 Z" />
-
-                        <path id="cont-Südamerika" class="continent-path" fill="#eab308" onclick="checkMapTarget('Südamerika')"
-                            d="M 245,255 L 305,265 L 345,310 L 320,375 L 280,425 L 260,420 L 255,345 L 235,290 Z" />
-
-                        <path id="cont-Europa" class="continent-path" fill="#3b82f6" onclick="checkMapTarget('Europa')"
-                            d="M 445,85 L 545,75 L 565,125 L 555,165 L 510,175 L 470,170 L 440,150 L 455,115 Z" />
-
-                        <path id="cont-Afrika" class="continent-path" fill="#ef4444" onclick="checkMapTarget('Afrika')"
-                            d="M 445,185 L 535,185 L 575,235 L 560,310 L 525,375 L 495,375 L 475,300 L 435,260 L 430,215 Z" />
-
-                        <path id="cont-Asien" class="continent-path" fill="#8b5cf6" onclick="checkMapTarget('Asien')"
-                            d="M 565,75 L 790,70 L 865,105 L 835,165 L 795,215 L 750,245 L 690,240 L 645,250 L 605,215 L 560,170 Z" />
-
-                        <path id="cont-Australien" class="continent-path" fill="#ec4899" onclick="checkMapTarget('Australien')"
-                            d="M 755,305 L 845,300 L 865,355 L 815,385 L 755,365 Z" />
-
-                        <path id="cont-Antarktika" class="continent-path" fill="#f8fafc" onclick="checkMapTarget('Antarktika')"
-                            d="M 180,455 L 820,455 L 850,490 L 150,490 Z" />
 
                         <g id="found-labels" pointer-events="none" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle"></g>
                     </svg>
@@ -1025,19 +1028,26 @@
                             Klicke auf die richtige Stelle an der Kompassrose links!
                         </p>
 
-                        <svg viewBox="0 0 400 220" style="background: var(--sky-200); border: 1px solid var(--sky-300);">
-                            <rect x="35" y="30" width="75" height="55" rx="12" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/>
-                            <text x="72" y="62" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">Nordamerika</text>
-                            <rect x="75" y="115" width="55" height="75" rx="12" fill="#eab308" stroke="#fff" stroke-width="1.5"/>
-                            <text x="102" y="155" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Südamerika</text>
-                            <rect x="175" y="30" width="60" height="45" rx="10" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
-                            <text x="205" y="56" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">Europa</text>
-                            <rect x="175" y="95" width="65" height="80" rx="12" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
-                            <text x="207" y="138" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">Afrika</text>
-                            <rect x="255" y="30" width="110" height="75" rx="14" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/>
-                            <text x="310" y="72" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">Asien</text>
-                            <rect x="305" y="140" width="65" height="45" rx="10" fill="#ec4899" stroke="#fff" stroke-width="1.5"/>
-                            <text x="337" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Australien</text>
+                        <svg viewBox="0 0 400 220" style="background: linear-gradient(180deg, #38bdf8 0%, #bae6fd 50%, #38bdf8 100%); border: 1px solid var(--sky-300);">
+                            <line x1="0" y1="122" x2="400" y2="122" stroke="#0369a1" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.45"/>
+                            <line x1="195" y1="0" x2="195" y2="220" stroke="#0369a1" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.45"/>
+                            <path d="M 20.3,46.1 L 26.5,41.5 L 39.0,41.5 L 49.4,42.7 L 59.8,41.5 L 70.2,38.1 L 85.8,36.9 L 96.2,39.2 L 106.6,41.5 L 109.7,48.4 L 99.3,50.7 L 97.2,55.3 L 103.5,62.2 L 111.8,63.4 L 113.9,57.6 L 116.0,50.7 L 127.4,53.0 L 136.8,62.2 L 132.6,69.1 L 126.4,71.4 L 122.2,73.7 L 118.0,76.0 L 116.0,81.8 L 110.8,86.3 L 111.8,93.2 L 109.7,93.2 L 108.7,88.7 L 103.5,87.5 L 96.2,88.7 L 94.1,92.1 L 95.2,99.0 L 99.3,101.3 L 103.5,97.8 L 104.5,97.8 L 103.5,103.6 L 107.6,104.8 L 108.7,109.3 L 111.8,111.7 L 113.9,112.8 L 111.8,114.0 L 108.7,111.7 L 105.6,109.3 L 99.3,105.9 L 95.2,104.8 L 85.8,100.2 L 83.7,95.5 L 80.6,94.4 L 77.5,87.5 L 79.6,94.4 L 76.4,89.8 L 73.3,85.2 L 69.2,81.8 L 67.1,78.3 L 66.0,73.7 L 66.0,66.8 L 61.9,63.4 L 55.6,57.6 L 49.4,53.0 L 41.1,53.0 L 34.8,56.5 L 26.5,58.8 L 22.4,54.2 L 26.5,49.6 L 20.3,46.1 Z M 140.9,53.0 L 149.2,53.0 L 155.5,47.2 L 170.0,41.5 L 176.3,34.6 L 172.1,27.7 L 153.4,26.6 L 137.8,28.9 L 124.3,33.5 L 134.7,39.2 L 139.9,46.1 L 140.9,53.0 Z M 106.6,96.7 L 111.8,95.5 L 117.0,97.8 L 118.0,99.0 L 112.8,99.0 L 107.6,97.8 L 106.6,96.7 Z" fill="#f59e0b" stroke="#fff" stroke-width="1"/>
+                            <text x="86" y="72" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Nordamerika</text>
+
+                            <path d="M 113.9,111.7 L 117.0,109.3 L 122.2,108.2 L 128.4,110.5 L 132.6,111.7 L 139.9,116.2 L 143.0,120.8 L 147.2,123.2 L 153.4,125.5 L 158.6,128.9 L 158.6,133.5 L 154.4,139.2 L 153.4,146.2 L 150.3,148.4 L 145.1,151.9 L 143.0,156.5 L 138.8,161.1 L 134.7,165.7 L 128.4,169.2 L 126.4,173.8 L 124.3,179.5 L 125.3,184.1 L 121.2,185.2 L 118.0,181.8 L 117.0,174.9 L 119.1,168.0 L 120.1,162.2 L 121.2,154.2 L 122.2,145.0 L 118.0,140.4 L 113.9,135.8 L 110.8,127.8 L 111.8,124.3 L 113.9,118.5 L 113.9,111.7 Z" fill="#eab308" stroke="#fff" stroke-width="1"/>
+                            <text x="133" y="142" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Südamerika</text>
+
+                            <path d="M 185.6,79.5 L 185.6,72.6 L 192.9,72.6 L 189.8,66.8 L 197.1,63.4 L 203.3,59.9 L 203.3,56.5 L 205.4,56.5 L 206.4,58.8 L 205.4,53.0 L 200.2,51.9 L 201.2,48.4 L 207.5,45.0 L 215.8,41.5 L 224.1,40.4 L 228.3,42.7 L 238.7,45.0 L 252.2,43.8 L 257.4,45.0 L 257.4,58.8 L 250.1,64.5 L 243.9,70.2 L 238.7,72.6 L 232.4,70.2 L 226.2,69.1 L 224.1,73.7 L 222.0,76.0 L 218.9,78.3 L 217.9,79.5 L 215.8,76.0 L 211.6,71.4 L 209.6,70.2 L 207.5,71.4 L 211.6,74.8 L 213.7,76.0 L 211.6,78.3 L 207.5,74.8 L 204.4,71.4 L 200.2,72.6 L 198.1,73.7 L 195.0,77.2 L 189.8,80.6 L 185.6,79.5 Z M 189.8,64.5 L 191.9,63.4 L 189.8,61.1 L 191.9,58.8 L 188.8,56.5 L 191.9,55.3 L 192.9,57.6 L 196.0,61.1 L 196.0,63.4 L 192.9,64.5 L 189.8,64.5 Z M 184.6,62.2 L 185.6,59.9 L 188.8,58.8 L 188.8,62.2 L 184.6,62.2 Z M 207.5,78.3 L 210.6,78.3 L 210.6,79.5 L 207.5,79.5 L 207.5,78.3 Z" fill="#3b82f6" stroke="#fff" stroke-width="1"/>
+                            <text x="218" y="63" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Europa</text>
+
+                            <path d="M 177.3,104.8 L 178.4,97.8 L 184.6,87.5 L 188.8,80.6 L 198.1,79.5 L 205.4,79.5 L 207.5,84.1 L 215.8,85.2 L 221.0,86.3 L 228.3,86.3 L 231.4,92.1 L 234.5,99.0 L 239.7,108.2 L 248.0,108.2 L 246.0,116.2 L 238.7,124.3 L 236.6,133.5 L 231.4,145.0 L 228.3,153.1 L 224.1,159.9 L 215.8,162.2 L 213.7,161.1 L 210.6,151.9 L 207.5,141.6 L 207.5,128.9 L 204.4,117.4 L 198.1,115.1 L 189.8,116.2 L 184.6,115.1 L 179.4,109.3 L 177.3,104.8 Z M 240.8,150.8 L 243.9,150.8 L 247.0,139.2 L 246.0,135.8 L 242.8,140.4 L 240.8,146.2 L 240.8,150.8 Z" fill="#ef4444" stroke="#fff" stroke-width="1"/>
+                            <text x="212" y="114" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Afrika</text>
+
+                            <path d="M 222.0,76.0 L 226.2,74.8 L 232.4,74.8 L 237.6,74.8 L 243.9,70.2 L 250.1,64.5 L 257.4,58.8 L 257.4,45.0 L 267.8,39.2 L 283.4,38.1 L 304.2,34.6 L 319.8,38.1 L 340.6,39.2 L 366.6,43.8 L 380.1,46.1 L 371.8,50.7 L 363.5,54.2 L 358.3,62.2 L 361.4,57.6 L 353.1,53.0 L 342.7,55.3 L 338.5,59.9 L 341.6,63.4 L 335.4,71.4 L 329.2,76.0 L 329.2,81.8 L 326.0,81.8 L 324.0,77.2 L 320.8,78.3 L 321.9,86.3 L 319.8,93.2 L 313.6,96.7 L 308.4,99.0 L 308.4,108.2 L 303.2,110.5 L 302.1,119.7 L 299.0,115.1 L 296.9,105.9 L 294.8,102.5 L 289.6,96.7 L 285.5,99.0 L 278.2,108.2 L 276.1,112.8 L 273.0,105.9 L 269.9,99.0 L 265.7,95.5 L 259.5,93.2 L 253.2,92.1 L 248.0,92.1 L 252.2,95.5 L 256.4,96.7 L 249.1,104.8 L 240.8,107.0 L 236.6,99.0 L 231.4,89.8 L 231.4,82.9 L 232.4,79.5 L 226.2,80.6 L 223.1,78.3 L 222.0,76.0 Z M 330.2,85.2 L 334.4,82.9 L 339.6,81.8 L 341.6,76.0 L 345.8,71.4 L 341.6,70.2 L 339.6,76.0 L 336.4,79.5 L 331.2,82.9 L 330.2,85.2 Z M 278.2,110.5 L 280.3,112.8 L 279.2,115.1 L 277.2,112.8 L 278.2,110.5 Z M 294.8,116.2 L 303.2,123.2 L 305.2,128.9 L 301.1,126.6 L 294.8,118.5 L 294.8,116.2 Z M 308.4,120.8 L 314.6,115.1 L 318.8,116.2 L 316.7,125.5 L 310.4,125.5 L 308.4,120.8 Z M 305.2,128.9 L 313.6,130.1 L 313.6,132.3 L 305.2,130.1 L 305.2,128.9 Z" fill="#8b5cf6" stroke="#fff" stroke-width="1"/>
+                            <text x="295" y="74" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Asien</text>
+
+                            <path d="M 313.6,147.3 L 321.9,141.6 L 330.2,135.8 L 336.4,135.8 L 336.4,139.2 L 341.6,141.6 L 342.7,134.7 L 346.8,141.6 L 354.1,151.9 L 351.0,162.2 L 346.8,165.7 L 340.6,165.7 L 336.4,162.2 L 331.2,158.8 L 321.9,161.1 L 314.6,161.1 L 313.6,153.1 L 313.6,147.3 Z M 345.8,169.2 L 348.9,169.2 L 348.9,171.4 L 345.8,171.4 L 345.8,169.2 Z M 374.9,162.2 L 380.1,165.7 L 377.0,169.2 L 373.9,172.6 L 368.7,174.9 L 371.8,170.3 L 376.0,166.8 L 374.9,162.2 Z" fill="#ec4899" stroke="#fff" stroke-width="1"/>
+                            <text x="334" y="155" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="bold" style="text-shadow:0 1px 2px rgba(0,0,0,0.4)">Australien</text>
                         </svg>
 
                         <div id="compass-mc-options" class="hidden" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.85rem;"></div>
@@ -1050,20 +1060,22 @@
                 <div class="grid-stage-layout">
                     <!-- Visuelles Gradnetz-Gitter auf Weltkarte -->
                     <div class="grid-map-box">
-                        <svg id="grid-map-svg" viewBox="0 0 700 390" style="background: #bae6fd;">
-                            <!-- Kontinent-Silhouetten (geografisch passend ausgerichtet) -->
-                            <!-- Nordamerika (ca. 15°N-65°N, 60°W-130°W) -->
-                            <path d="M 115,65 L 255,55 L 275,110 L 220,170 L 180,155 L 140,115 Z" fill="#94a3b8" opacity="0.65"/>
-                            <!-- Südamerika (ca. 10°N-55°S, 35°W-80°W) -->
-                            <path d="M 225,185 L 295,205 L 305,280 L 255,345 L 235,270 Z" fill="#94a3b8" opacity="0.65"/>
-                            <!-- Europa (ca. 36°N-70°N, 10°W-60°O) -->
-                            <path d="M 355,65 L 455,60 L 460,125 L 365,130 Z" fill="#94a3b8" opacity="0.65"/>
-                            <!-- Afrika (ca. 35°N-35°S, 15°W-50°O) -->
-                            <path d="M 355,142 L 455,142 L 465,245 L 415,295 L 375,220 Z" fill="#94a3b8" opacity="0.65"/>
-                            <!-- Asien (ca. 10°N-75°N, 60°O-150°O) -->
-                            <path d="M 465,60 L 635,60 L 620,175 L 505,180 L 465,130 Z" fill="#94a3b8" opacity="0.65"/>
-                            <!-- Australien (ca. 12°S-40°S, 115°O-152°O) -->
-                            <path d="M 555,230 L 630,230 L 635,288 L 560,288 Z" fill="#94a3b8" opacity="0.65"/>
+                        <svg id="grid-map-svg" viewBox="0 0 700 390" style="background: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 50%, #7dd3fc 100%);">
+                            <!-- Realistische Kontinent-Silhouetten (exakt auf 0°=370/195, 30°Lon=45px, 30°Lat=48px projiziert) -->
+                            <g fill="#cbd5e1" stroke="#64748b" stroke-width="1" opacity="0.82">
+                                <!-- Nordamerika inkl. Grönland & Kuba -->
+                                <path d="M 118.0,89.4 L 127.0,83.0 L 145.0,83.0 L 160.0,84.6 L 175.0,83.0 L 190.0,78.2 L 212.5,76.6 L 227.5,79.8 L 242.5,83.0 L 247.0,92.6 L 232.0,95.8 L 229.0,102.2 L 238.0,111.8 L 250.0,113.4 L 253.0,105.4 L 256.0,95.8 L 272.5,99.0 L 286.0,111.8 L 280.0,121.4 L 271.0,124.6 L 265.0,127.8 L 259.0,131.0 L 256.0,139.0 L 248.5,145.4 L 250.0,155.0 L 247.0,155.0 L 245.5,148.6 L 238.0,147.0 L 227.5,148.6 L 224.5,153.4 L 226.0,163.0 L 232.0,166.2 L 238.0,161.4 L 239.5,161.4 L 238.0,169.4 L 244.0,171.0 L 245.5,177.4 L 250.0,180.6 L 253.0,182.2 L 250.0,183.8 L 245.5,180.6 L 241.0,177.4 L 232.0,172.6 L 226.0,171.0 L 212.5,164.6 L 209.5,158.2 L 205.0,156.6 L 200.5,147.0 L 203.5,156.6 L 199.0,150.2 L 194.5,143.8 L 188.5,139.0 L 185.5,134.2 L 184.0,127.8 L 184.0,118.2 L 178.0,113.4 L 169.0,105.4 L 160.0,99.0 L 148.0,99.0 L 139.0,103.8 L 127.0,107.0 L 121.0,100.6 L 127.0,94.2 L 118.0,89.4 Z M 292.0,99.0 L 304.0,99.0 L 313.0,91.0 L 334.0,83.0 L 343.0,73.4 L 337.0,63.8 L 310.0,62.2 L 287.5,65.4 L 268.0,71.8 L 283.0,79.8 L 290.5,89.4 L 292.0,99.0 Z M 242.5,159.8 L 250.0,158.2 L 257.5,161.4 L 259.0,163.0 L 251.5,163.0 L 244.0,161.4 L 242.5,159.8 Z"/>
+                                <!-- Südamerika -->
+                                <path d="M 253.0,180.6 L 257.5,177.4 L 265.0,175.8 L 274.0,179.0 L 280.0,180.6 L 290.5,187.0 L 295.0,193.4 L 301.0,196.6 L 310.0,199.8 L 317.5,204.6 L 317.5,211.0 L 311.5,219.0 L 310.0,228.6 L 305.5,231.8 L 298.0,236.6 L 295.0,243.0 L 289.0,249.4 L 283.0,255.8 L 274.0,260.6 L 271.0,267.0 L 268.0,275.0 L 269.5,281.4 L 263.5,283.0 L 259.0,278.2 L 257.5,268.6 L 260.5,259.0 L 262.0,251.0 L 263.5,239.8 L 265.0,227.0 L 259.0,220.6 L 253.0,214.2 L 248.5,203.0 L 250.0,198.2 L 253.0,190.2 L 253.0,180.6 Z"/>
+                                <!-- Europa inkl. Großbritannien, Irland & Sizilien -->
+                                <path d="M 356.5,135.8 L 356.5,126.2 L 367.0,126.2 L 362.5,118.2 L 373.0,113.4 L 382.0,108.6 L 382.0,103.8 L 385.0,103.8 L 386.5,107.0 L 385.0,99.0 L 377.5,97.4 L 379.0,92.6 L 388.0,87.8 L 400.0,83.0 L 412.0,81.4 L 418.0,84.6 L 433.0,87.8 L 452.5,86.2 L 460.0,87.8 L 460.0,107.0 L 449.5,115.0 L 440.5,123.0 L 433.0,126.2 L 424.0,123.0 L 415.0,121.4 L 412.0,127.8 L 409.0,131.0 L 404.5,134.2 L 403.0,135.8 L 400.0,131.0 L 394.0,124.6 L 391.0,123.0 L 388.0,124.6 L 394.0,129.4 L 397.0,131.0 L 394.0,134.2 L 388.0,129.4 L 383.5,124.6 L 377.5,126.2 L 374.5,127.8 L 370.0,132.6 L 362.5,137.4 L 356.5,135.8 Z M 362.5,115.0 L 365.5,113.4 L 362.5,110.2 L 365.5,107.0 L 361.0,103.8 L 365.5,102.2 L 367.0,105.4 L 371.5,110.2 L 371.5,113.4 L 367.0,115.0 L 362.5,115.0 Z M 355.0,111.8 L 356.5,108.6 L 361.0,107.0 L 361.0,111.8 L 355.0,111.8 Z M 388.0,134.2 L 392.5,134.2 L 392.5,135.8 L 388.0,135.8 L 388.0,134.2 Z"/>
+                                <!-- Afrika inkl. Madagaskar -->
+                                <path d="M 344.5,171.0 L 346.0,161.4 L 355.0,147.0 L 361.0,137.4 L 374.5,135.8 L 385.0,135.8 L 388.0,142.2 L 400.0,143.8 L 407.5,145.4 L 418.0,145.4 L 422.5,153.4 L 427.0,163.0 L 434.5,175.8 L 446.5,175.8 L 443.5,187.0 L 433.0,198.2 L 430.0,211.0 L 422.5,227.0 L 418.0,238.2 L 412.0,247.8 L 400.0,251.0 L 397.0,249.4 L 392.5,236.6 L 388.0,222.2 L 388.0,204.6 L 383.5,188.6 L 374.5,185.4 L 362.5,187.0 L 355.0,185.4 L 347.5,177.4 L 344.5,171.0 Z M 436.0,235.0 L 440.5,235.0 L 445.0,219.0 L 443.5,214.2 L 439.0,220.6 L 436.0,228.6 L 436.0,235.0 Z"/>
+                                <!-- Asien inkl. Japan, Sri Lanka & Indonesien -->
+                                <path d="M 409.0,131.0 L 415.0,129.4 L 424.0,129.4 L 431.5,129.4 L 440.5,123.0 L 449.5,115.0 L 460.0,107.0 L 460.0,87.8 L 475.0,79.8 L 497.5,78.2 L 527.5,73.4 L 550.0,78.2 L 580.0,79.8 L 617.5,86.2 L 637.0,89.4 L 625.0,95.8 L 613.0,100.6 L 605.5,111.8 L 610.0,105.4 L 598.0,99.0 L 583.0,102.2 L 577.0,108.6 L 581.5,113.4 L 572.5,124.6 L 563.5,131.0 L 563.5,139.0 L 559.0,139.0 L 556.0,132.6 L 551.5,134.2 L 553.0,145.4 L 550.0,155.0 L 541.0,159.8 L 533.5,163.0 L 533.5,175.8 L 526.0,179.0 L 524.5,191.8 L 520.0,185.4 L 517.0,172.6 L 514.0,167.8 L 506.5,159.8 L 500.5,163.0 L 490.0,175.8 L 487.0,182.2 L 482.5,172.6 L 478.0,163.0 L 472.0,158.2 L 463.0,155.0 L 454.0,153.4 L 446.5,153.4 L 452.5,158.2 L 458.5,159.8 L 448.0,171.0 L 436.0,174.2 L 430.0,163.0 L 422.5,150.2 L 422.5,140.6 L 424.0,135.8 L 415.0,137.4 L 410.5,134.2 L 409.0,131.0 Z M 565.0,143.8 L 571.0,140.6 L 578.5,139.0 L 581.5,131.0 L 587.5,124.6 L 581.5,123.0 L 578.5,131.0 L 574.0,135.8 L 566.5,140.6 L 565.0,143.8 Z M 490.0,179.0 L 493.0,182.2 L 491.5,185.4 L 488.5,182.2 L 490.0,179.0 Z M 514.0,187.0 L 526.0,196.6 L 529.0,204.6 L 523.0,201.4 L 514.0,190.2 L 514.0,187.0 Z M 533.5,193.4 L 542.5,185.4 L 548.5,187.0 L 545.5,199.8 L 536.5,199.8 L 533.5,193.4 Z M 529.0,204.6 L 541.0,206.2 L 541.0,209.4 L 529.0,206.2 L 529.0,204.6 Z"/>
+                                <!-- Australien inkl. Tasmanien & Neuseeland -->
+                                <path d="M 541.0,230.2 L 553.0,222.2 L 565.0,214.2 L 574.0,214.2 L 574.0,219.0 L 581.5,222.2 L 583.0,212.6 L 589.0,222.2 L 599.5,236.6 L 595.0,251.0 L 589.0,255.8 L 580.0,255.8 L 574.0,251.0 L 566.5,246.2 L 553.0,249.4 L 542.5,249.4 L 541.0,238.2 L 541.0,230.2 Z M 587.5,260.6 L 592.0,260.6 L 592.0,263.8 L 587.5,263.8 L 587.5,260.6 Z M 629.5,251.0 L 637.0,255.8 L 632.5,260.6 L 628.0,265.4 L 620.5,268.6 L 625.0,262.2 L 631.0,257.4 L 629.5,251.0 Z"/>
+                            </g>
 
                             <!-- GRADNETZ-KOORDINATENSYSTEM:
                                  Nullpunkt (0° Breite, 0° Länge) liegt exakt bei X = 370, Y = 195
@@ -1398,20 +1410,18 @@
            3. FRAGEN-KATALOGE FÜR ALLE 4 ETAPPEN
            ========================================================================== */
 
-        // ETAPPE 1: Alle 7 Kontinente + 5 Ozeane (12 Aufgaben)
+        // ETAPPE 1: Alle 7 Kontinente + 3 Ozeane (10 Aufgaben)
         const stage1Questions = [
-            { target: "Europa", type: "Kontinent", hint: "Hier liegt Deutschland! Europa liegt nördlich von Afrika und westlich von Asien.", labelX: 495, labelY: 135 },
-            { target: "Afrika", type: "Kontinent", hint: "Dieser Kontinent liegt südlich von Europa. Der Äquator verläuft mitten durch ihn hindurch.", labelX: 505, labelY: 265 },
-            { target: "Asien", type: "Kontinent", hint: "Der größte Kontinent der Erde! Er liegt östlich von Europa.", labelX: 695, labelY: 155 },
+            { target: "Europa", type: "Kontinent", hint: "Hier liegt Deutschland! Europa liegt nördlich von Afrika und westlich von Asien.", labelX: 540, labelY: 112 },
+            { target: "Afrika", type: "Kontinent", hint: "Dieser Kontinent liegt südlich von Europa. Der Äquator verläuft mitten durch ihn hindurch.", labelX: 530, labelY: 230 },
+            { target: "Asien", type: "Kontinent", hint: "Der größte Kontinent der Erde! Er liegt östlich von Europa.", labelX: 735, labelY: 130 },
             { target: "Nordamerika", type: "Kontinent", hint: "Liegt im Nordwesten der Weltkarte (dort liegen z. B. die USA und Kanada).", labelX: 205, labelY: 135 },
-            { target: "Südamerika", type: "Kontinent", hint: "Liegt südlich von Nordamerika und hat die Form einer großen Eistüte.", labelX: 285, labelY: 325 },
-            { target: "Australien", type: "Kontinent", hint: "Der kleinste Kontinent – eine große Insel im Südosten der Karte.", labelX: 808, labelY: 348 },
-            { target: "Antarktika", type: "Kontinent", hint: "Der eisige Kontinent ganz unten am Südpol!", labelX: 500, labelY: 478 },
+            { target: "Südamerika", type: "Kontinent", hint: "Liegt südlich von Nordamerika und hat die Form einer großen Eistüte.", labelX: 332, labelY: 292 },
+            { target: "Australien", type: "Kontinent", hint: "Der kleinste Kontinent – eine große Insel im Südosten der Karte.", labelX: 838, labelY: 322 },
+            { target: "Antarktika", type: "Kontinent", hint: "Der eisige Kontinent ganz unten am Südpol!", labelX: 500, labelY: 460 },
             { target: "Atlantischer Ozean", type: "Ozean", hint: "Dieser Ozean liegt wie ein großes 'S' zwischen Amerika und Europa/Afrika." },
             { target: "Pazifischer Ozean", type: "Ozean", hint: "Der größte Ozean der Welt! Er liegt ganz links (westlich von Amerika) und ganz rechts (östlich von Asien)." },
-            { target: "Indischer Ozean", type: "Ozean", hint: "Er liegt südlich von Asien, östlich von Afrika und westlich von Australien." },
-            { target: "Arktischer Ozean", type: "Ozean", hint: "Er liegt ganz oben im hohen Norden rund um den Nordpol." },
-            { target: "Südlicher Ozean", type: "Ozean", hint: "Er umgibt den eisigen Kontinent Antarktika ganz im Süden." }
+            { target: "Indischer Ozean", type: "Ozean", hint: "Er liegt südlich von Asien, östlich von Afrika und westlich von Australien." }
         ];
 
         // ETAPPE 2: Kompassrose & Himmelsrichtungen (9 Aufgaben)
@@ -1732,7 +1742,7 @@
             document.getElementById('hud-progress-text').textContent = `${doneCount} / 4 Etappen`;
             document.getElementById('hud-progress-bar').style.width = `${(doneCount / 4) * 100}%`;
 
-            const defaultLabels = { 1: "12 Aufgaben", 2: "9 Aufgaben", 3: "14 Aufgaben • XXL", 4: "4 Aufgaben" };
+            const defaultLabels = { 1: "10 Aufgaben", 2: "9 Aufgaben", 3: "14 Aufgaben • XXL", 4: "4 Aufgaben" };
 
             for (let i = 1; i <= 4; i++) {
                 const badge = document.getElementById(`badge-stage-${i}`);
